@@ -13,6 +13,35 @@ html, body{
   background:#000;
 }
 
+
+/* ---------- START TEST BUTTON ---------- */
+.start-btn-wrapper {
+  margin-top: 40px;
+  text-align: center;
+  z-index: 10;
+  position: relative;
+}
+
+.start-btn {
+  display: inline-block;
+  padding: 14px 34px;
+  font-size: 1.3rem;
+  color: #1b1b1b;
+  background: #f3d9a2;
+  border-radius: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0px 6px 16px rgba(0,0,0,0.45);
+  transition: 0.3s;
+}
+
+.start-btn:hover {
+  background: #ffe2ad;
+  transform: translateY(-4px);
+  box-shadow: 0px 12px 24px rgba(0,0,0,0.55);
+}
+
+
 /* ---------- BACKGROUND MAP ---------- */
 .bg-map{
   position:fixed;
@@ -80,6 +109,7 @@ html, body{
     font-size:.9rem;
   }
 }
+
 
 
 
