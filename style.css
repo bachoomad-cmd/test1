@@ -1,52 +1,79 @@
-/* --- Infinite Zoom (Desktop) --- */
-.bg-map {
-  animation: mapZoom 6s ease-in-out infinite;
-  transform-origin: center;
-  background-size: cover;
-  .bg-map{
-  position: fixed;
-  top:0;
-  left:0;
-  width:100vw;
-  height:100vh;
-  object-fit: cover;
-  overflow:hidden;
-  max-width:100%;
+/* ---------- RESET ---------- */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
+html, body{
+  width:100%;
+  height:100%;
+  overflow-x:hidden;  /* جلوگیری کامل از اسکرول افقی */
+  font-family: "Segoe UI", sans-serif;
+  background:#000;
+}
+
+/* ---------- BACKGROUND MAP ---------- */
+.bg-map{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  background-image:url("assets/map.png");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  z-index:-1;
+
+  animation: mapZoom 6s ease-in-out infinite;
+  transform-origin:center;
 }
 
 @keyframes mapZoom {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.22); }
-  100% { transform: scale(1); }
+  0% { transform:scale(1); }
+  50% { transform:scale(1.18); }
+  100% { transform:scale(1); }
 }
 
-/* 🔥 Mobile Fix */
-@media(max-width: 768px){
-  .bg-map {
-    background-size: 135%;   /* جلوگیری از زوم شدید */
-    animation: mapZoomMobile 10s ease-in-out infinite;
+/* ---------- TITLE ---------- */
+.hero{
+  position:fixed;
+  top:7vh;
+  width:100%;
+  text-align:center;
+  color:#f3d9a2;
+  text-shadow:0 6px 22px rgba(0,0,0,.7);
+  padding:0 20px;
+}
+
+.hero h1{
+  font-size:3rem;
+}
+
+.hero p{
+  font-size:1.2rem;
+  opacity:.9;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:768px){
+
+  .hero h1{
+    font-size:2.1rem;
   }
 
-  @keyframes mapZoomMobile {
-    0%   { transform: scale(1); }
-    50%  { transform: scale(1.08); }  /* زوم بسیار نرم */
-    100% { transform: scale(1); }
+  .hero p{
+    font-size:1rem;
   }
 }
 
-/* 🔥 Extra Small Phones */
-@media(max-width: 450px){
-  .bg-map{
-    background-size: 150%;  /* کمتر فشرده دیده بشه */
-    animation: mapZoomMobileXS 12s ease-in-out infinite;
+@media(max-width:450px){
+
+  .hero h1{
+    font-size:1.65rem;
   }
 
-  @keyframes mapZoomMobileXS {
-    0%   { transform: scale(1); }
-    50%  { transform: scale(1.05); }
-    100% { transform: scale(1); }
+  .hero p{
+    font-size:.9rem;
   }
 }
-
