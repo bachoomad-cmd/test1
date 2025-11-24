@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تست فرمانروایان ایران</title>
+
+<style>
+/* ---------- GENERAL ---------- */
+*{
+  margin:0; padding:0; box-sizing:border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body{
+  background:#000;
+  overflow:hidden;
+}
+
+/* ---------- MAP BACKGROUND ---------- */
+.bg-map{
+  position: fixed;
+  inset:0;
+  background-image: url("assets/map.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: brightness(.55) contrast(1.1) saturate(.9);
+  z-index: 0;
+}
+
+/* vignette */
+.vignette{
+  position: fixed;
+  inset:0;
+  background:
+      radial-gradient(circle at center,
+      rgba(0,0,0,0) 45%, rgba(0,0,0,0.65) 100%);
+  z-index: 1;
+  pointer-events:none;
+}
+
+/* ---------- TITLE AREA ---------- */
+.hero{
+  position: fixed;
+  top: 7vh;
+  width: 100%;
+  z-index: 3;
+  text-align: center;
+  color: #f3d9a2;
+  text-shadow: 0 6px 22px rgba(0,0,0,.7);
+}
+
+.hero h1{
+  font-size: 3rem;
+  margin-bottom: 14px;
+}
+
+.hero p{
+  font-size:1.2rem;
+  opacity:.9;
+}
+
+/* ---------- REEL SECTION ---------- */
+.reel{
+  position: fixed;
+  bottom: 40px;
+  left:0; right:0;
+  height: 140px;    /* کوچیک‌تر شد */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 0 6vw;
+  z-index:4;
+}
+
+/* ریل اصلی */
+.reel-track{
+  display: flex;
+  gap: 14px;        /* فاصله کمتر */
+  will-change: transform;
+}
+
+/* آیتم‌ها (عکس‌های پادشاه) */
+.reel-item{
+  height: 120px;     /* سایز ثابت */
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 4px;
+  background: rgba(0,0,0,0.35);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.6);
+  transition: .3s;
+}
+
+.reel-item:hover{
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 16px 30px rgba(0,0,0,0.75);
+}
+
+.reel-item:hover{
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 20px 38px rgba(0,0,0,0.75);
+}
+
+/* ---------- BUTTONS ---------- */
+.reel-btn{
+  position: absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:48px; height:48px;
+  border-radius:50%;
+  background: rgba(0,0,0,0.5);
+  color:#ffebc1;
+  border:1px solid rgba(255,255,255,0.07);
+  cursor:pointer;
+  z-index:5;
+  font-size:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  backdrop-filter: blur(4px);
+}
+
+.reel-btn.left{ left: 2vw; }
+.reel-btn.right{ right:2vw; }
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero h1{ font-size:2.2rem; }
+  .reel{ height:26vh; }
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg-map"></div>
+<div class="vignette"></div>
+
+<!-- TITLE -->
+<div class="hero">
+  <h1>تست فرمانروایان ایران</h1>
+  <p>ببین کدام چهره تاریخی به شخصیت تو نزدیک‌تر است</p>
+</div>
+
+<!-- REEL -->
+<div class="reel">
+
+  <button class="reel-btn left" id="reelPrev">‹</button>
+
+  <div class="reel-track" id="reelTrack">
+    <img class="reel-item" src="assets/king1.png">
+    <img class="reel-item" src="assets/king2.png">
+    <img class="reel-item" src="assets/king3.png">
+    <img class="reel-item" src="assets/king4.png">
+    <img class="reel-item" src="assets/king5.png">
+    <img class="reel-item" src="assets/king6.png">
+    <img class="reel-item" src="assets/king7.png">
+    <img class="reel-item" src="assets/king8.png">
+    <img class="reel-item" src="assets/king9.png">
+    <img class="reel-item" src="assets/king10.png">
+  </div>
+
+  <button class="reel-btn right" id="reelNext">›</button>
+
+</div>
+
+<!-- JS -->
+<script>
+(function(){
+  const track = document.getElementById("reelTrack");
+  const prev = document.getElementById("reelPrev");
+  const next = document.getElementById("reelNext");
+
+  let speed = 38;
+  let paused = false;
+  let pos = 0;
+
+  function duplicateIfNeeded(){
+    const gap = parseFloat(getComputedStyle(track).gap);
+    const items = [...track.children];
+    const total = items.reduce((sum, el)=> sum + el.getBoundingClientRect().width + gap, 0);
+    if(total < window.innerWidth * 1.8){
+      items.forEach(el => track.appendChild(el.cloneNode(true)));
+    }
+  }
+  duplicateIfNeeded();
+
+  const gap = parseFloat(getComputedStyle(track).gap);
+
+  function animate(){
+    if(!paused){
+      pos -= speed/60;
+      const first = track.children[0];
+      if(first){
+        const w = first.getBoundingClientRect().width + gap;
+        if(Math.abs(pos) >= w){
+          pos += w;
+          track.appendChild(first);
+        }
+      }
+      track.style.transform = `translateX(${pos}px)`;
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  track.addEventListener("mouseenter",()=>paused = true);
+  track.addEventListener("mouseleave",()=>paused = false);
+
+  prev.addEventListener("click",()=>{
+    const items = track.children;
+    if(items.length){
+      const last = items[items.length-1];
+      track.insertBefore(last, items[0]);
+    }
+  });
+
+  next.addEventListener("click",()=>{
+    const first = track.children[0];
+    track.appendChild(first);
+  });
+
+})();
+</script>
+
+</body>
+</html>
+
+

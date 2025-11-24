@@ -1,0 +1,107 @@
+/* ---------- Map background (full page) ---------- */
+.map-with-reel { position: relative; width:100%; min-height:100vh; overflow:hidden; }
+
+/* background map */
+.bg-map{
+  position: fixed; inset:0;
+  background-image: url("assets/map.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: brightness(.55) contrast(1.02) saturate(.9);
+  z-index: 0;
+}
+
+/* paper vignette */
+.paper-vignette{
+  position: fixed; inset:0; z-index: 1;
+  background:
+    radial-gradient(circle at center, rgba(0,0,0,0) 30%, rgba(0,0,0,0.55) 100%),
+    linear-gradient(180deg, rgba(20,12,8,0.12), rgba(0,0,0,0.45));
+  pointer-events: none;
+}
+
+/* hero content (مثال: عنوان) */
+.hero-content{
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding-top: 6vh;
+  color: #f1e6c3;
+  text-shadow: 0 6px 24px rgba(0,0,0,0.6);
+}
+
+/* ---------- Reel strip (bottom) ---------- */
+.reel{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 36px;               /* فاصله از پایین صفحه */
+  height: 20vh;               /* ارتفاع نوار؛ می‌تونی عدد را تغییر بدی */
+  max-height: 220px;
+  min-height: 120px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  padding: 0 6vw;
+}
+
+/* track that moves */
+.reel-track{
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* individual slide */
+.reel-item{
+  width: auto;
+  height: calc(100% - 8px); /* کمی فاصله بالا/پایین */
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.45));
+  padding: 8px;
+  cursor: pointer;
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
+/* hover effect: کمی بزرگ‌تر و برجسته‌تر */
+.reel-item:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.75);
+}
+
+/* navigation buttons (optional) */
+.reel-btn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  background: rgba(0,0,0,0.45);
+  color: #ffe9b8;
+  border: 1px solid rgba(255,255,255,0.06);
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  font-size: 22px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  backdrop-filter: blur(4px);
+}
+.reel-btn.left{ left: 2.5vw; }
+.reel-btn.right{ right: 2.5vw; }
+
+/* responsive tweak */
+@media (max-width:900px){
+  .reel{ bottom: 26px; height: 24vh; padding: 0 4vw; }
+  .reel-item{ height: calc(100% - 6px); }
+  .reel-btn{ width:40px; height:40px; font-size:18px; }
+}
+@media (max-width:480px){
+  .reel{ bottom: 18px; height: 28vh; }
+  .reel-item{ height: calc(100% - 4px); border-radius:6px; padding:6px; }
+}
+
