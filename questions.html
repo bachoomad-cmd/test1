@@ -1,277 +1,188 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>تست فرمانروایان — سوالات</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تست فرمانروایان ایران – سوالات</title>
+
 <style>
-  :root{
-    --bg:#0b0b0b;
-    --panel:#111;
-    --accent:#f3d9a2; /* gold-ish */
-    --muted:#cfc7b7;
-    --option-1: linear-gradient(90deg,#ffd77f,#f3d9a2);
-    --option-2: linear-gradient(90deg,#ffeabf,#ffd77f);
-    --option-3: linear-gradient(90deg,#e6e6e6,#dddddd);
-    --option-4: linear-gradient(90deg,#d8d0b8,#c7b692);
-    --option-5: linear-gradient(90deg,#c79b5a,#b07a2a);
-  }
+body{
+  margin:0;
+  padding:0;
+  font-family:"Segoe UI",sans-serif;
+  background:url("assets/map.png") center/cover no-repeat fixed;
+  backdrop-filter: blur(3px);
+  direction:rtl;
+}
 
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family: "Segoe UI",sans-serif;background:var(--bg);color:var(--muted);direction:rtl}
-  /* Background (subtle parchment map) */
-  body::before{
-    content:"";
-    position:fixed;inset:0;z-index:0;
-    background-image: url("/mnt/data/A_detailed_aged_parchment_map_in_this_digital_imag.png");
-    background-size:cover;
-    background-position:center;
-    filter:brightness(.45) contrast(1.05) saturate(.85);
-    transform-origin:center;
-    /* small subtle zoom */
-    animation: bgZoom 18s ease-in-out infinite;
-  }
-  @keyframes bgZoom{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+/* Glass card */
+.question-box{
+  width:90%;
+  max-width:680px;
+  margin:80px auto;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  padding:32px;
+  border-radius:22px;
+  box-shadow:0 8px 28px rgba(0,0,0,0.45);
+  animation:fadeIn .6s ease;
+}
 
-  .app{
-    position:relative;z-index:2;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:28px 18px 60px;
-  }
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
 
-  /* top progress area */
-  .topbar{
-    width:100%;
-    max-width:980px;
-    margin:8px auto 18px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
-  .progress-wrap{flex:1;background:rgba(255,255,255,0.03);height:8px;border-radius:6px;overflow:hidden}
-  .progress{height:100%;width:0%;background:linear-gradient(90deg,#ffd77f,#f3d9a2);transition:width .28s ease}
-  .qcount{color:var(--muted);font-size:0.95rem;min-width:110px;text-align:center}
+/* Question text */
+.question-text{
+  font-size:1.4rem;
+  color:#ffeec8;
+  text-shadow:0 2px 8px #000;
+  margin-bottom:26px;
+  line-height:1.7;
+}
 
-  /* card */
-  .card{
-    width:100%;
-    max-width:980px;
-    background: rgba(0,0,0,0.45);
-    border-radius:12px;
-    padding:28px;
-    box-shadow:0 18px 40px rgba(0,0,0,.6);
-    backdrop-filter: blur(6px);
-  }
+/* OPTIONS (8values-style) */
+.options{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
 
-  .q-num{color:var(--muted);font-size:0.95rem}
-  .question{
-    margin-top:10px;
-    font-size:1.6rem;
-    color:#fff;
-    line-height:1.6;
-  }
+.option-btn{
+  background:rgba(255,225,150,0.14);
+  border:1px solid rgba(255,255,255,0.25);
+  color:#f6dba1;
+  padding:14px;
+  border-radius:12px;
+  font-size:1.05rem;
+  cursor:pointer;
+  transition:0.25s;
+  text-align:center;
+}
 
-  /* options stack like 8values: big full-width bars */
-  .options{
-    margin-top:26px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-  }
-  .opt{
-    padding:18px 20px;
-    border-radius:10px;
-    cursor:pointer;
-    color:#111;
-    font-weight:700;
-    font-size:1.05rem;
-    border:0;
-    box-shadow:0 8px 18px rgba(0,0,0,.45);
-    transition: transform .14s ease, box-shadow .14s ease, opacity .14s;
-    text-align:right;
-  }
-  .opt:active{transform:scale(.995)}
-  .opt.disabled{opacity:.6;pointer-events:none}
+.option-btn:hover{
+  background:rgba(255,225,150,0.28);
+  transform:translateY(-3px);
+  box-shadow:0 8px 18px rgba(0,0,0,0.45);
+}
 
-  /* color mapping (from strongly agree -> strongly disagree)
-     style approach: using custom backgrounds to echo 8values look */
-  .opt.opt-1{background:var(--option-1)} /* کاملاً موافق (most positive) */
-  .opt.opt-2{background:var(--option-2)}
-  .opt.opt-3{background:var(--option-3); color:#111}
-  .opt.opt-4{background:var(--option-4)}
-  .opt.opt-5{background:var(--option-5)}
+/* NEXT button */
+.next-btn{
+  margin-top:28px;
+  display:inline-block;
+  padding:12px 26px;
+  background:#f3d9a2;
+  color:#1b1b1b;
+  font-size:1.1rem;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.3s;
+  font-weight:bold;
+  text-align:center;
+}
 
-  /* small hint row */
-  .hint{margin-top:14px;color:var(--muted);font-size:0.95rem}
+.next-btn:hover{
+  background:#ffe7bd;
+  transform:translateY(-3px);
+}
 
-  /* footer controls */
-  .controls{
-    margin-top:18px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    flex-wrap:wrap;
-  }
-  .btn{
-    background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:10px 14px;border-radius:8px;cursor:pointer;
-  }
-  .btn.primary{background:linear-gradient(90deg,#ffd77f,#f3d9a2);color:#231b0b;border:0;font-weight:700}
+/* PROGRESS BAR */
+.progress-wrapper{
+  width:90%;
+  max-width:680px;
+  margin:30px auto 0;
+}
 
-  /* small screens adjustments */
-  @media(max-width:720px){
-    .question{font-size:1.25rem}
-    .opt{font-size:1rem;padding:14px}
-    .card{padding:18px;border-radius:10px}
-    .topbar{margin:6px auto 12px}
-  }
+.progress{
+  width:100%;
+  height:10px;
+  background:rgba(255,255,255,0.15);
+  border-radius:5px;
+  overflow:hidden;
+}
+
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:#f3d9a2;
+  transition:width .35s ease;
+}
+
+/* Mobile */
+@media(max-width:500px){
+  .question-text{ font-size:1.2rem; }
+  .option-btn{ font-size:.95rem; padding:12px; }
+}
 </style>
+
 </head>
 <body>
-  <div class="app">
-    <div class="topbar">
-      <div class="qcount" id="qcount">سؤال 1 از 10</div>
-      <div class="progress-wrap" aria-hidden="true">
-        <div class="progress" id="progress"></div>
-      </div>
-    </div>
 
-    <main class="card" role="main" aria-live="polite">
-      <div class="q-num" id="qnum">#1</div>
-      <div class="question" id="question">در تصمیم‌گیری اهمیت بیشتری با احساس است یا منطق؟</div>
-
-      <div class="options" id="options">
-        <button class="opt opt-1" data-value="4">1 — کاملاً موافق</button>
-        <button class="opt opt-2" data-value="3">2 — موافق</button>
-        <button class="opt opt-3" data-value="2">3 — بی‌طرف</button>
-        <button class="opt opt-4" data-value="1">4 — مخالف</button>
-        <button class="opt opt-5" data-value="0">5 — کاملاً مخالف</button>
-      </div>
-
-      <div class="hint">می‌توانید از کلیدهای 1-5 کیبورد برای پاسخ سریع استفاده کنید. پاسخ پس از کلیک ذخیره شده و به سؤال بعد می‌روید.</div>
-
-      <div class="controls">
-        <button class="btn" id="backBtn">بازگشت</button>
-        <div style="flex:1"></div>
-        <button class="btn" id="skipBtn">رد کردن</button>
-        <button class="btn primary" id="finishBtn" style="display:none">اتمام و مشاهده نتیجه</button>
-      </div>
-    </main>
+<div class="progress-wrapper">
+  <div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
   </div>
+</div>
+
+<div class="question-box">
+  <div class="question-text" id="questionText"></div>
+
+  <div class="options" id="options"></div>
+
+  <div class="next-btn" onclick="nextQuestion()">سؤال بعدی</div>
+</div>
+
 
 <script>
-/* ====== QUESTIONS DATA ======
-   Replace these strings with your real 40 questions.
-   The example uses 10 short sample questions.
-*/
+/* -------- QUESTIONS -------- */
 const questions = [
-"در تصمیم‌گیری اهمیت بیشتری با احساس است یا منطق؟",
-"آیا ترجیح می‌دهید مسائل را با مشورت حل کنید یا خودتان تصمیم بگیرید؟",
-"آیا اهداف بلندمدت برای شما مهم‌تر است یا نتایج سریع؟",
-"با ریسک‌پذیری چقدر موافقید؟",
-"در شرایط بحرانی آرام می‌مانید یا سریع واکنش نشان می‌دهید؟",
-"آیا نظم برای شما اولویت است یا خلاقیت؟",
-"در رهبری، سخت‌گیری بهتر است یا انعطاف؟",
-"آیا به سنت‌ها پایبندید یا نوآوری را ترجیح می‌دهید؟",
-"در کار گروهی بیشتر رهبر می‌شوید یا دنبال‌کننده؟",
-"قدرت و اقتدار مهم‌تر است یا محبوبیت؟"
+  "قدرت مرکزی قوی برای پیشرفت کشور ضروری است.",
+  "فرمانروای خوب باید بیشتر بر عقل تکیه کند تا احساس.",
+  "ملت بدون انضباط، شایسته رهبری نیرومند است.",
+  "وفاداری به سرزمین مهم‌تر از آزادی فردی است.",
+  "آینده را باید با قاطعیت ساخت، نه با سازش.",
 ];
 
-let current = 0;
-const total = questions.length;
-const answers = new Array(total).fill(null);
+/* -------- STATE -------- */
+let index = 0;
+let answers = [];
 
-/* DOM refs */
-const qcount = document.getElementById('qcount');
-const progress = document.getElementById('progress');
-const qnum = document.getElementById('qnum');
-const qtext = document.getElementById('question');
-const optionsWrap = document.getElementById('options');
-const backBtn = document.getElementById('backBtn');
-const skipBtn = document.getElementById('skipBtn');
-const finishBtn = document.getElementById('finishBtn');
+/* -------- LOAD QUESTION -------- */
+function loadQuestion(){
+  document.getElementById("questionText").innerText = questions[index];
 
-/* render current question */
-function render(){
-  qcount.textContent = `سؤال ${current+1} از ${total}`;
-  qnum.textContent = `#${current+1}`;
-  qtext.textContent = questions[current];
-  // progress width
-  const pct = Math.round((current)/total * 100);
-  progress.style.width = pct + '%';
+  let optionsHTML = `
+    <div class="option-btn" onclick="select(2)">کاملاً موافقم</div>
+    <div class="option-btn" onclick="select(1)">موافقم</div>
+    <div class="option-btn" onclick="select(0)">خنثی</div>
+    <div class="option-btn" onclick="select(-1)">مخالفم</div>
+    <div class="option-btn" onclick="select(-2)">کاملاً مخالفم</div>
+  `;
+  document.getElementById("options").innerHTML = optionsHTML;
 
-  // show/hide controls
-  backBtn.style.display = current>0 ? 'inline-flex' : 'none';
-  finishBtn.style.display = current===total-1 ? 'inline-flex' : 'none';
+  let progress = ((index) / questions.length) * 100;
+  document.getElementById("progressBar").style.width = progress + "%";
 }
 
-/* answer handler */
-function handleAnswer(value){
-  answers[current] = Number(value);
-  // small visual feedback: briefly disable buttons
-  Array.from(optionsWrap.children).forEach(b=> b.classList.add('disabled'));
-  setTimeout(()=> {
-    // go to next
-    if(current < total-1){
-      current++;
-      render();
-      // re-enable
-      Array.from(optionsWrap.children).forEach(b=> b.classList.remove('disabled'));
-    } else {
-      // finished -> save and redirect to results
-      saveAndFinish();
-    }
-  }, 180);
+function select(value){
+  answers[index] = value;
+  nextQuestion();
 }
 
-/* keyboard support 1..5 */
-document.addEventListener('keydown', (e)=>{
-  if(e.key>='1' && e.key<='5'){
-    const idx = Number(e.key) - 1;
-    const btn = optionsWrap.children[idx];
-    if(btn) btn.click();
-  }
-  if(e.key==='ArrowLeft') backBtn.click();
-  if(e.key==='ArrowRight') skipBtn.click();
-});
-
-/* attach click handlers */
-Array.from(optionsWrap.children).forEach(btn=>{
-  btn.addEventListener('click', ()=> handleAnswer(btn.dataset.value));
-});
-
-/* back/skip/finish */
-backBtn.addEventListener('click', ()=>{
-  if(current>0){
-    current--;
-    render();
-  }
-});
-skipBtn.addEventListener('click', ()=>{
-  answers[current] = null;
-  if(current < total-1){
-    current++;
-    render();
+function nextQuestion(){
+  index++;
+  if(index >= questions.length){
+    alert("آزمون تمام شد!\nنتایج آماده‌سازی می‌شود…");
+    // redirect later: results.html?data=...
   } else {
-    saveAndFinish();
+    loadQuestion();
   }
-});
-finishBtn.addEventListener('click', saveAndFinish);
-
-/* save & redirect (simple localStorage save) */
-function saveAndFinish(){
-  // save answers array to localStorage for results page
-  localStorage.setItem('ancient_test_answers', JSON.stringify(answers));
-  // you can compute results here or redirect to results.html
-  window.location.href = 'results.html';
 }
 
-/* initial render */
-render();
+loadQuestion();
 </script>
+
 </body>
 </html>
 
