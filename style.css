@@ -1,107 +1,176 @@
-/* ---------- Map background (full page) ---------- */
-.map-with-reel { position: relative; width:100%; min-height:100vh; overflow:hidden; }
+/* ---------- GENERAL ---------- */
+*{
+  margin:0; padding:0; box-sizing:border-box;
+  font-family: "Segoe UI", sans-serif;
+}
 
-/* background map */
+body{
+  background:#000;
+  overflow:hidden;
+}
+
+/* ---------- MAP BACKGROUND ---------- */
 .bg-map{
-  position: fixed; inset:0;
+  position: fixed;
+  inset:0;
   background-image: url("assets/map.jpg");
   background-size: cover;
   background-position: center;
-  filter: brightness(.55) contrast(1.02) saturate(.9);
+  filter: brightness(.55) contrast(1.1) saturate(.9);
   z-index: 0;
 }
 
-/* paper vignette */
-.paper-vignette{
-  position: fixed; inset:0; z-index: 1;
-  background:
-    radial-gradient(circle at center, rgba(0,0,0,0) 30%, rgba(0,0,0,0.55) 100%),
-    linear-gradient(180deg, rgba(20,12,8,0.12), rgba(0,0,0,0.45));
-  pointer-events: none;
+/* ---------- VIGNETTE (dark edges) ---------- */
+.vignette{
+  position: fixed;
+  inset:0;
+  background: radial-gradient(circle at center,
+        rgba(0,0,0,0) 45%, rgba(0,0,0,0.65) 100%);
+  z-index: 1;
+  pointer-events:none;
 }
 
-/* hero content (مثال: عنوان) */
-.hero-content{
-  position: relative;
+/* ---------- TITLE AREA ---------- */
+.hero{
+  position: fixed;
+  top: 7vh;
+  width: 100%;
   z-index: 3;
   text-align: center;
-  padding-top: 6vh;
-  color: #f1e6c3;
-  text-shadow: 0 6px 24px rgba(0,0,0,0.6);
+  color: #f3d9a2;
+  text-shadow: 0 6px 22px rgba(0,0,0,.7);
+  padding: 0 20px;
 }
 
-/* ---------- Reel strip (bottom) ---------- */
+.hero h1{
+  font-size: 3rem;
+  margin-bottom: 14px;
+}
+
+.hero p{
+  font-size:1.2rem;
+  opacity:.9;
+}
+
+/* ---------- REEL SECTION ---------- */
 .reel{
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 36px;               /* فاصله از پایین صفحه */
-  height: 20vh;               /* ارتفاع نوار؛ می‌تونی عدد را تغییر بدی */
-  max-height: 220px;
-  min-height: 120px;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: auto;
+  bottom: 35px;
+  left:0; right:0;
+  height: 150px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   padding: 0 6vw;
+  z-index:4;
+  overflow:hidden;
 }
 
-/* track that moves */
 .reel-track{
   display: flex;
-  align-items: center;
-  gap: 18px;
+  gap: 16px;
   will-change: transform;
-  transition: transform 0.1s linear;
 }
 
-/* individual slide */
 .reel-item{
-  width: auto;
-  height: calc(100% - 8px); /* کمی فاصله بالا/پایین */
+  height: 130px;
+  width:auto;
   object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-  background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.45));
-  padding: 8px;
-  cursor: pointer;
-  transition: transform .35s ease, box-shadow .35s ease;
+  border-radius: 10px;
+  padding: 5px;
+  background: rgba(0,0,0,0.35);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.6);
+  transition: .3s;
 }
 
-/* hover effect: کمی بزرگ‌تر و برجسته‌تر */
-.reel-item:hover {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.75);
+.reel-item:hover{
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 16px 30px rgba(0,0,0,0.75);
 }
 
-/* navigation buttons (optional) */
+/* ---------- BUTTONS ---------- */
 .reel-btn{
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 5;
-  background: rgba(0,0,0,0.45);
-  color: #ffe9b8;
-  border: 1px solid rgba(255,255,255,0.06);
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  font-size: 22px;
-  display:flex; align-items:center; justify-content:center;
+  top:50%;
+  transform:translateY(-50%);
+  width:48px; height:48px;
+  border-radius:50%;
+  background: rgba(0,0,0,0.5);
+  color:#ffebc1;
+  border:1px solid rgba(255,255,255,0.07);
   cursor:pointer;
+  z-index:5;
+  font-size:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   backdrop-filter: blur(4px);
 }
-.reel-btn.left{ left: 2.5vw; }
-.reel-btn.right{ right: 2.5vw; }
 
-/* responsive tweak */
-@media (max-width:900px){
-  .reel{ bottom: 26px; height: 24vh; padding: 0 4vw; }
-  .reel-item{ height: calc(100% - 6px); }
-  .reel-btn{ width:40px; height:40px; font-size:18px; }
+.reel-btn.left{ left: 2vw; }
+.reel-btn.right{ right:2vw; }
+
+/* -------------------------------------- */
+/* ----------   RESPONSIVE   ------------ */
+/* -------------------------------------- */
+
+/* ----------- MOBILE (< 768px) ---------- */
+@media(max-width:768px){
+
+  body { overflow: hidden; }
+
+  .hero{
+    top: 4vh;
+  }
+
+  .hero h1{
+    font-size: 1.9rem;
+  }
+
+  .hero p{
+    font-size: .95rem;
+  }
+
+  .reel{
+    bottom: 20px;
+    height: 120px;
+    padding: 0 4vw;
+  }
+
+  .reel-item{
+    height: 90px;
+    padding:3px;
+    border-radius: 6px;
+  }
+
+  .reel-track{
+    gap: 10px;
+  }
+
+  .reel-btn{
+    width:38px;
+    height:38px;
+    font-size:18px;
+    backdrop-filter: blur(2px);
+  }
+
+  .reel-btn.left{ left: 3vw; }
+  .reel-btn.right{ right:3vw; }
 }
-@media (max-width:480px){
-  .reel{ bottom: 18px; height: 28vh; }
-  .reel-item{ height: calc(100% - 4px); border-radius:6px; padding:6px; }
+
+/* ----------- SMALL MOBILE (< 450px ) ---------- */
+@media(max-width:450px){
+
+  .hero h1{
+    font-size: 1.6rem;
+  }
+
+  .reel{
+    height: 100px;
+  }
+
+  .reel-item{
+    height: 75px;
+  }
 }
 
