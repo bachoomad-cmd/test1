@@ -6,7 +6,7 @@
 <title>تست فرمانروایان ایران</title>
 
 <style>
-/* ---------- GLOBAL ---------- */
+/* ---------- GENERAL ---------- */
 *{
   margin:0; padding:0; box-sizing:border-box;
   font-family: "Segoe UI", sans-serif;
@@ -17,144 +17,61 @@ body{
   overflow:hidden;
 }
 
-/* ---------- BACKGROUND MAP + ZOOM ---------- */
+/* ---------- MAP BACKGROUND ---------- */
 .bg-map{
   position: fixed;
   inset:0;
   background-image: url("assets/map.jpg");
   background-size: cover;
   background-position: center;
-  filter: brightness(.5) contrast(1.15);
+  filter: brightness(.55) contrast(1.1) saturate(.9);
   z-index: 0;
-  animation: zoomMap 7s ease forwards;
+  animation: zoomLoop 13s ease-in-out infinite;
 }
 
-@keyframes zoomMap{
-  0%{ transform: scale(1);}
-  100%{ transform: scale(1.18);}
+/* Loop zoom animation */
+@keyframes zoomLoop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.20); }
+  100% { transform: scale(1); }
 }
 
-/* ---------- VIGNETTE ---------- */
+/* vignette */
 .vignette{
   position: fixed;
   inset:0;
   background:
-    radial-gradient(circle at center,
-       rgba(0,0,0,0) 40%,
-       rgba(0,0,0,0.75) 100%);
+      radial-gradient(circle at center,
+      rgba(0,0,0,0) 45%, rgba(0,0,0,0.65) 100%);
   z-index: 1;
   pointer-events:none;
 }
 
-/* ---------- TITLE ---------- */
+/* ---------- TITLE AREA ---------- */
 .hero{
   position: fixed;
-  top: 6vh;
+  top: 8vh;
   width: 100%;
-  z-index: 5;
+  z-index: 3;
   text-align: center;
-  color: #f9e8c2;
-  text-shadow: 0 6px 22px rgba(0,0,0,.9);
+  color: #f3d9a2;
+  text-shadow: 0 6px 22px rgba(0,0,0,.7);
+  padding: 0 20px;
 }
 
 .hero h1{
-  font-size: 3.1rem;
-  margin-bottom: 10px;
+  font-size: 3rem;
+  margin-bottom: 14px;
 }
 
 .hero p{
-  font-size:1.25rem;
+  font-size:1.2rem;
   opacity:.9;
 }
 
-/* ---------- START BUTTON ---------- */
-.start-btn{
-  position: fixed;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 16px 36px;
-  background: linear-gradient(180deg, #fcd77b, #bf8d2f);
-  border: none;
-  border-radius: 14px;
-  font-size: 1.4rem;
-  font-weight: bold;
-  cursor: pointer;
-  color:#3e2a00;
-  z-index:6;
-  box-shadow:0 8px 20px rgba(0,0,0,.6);
-  transition:.25s;
-}
-
-.start-btn:hover{
-  transform: translate(-50%, -50%) scale(1.05);
-}
-
-/* ---------- REEL SECTION ---------- */
-.reel{
-  position: fixed;
-  bottom: 40px;
-  left:0; right:0;
-  height: 145px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding: 0 5vw;
-  z-index:4;
-}
-
-/* ریل اصلی */
-.reel-track{
-  display: flex;
-  gap: 18px;
-  will-change: transform;
-  padding: 4px 0;
-}
-
-/* آیتم‌ها */
-.reel-item{
-  height: 130px;
-  width: auto;
-  object-fit: contain;
-  border-radius: 10px;
-  background: rgba(0,0,0,0.45);
-  padding: 4px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.7);
-  transition: .3s;
-}
-
-.reel-item:hover{
-  transform: translateY(-6px) scale(1.04);
-  box-shadow: 0 16px 38px rgba(0,0,0,0.85);
-}
-
-/* ---------- REEL BUTTONS ---------- */
-.reel-btn{
-  position: absolute;
-  top:50%;
-  transform:translateY(-50%);
-  width:50px; height:50px;
-  border-radius:50%;
-  background: rgba(0,0,0,0.55);
-  color:#ffe6b0;
-  border:1px solid rgba(255,255,255,0.09);
-  cursor:pointer;
-  font-size:26px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  backdrop-filter: blur(4px);
-  z-index:5;
-}
-
-.reel-btn.left{ left: 1.5vw; }
-.reel-btn.right{ right:1.5vw; }
-
-/* ---------- RESPONSIVE ---------- */
+/* RESPONSIVE */
 @media(max-width:768px){
   .hero h1{ font-size:2.2rem; }
-  .start-btn{ font-size:1.1rem; padding:12px 26px; }
-  .reel-item{ height:110px; }
 }
 </style>
 </head>
@@ -167,100 +84,8 @@ body{
 <!-- TITLE -->
 <div class="hero">
   <h1>تست فرمانروایان ایران</h1>
-  <p>ببین کدام چهرهٔ تاریخی به شخصیت تو نزدیک‌تر است</p>
+  <p>ببین کدام چهره تاریخی به شخصیت تو نزدیک‌تر است</p>
 </div>
-
-<button class="start-btn" id="startBtn">شروع تست</button>
-
-<!-- REEL -->
-<div class="reel">
-
-  <button class="reel-btn left" id="reelPrev">‹</button>
-
-  <div class="reel-track" id="reelTrack">
-    <img class="reel-item" src="assets/king1.png">
-    <img class="reel-item" src="assets/king2.png">
-    <img class="reel-item" src="assets/king3.png">
-    <img class="reel-item" src="assets/king4.png">
-    <img class="reel-item" src="assets/king5.png">
-    <img class="reel-item" src="assets/king6.png">
-    <img class="reel-item" src="assets/king7.png">
-    <img class="reel-item" src="assets/king8.png">
-    <img class="reel-item" src="assets/king9.png">
-    <img class="reel-item" src="assets/king10.png">
-  </div>
-
-  <button class="reel-btn right" id="reelNext">›</button>
-
-</div>
-
-<!-- JS -->
-<script>
-(function(){
-  const track = document.getElementById("reelTrack");
-  const prev = document.getElementById("reelPrev");
-  const next = document.getElementById("reelNext");
-  const start = document.getElementById("startBtn");
-
-  let speed = 40; 
-  let paused = false;
-  let pos = 0;
-
-  /* Duplicate Reel for Infinite Scroll */
-  function duplicateIfNeeded(){
-    const gap = parseFloat(getComputedStyle(track).gap);
-    const items = [...track.children];
-
-    let total = items.reduce((sum, el)=> sum + el.getBoundingClientRect().width + gap, 0);
-
-    while(total < window.innerWidth * 2){
-      items.forEach(el => track.appendChild(el.cloneNode(true)));
-      total *= 2;
-    }
-  }
-  duplicateIfNeeded();
-
-  const gap = parseFloat(getComputedStyle(track).gap);
-
-  function animate(){
-    if(!paused){
-      pos -= speed/60;
-      const first = track.children[0];
-      if(first){
-        const w = first.getBoundingClientRect().width + gap;
-        if(Math.abs(pos) >= w){
-          pos += w;
-          track.appendChild(first);
-        }
-      }
-      track.style.transform = `translateX(${pos}px)`;
-    }
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  track.addEventListener("mouseenter",()=>paused = true);
-  track.addEventListener("mouseleave",()=>paused = false);
-
-  prev.addEventListener("click",()=>{
-    const items = track.children;
-    if(items.length){
-      const last = items[items.length-1];
-      track.insertBefore(last, items[0]);
-    }
-  });
-
-  next.addEventListener("click",()=>{
-    const first = track.children[0];
-    track.appendChild(first);
-  });
-
-  // Start Button Behavior
-  start.addEventListener("click",()=>{
-    window.location.href = "test.html";
-  });
-})();
-</script>
 
 </body>
 </html>
