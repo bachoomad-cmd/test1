@@ -34,17 +34,7 @@ html, body{
   50% { transform:scale(1.18); }
   100% { transform:scale(1); }
 }
-<header class="topbar">
-  <div class="container-topbar">
-    <img src="assets/logo.png" alt="لوگوی من" class="logo">
-    <nav class="nav-links">
-      <a href="#">خانه</a>
-      <a href="#">درباره</a>
-      <a href="#">تست</a>
-      <a href="#">تماس</a>
-    </nav>
-  </div>
-</header>
+
 
 
 /* ---------- TITLE ---------- */
@@ -89,4 +79,5 @@ html, body{
     font-size:.9rem;
   }
 }
+
 
