@@ -1,21 +1,38 @@
+/* ---------- FIXED GOLDEN GLOW LOGO ---------- */
 .logo-box {
   position: fixed;
-  top: 15px;
-  left: 20px;
-  z-index: 999;
+  top: 18px;
+  left: 18px;
+  z-index: 9999;
 }
 
 .logo-box img {
-  height: 55px;
+  height: 60px;
   width: auto;
-  opacity: 0.9;
-  transition: 0.3s;
+  opacity: 0.95;
+  filter: drop-shadow(0 0 8px rgba(255, 200, 80, 0.6));
+  animation: goldenPulse 2.2s ease-in-out infinite;
+  transition: 0.2s;
 }
 
 .logo-box img:hover {
-  opacity: 1;
-  transform: scale(1.05);
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 14px rgba(255, 220, 110, 0.95));
 }
+
+/* Gold glowing animation */
+@keyframes goldenPulse {
+  0% {
+    filter: drop-shadow(0 0 5px rgba(255,200,80,0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(255,220,130,1));
+  }
+  100% {
+    filter: drop-shadow(0 0 5px rgba(255,200,80,0.4));
+  }
+}
+
 
 /* ---------- ANIMATED ROYAL BROWN BACKGROUND ---------- */
 
