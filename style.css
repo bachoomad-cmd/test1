@@ -3,6 +3,17 @@
   animation: mapZoom 6s ease-in-out infinite;
   transform-origin: center;
   background-size: cover;
+  .bg-map{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  object-fit: cover;
+  overflow:hidden;
+  max-width:100%;
+}
+
 }
 
 @keyframes mapZoom {
@@ -38,3 +49,4 @@
     100% { transform: scale(1); }
   }
 }
+
