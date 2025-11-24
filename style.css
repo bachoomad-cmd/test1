@@ -26,3 +26,22 @@
 </body>
 </html>
 
+/* ---------- Royal Animated Gradient Background ---------- */
+.royal-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(130deg, #111, #3a2a15, #b28b43, #6b532d, #111);
+  background-size: 400% 400%;
+  animation: royalFlow 16s ease-in-out infinite;
+  filter: brightness(0.8) contrast(1.1);
+}
+
+@keyframes royalFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+
