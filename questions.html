@@ -3,186 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تست فرمانروایان ایران – سوالات</title>
+<title>تست فرمانروایان ایران</title>
 
 <style>
+/* ---------- GENERAL ---------- */
+*{
+  margin:0; padding:0; box-sizing:border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
 body{
-  margin:0;
-  padding:0;
-  font-family:"Segoe UI",sans-serif;
-  background:url("assets/map.png") center/cover no-repeat fixed;
-  backdrop-filter: blur(3px);
-  direction:rtl;
-}
-
-/* Glass card */
-.question-box{
-  width:90%;
-  max-width:680px;
-  margin:80px auto;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(20px);
-  padding:32px;
-  border-radius:22px;
-  box-shadow:0 8px 28px rgba(0,0,0,0.45);
-  animation:fadeIn .6s ease;
-}
-
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
-}
-
-/* Question text */
-.question-text{
-  font-size:1.4rem;
-  color:#ffeec8;
-  text-shadow:0 2px 8px #000;
-  margin-bottom:26px;
-  line-height:1.7;
-}
-
-/* OPTIONS (8values-style) */
-.options{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
-
-.option-btn{
-  background:rgba(255,225,150,0.14);
-  border:1px solid rgba(255,255,255,0.25);
-  color:#f6dba1;
-  padding:14px;
-  border-radius:12px;
-  font-size:1.05rem;
-  cursor:pointer;
-  transition:0.25s;
-  text-align:center;
-}
-
-.option-btn:hover{
-  background:rgba(255,225,150,0.28);
-  transform:translateY(-3px);
-  box-shadow:0 8px 18px rgba(0,0,0,0.45);
-}
-
-/* NEXT button */
-.next-btn{
-  margin-top:28px;
-  display:inline-block;
-  padding:12px 26px;
-  background:#f3d9a2;
-  color:#1b1b1b;
-  font-size:1.1rem;
-  border-radius:10px;
-  cursor:pointer;
-  transition:0.3s;
-  font-weight:bold;
-  text-align:center;
-}
-
-.next-btn:hover{
-  background:#ffe7bd;
-  transform:translateY(-3px);
-}
-
-/* PROGRESS BAR */
-.progress-wrapper{
-  width:90%;
-  max-width:680px;
-  margin:30px auto 0;
-}
-
-.progress{
-  width:100%;
-  height:10px;
-  background:rgba(255,255,255,0.15);
-  border-radius:5px;
+  background:#000;
   overflow:hidden;
 }
 
-.progress-bar{
-  height:100%;
-  width:0%;
-  background:#f3d9a2;
-  transition:width .35s ease;
+/* ---------- MAP BACKGROUND ---------- */
+.bg-map{
+  position: fixed;
+  inset:0;
+  background-image: url("assets/map.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: brightness(.55) contrast(1.1) saturate(.9);
+  z-index: 0;
+  animation: zoomLoop 13s ease-in-out infinite;
 }
 
-/* Mobile */
-@media(max-width:500px){
-  .question-text{ font-size:1.2rem; }
-  .option-btn{ font-size:.95rem; padding:12px; }
+/* Loop zoom animation */
+@keyframes zoomLoop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.20); }
+  100% { transform: scale(1); }
+}
+
+/* vignette */
+.vignette{
+  position: fixed;
+  inset:0;
+  background:
+      radial-gradient(circle at center,
+      rgba(0,0,0,0) 45%, rgba(0,0,0,0.65) 100%);
+  z-index: 1;
+  pointer-events:none;
+}
+
+/* ---------- TITLE AREA ---------- */
+.hero{
+  position: fixed;
+  top: 8vh;
+  width: 100%;
+  z-index: 3;
+  text-align: center;
+  color: #f3d9a2;
+  text-shadow: 0 6px 22px rgba(0,0,0,.7);
+  padding: 0 20px;
+}
+
+.hero h1{
+  font-size: 3rem;
+  margin-bottom: 14px;
+}
+
+.hero p{
+  font-size:1.2rem;
+  opacity:.9;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero h1{ font-size:2.2rem; }
 }
 </style>
-
 </head>
 <body>
 
-<div class="progress-wrapper">
-  <div class="progress">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
+<!-- BACKGROUND -->
+<div class="bg-map"></div>
+<div class="vignette"></div>
+
+<!-- TITLE -->
+<div class="hero">
+  <h1>تست فرمانروایان ایران</h1>
+  <p>ببین کدام چهره تاریخی به شخصیت تو نزدیک‌تر است</p>
 </div>
-
-<div class="question-box">
-  <div class="question-text" id="questionText"></div>
-
-  <div class="options" id="options"></div>
-
-  <div class="next-btn" onclick="nextQuestion()">سؤال بعدی</div>
-</div>
-
-
-<script>
-/* -------- QUESTIONS -------- */
-const questions = [
-  "قدرت مرکزی قوی برای پیشرفت کشور ضروری است.",
-  "فرمانروای خوب باید بیشتر بر عقل تکیه کند تا احساس.",
-  "ملت بدون انضباط، شایسته رهبری نیرومند است.",
-  "وفاداری به سرزمین مهم‌تر از آزادی فردی است.",
-  "آینده را باید با قاطعیت ساخت، نه با سازش.",
-];
-
-/* -------- STATE -------- */
-let index = 0;
-let answers = [];
-
-/* -------- LOAD QUESTION -------- */
-function loadQuestion(){
-  document.getElementById("questionText").innerText = questions[index];
-
-  let optionsHTML = `
-    <div class="option-btn" onclick="select(2)">کاملاً موافقم</div>
-    <div class="option-btn" onclick="select(1)">موافقم</div>
-    <div class="option-btn" onclick="select(0)">خنثی</div>
-    <div class="option-btn" onclick="select(-1)">مخالفم</div>
-    <div class="option-btn" onclick="select(-2)">کاملاً مخالفم</div>
-  `;
-  document.getElementById("options").innerHTML = optionsHTML;
-
-  let progress = ((index) / questions.length) * 100;
-  document.getElementById("progressBar").style.width = progress + "%";
-}
-
-function select(value){
-  answers[index] = value;
-  nextQuestion();
-}
-
-function nextQuestion(){
-  index++;
-  if(index >= questions.length){
-    alert("آزمون تمام شد!\nنتایج آماده‌سازی می‌شود…");
-    // redirect later: results.html?data=...
-  } else {
-    loadQuestion();
-  }
-}
-
-loadQuestion();
-</script>
 
 </body>
 </html>
-
