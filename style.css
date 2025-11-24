@@ -1,174 +1,40 @@
-/* ---------- GENERAL ---------- */
-*{
-  margin:0; padding:0; box-sizing:border-box;
-  font-family: "Segoe UI", sans-serif;
-}
-
-body{
-  background:#000;
-  overflow:hidden;
-}
-
-/* --- Infinite Zoom In & Zoom Out Animation --- */
+/* --- Infinite Zoom (Desktop) --- */
 .bg-map {
-  animation: mapZoom 4s ease-in-out infinite;
+  animation: mapZoom 6s ease-in-out infinite;
   transform-origin: center;
+  background-size: cover;
 }
 
 @keyframes mapZoom {
-  0% {
-    transform: scale(1);
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+
+/* 🔥 Mobile Fix */
+@media(max-width: 768px){
+  .bg-map {
+    background-size: 135%;   /* جلوگیری از زوم شدید */
+    animation: mapZoomMobile 10s ease-in-out infinite;
   }
-  50% {
-    transform: scale(1.25); /* zoom-in peak */
-  }
-  100% {
-    transform: scale(1); /* back to normal */
+
+  @keyframes mapZoomMobile {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.08); }  /* زوم بسیار نرم */
+    100% { transform: scale(1); }
   }
 }
 
-/* ---------- TITLE AREA ---------- */
-.hero{
-  position: fixed;
-  top: 7vh;
-  width: 100%;
-  z-index: 3;
-  text-align: center;
-  color: #f3d9a2;
-  text-shadow: 0 6px 22px rgba(0,0,0,.7);
-  padding: 0 20px;
-}
-
-.hero h1{
-  font-size: 3rem;
-  margin-bottom: 14px;
-}
-
-.hero p{
-  font-size:1.2rem;
-  opacity:.9;
-}
-
-/* ---------- REEL SECTION ---------- */
-.reel{
-  position: fixed;
-  bottom: 35px;
-  left:0; right:0;
-  height: 150px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding: 0 6vw;
-  z-index:4;
-  overflow:hidden;
-}
-
-.reel-track{
-  display: flex;
-  gap: 16px;
-  will-change: transform;
-}
-
-.reel-item{
-  height: 130px;
-  width:auto;
-  object-fit: contain;
-  border-radius: 10px;
-  padding: 5px;
-  background: rgba(0,0,0,0.35);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.6);
-  transition: .3s;
-}
-
-.reel-item:hover{
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 16px 30px rgba(0,0,0,0.75);
-}
-
-/* ---------- BUTTONS ---------- */
-.reel-btn{
-  position: absolute;
-  top:50%;
-  transform:translateY(-50%);
-  width:48px; height:48px;
-  border-radius:50%;
-  background: rgba(0,0,0,0.5);
-  color:#ffebc1;
-  border:1px solid rgba(255,255,255,0.07);
-  cursor:pointer;
-  z-index:5;
-  font-size:22px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  backdrop-filter: blur(4px);
-}
-
-.reel-btn.left{ left: 2vw; }
-.reel-btn.right{ right:2vw; }
-
-/* -------------------------------------- */
-/* ----------   RESPONSIVE   ------------ */
-/* -------------------------------------- */
-
-/* ----------- MOBILE (< 768px) ---------- */
-@media(max-width:768px){
-
-  body { overflow: hidden; }
-
-  .hero{
-    top: 4vh;
+/* 🔥 Extra Small Phones */
+@media(max-width: 450px){
+  .bg-map{
+    background-size: 150%;  /* کمتر فشرده دیده بشه */
+    animation: mapZoomMobileXS 12s ease-in-out infinite;
   }
 
-  .hero h1{
-    font-size: 1.9rem;
-  }
-
-  .hero p{
-    font-size: .95rem;
-  }
-
-  .reel{
-    bottom: 20px;
-    height: 120px;
-    padding: 0 4vw;
-  }
-
-  .reel-item{
-    height: 90px;
-    padding:3px;
-    border-radius: 6px;
-  }
-
-  .reel-track{
-    gap: 10px;
-  }
-
-  .reel-btn{
-    width:38px;
-    height:38px;
-    font-size:18px;
-    backdrop-filter: blur(2px);
-  }
-
-  .reel-btn.left{ left: 3vw; }
-  .reel-btn.right{ right:3vw; }
-}
-
-/* ----------- SMALL MOBILE (< 450px ) ---------- */
-@media(max-width:450px){
-
-  .hero h1{
-    font-size: 1.6rem;
-  }
-
-  .reel{
-    height: 100px;
-  }
-
-  .reel-item{
-    height: 75px;
+  @keyframes mapZoomMobileXS {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.05); }
+    100% { transform: scale(1); }
   }
 }
-
-
