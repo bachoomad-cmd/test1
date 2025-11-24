@@ -1,3 +1,44 @@
+/* ---------- ANIMATED ROYAL BROWN BACKGROUND ---------- */
+
+.animated-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+
+    /* پس‌زمینه قهوه‌ای لوکس */
+    background: linear-gradient(140deg, #2b1f14, #3a2718, #2d1c10);
+    background-size: 300% 300%;
+    animation: bgFlow 18s ease-in-out infinite;
+}
+
+/* حرکت نور سفید روی صفحه */
+.light-effect {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background: radial-gradient(
+        circle at var(--x, 60%) var(--y, 40%),
+        rgba(255,255,255,0.18),
+        transparent 55%
+    );
+
+    animation: lightMove 12s ease-in-out infinite;
+}
+
+@keyframes bgFlow {
+    0%   { background-position: 0% 0%; }
+    50%  { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
+@keyframes lightMove {
+    0%   { --x: 30%; --y: 60%; }
+    50%  { --x: 70%; --y: 30%; }
+    100% { --x: 30%; --y: 60%; }
+}
+
 /* RESET */
 *{
     margin:0;
