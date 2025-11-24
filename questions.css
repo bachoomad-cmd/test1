@@ -1,3 +1,22 @@
+.logo-box {
+  position: fixed;
+  top: 15px;
+  left: 20px;
+  z-index: 999;
+}
+
+.logo-box img {
+  height: 55px;
+  width: auto;
+  opacity: 0.9;
+  transition: 0.3s;
+}
+
+.logo-box img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
 /* ---------- ANIMATED ROYAL BROWN BACKGROUND ---------- */
 
 .animated-bg {
