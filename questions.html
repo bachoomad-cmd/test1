@@ -3,12 +3,138 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سوالات تست</title>
+<title>سوالات تست فرمانروایان ایران</title>
+
+<style>
+    body {
+        margin: 0;
+        background: #111;
+        color: #f3d9a2;
+        font-family: "Segoe UI", sans-serif;
+        direction: rtl;
+        overflow-x: hidden;
+        text-align: center;
+    }
+
+    /* --- Progress Bar --- */
+    .progress-container {
+        width: 100%;
+        background: #222;
+        height: 10px;
+        margin-top: 0;
+    }
+    .progress {
+        height: 10px;
+        width: 0%;
+        background: #f3d9a2;
+        transition: .3s;
+    }
+
+    /* --- Question Section --- */
+    .question-box {
+        margin-top: 60px;
+        padding: 0 20px;
+    }
+
+    #q-number {
+        font-size: 1.2rem;
+        opacity: .8;
+    }
+
+    #question {
+        font-size: 1.8rem;
+        margin-top: 25px;
+        line-height: 2.4rem;
+    }
+
+    /* --- Answers --- */
+    .options {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        padding: 0 30px;
+    }
+
+    .option {
+        padding: 16px;
+        background: #f3d9a2;
+        color: #222;
+        font-weight: bold;
+        border-radius: 14px;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(0,0,0,.45);
+        transition: .25s;
+        font-size: 1.2rem;
+    }
+
+    .option:hover {
+        transform: scale(1.03);
+        background:#ffe9ba;
+    }
+
+    @media(max-width:600px){
+        #question{ font-size:1.4rem; }
+        .option{ font-size:1rem; padding:14px; }
+    }
+</style>
 </head>
+
 <body>
 
-<h1>صفحه سوالات</h1>
-<p>اینجا سوال‌ها قرار می‌گیرد.</p>
+<!-- Progress Bar -->
+<div class="progress-container">
+    <div class="progress" id="progress"></div>
+</div>
+
+<!-- Question Box -->
+<div class="question-box">
+    <div id="q-number">سؤال 1 از 10</div>
+    <div id="question">در تصمیم‌گیری اهمیت بیشتری با احساس است یا منطق؟</div>
+
+    <!-- Options -->
+    <div class="options">
+        <div class="option" onclick="answer(3)">کاملاً احساس</div>
+        <div class="option" onclick="answer(2)">احساس</div>
+        <div class="option" onclick="answer(1)">منطق</div>
+        <div class="option" onclick="answer(0)">کاملاً منطق</div>
+    </div>
+</div>
+
+<script>
+const questions = [
+    "در تصمیم‌گیری اهمیت بیشتری با احساس است یا منطق؟",
+    "آیا در مشکلات ترجیح می‌دهید خودتان تصمیم بگیرید یا مشورت کنید؟",
+    "آیا اهداف بلندمدت برای شما مهم‌تر است یا نتایج سریع؟",
+    "با ریسک‌پذیری چقدر موافقید؟",
+    "در شرایط بحرانی آرام می‌مانید یا سریع واکنش نشان می‌دهید؟",
+    "آیا نظم برای شما اولویت است یا خلاقیت؟",
+    "در رهبری، سخت‌گیری بهتر است یا انعطاف؟",
+    "آیا به سنت‌ها پایبندید یا نوآوری را ترجیح می‌دهید؟",
+    "در کار گروهی بیشتر رهبر می‌شوید یا دنبال‌کننده؟",
+    "قدرت و اقتدار مهم‌تر است یا محبوبیت؟"
+];
+
+let current = 0;
+let total = questions.length;
+
+function answer(val){
+    // بعداً امتیازدهی اینجا ذخیره میشه
+
+    current++;
+
+    if(current >= total){
+        location.href = "results.html"; 
+        return;
+    }
+
+    document.getElementById("q-number").innerText = `سؤال ${current+1} از ${total}`;
+    document.getElementById("question").innerText = questions[current];
+
+    document.getElementById("progress").style.width = ((current)/total)*100 + "%";
+}
+</script>
 
 </body>
 </html>
+
