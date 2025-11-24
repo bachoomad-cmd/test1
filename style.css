@@ -9,25 +9,22 @@ body{
   overflow:hidden;
 }
 
-/* ---------- MAP BACKGROUND ---------- */
-.bg-map{
-  position: fixed;
-  inset:0;
-  background-image: url("assets/map.jpg");
-  background-size: cover;
-  background-position: center;
-  filter: brightness(.55) contrast(1.1) saturate(.9);
-  z-index: 0;
+/* --- Infinite Zoom In & Zoom Out Animation --- */
+.bg-map {
+  animation: mapZoom 4s ease-in-out infinite;
+  transform-origin: center;
 }
 
-/* ---------- VIGNETTE (dark edges) ---------- */
-.vignette{
-  position: fixed;
-  inset:0;
-  background: radial-gradient(circle at center,
-        rgba(0,0,0,0) 45%, rgba(0,0,0,0.65) 100%);
-  z-index: 1;
-  pointer-events:none;
+@keyframes mapZoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25); /* zoom-in peak */
+  }
+  100% {
+    transform: scale(1); /* back to normal */
+  }
 }
 
 /* ---------- TITLE AREA ---------- */
@@ -173,4 +170,5 @@ body{
     height: 75px;
   }
 }
+
 
