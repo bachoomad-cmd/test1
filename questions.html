@@ -9,54 +9,43 @@
 
 <body>
 
-<!-- نوار بالا -->
+<!-- نوار بالا (حفظ شد) -->
 <header class="top-bar">
     <div class="brand">زنده باد ایران</div>
-
-    <div class="logo-box">
-        <img src="assets/logo.png" alt="logo" style="height:45px;">
-    </div>
 </header>
 
-<!-- تصویر کنار صفحه -->
-<img src="assets/nama.png" class="side-image">
+<div class="page-wrapper">
 
-<!-- پس‌زمینه -->
-<div class="animated-bg"></div>
-<div class="light-effect"></div>
-
-<!-- محتوای اصلی -->
-<div class="container">
-
-    <h2 class="page-title">تست فرمانروایان ایران</h2>
-
-    <p class="page-desc">
-        میزان شباهت شخصیت تو به فرمانروایان بزرگ ایران را با پاسخ به چند سؤال مشخص می‌کنیم.
-    </p>
-
-    <h3 id="q-number">سوال 1 از 20</h3>
-
-    <div class="progress-bg">
-        <div id="progress-bar"></div>
+    <!-- عکس کناری بزرگ مثل IDRlabs -->
+    <div class="side-image-box">
+        <img src="assets/nama.png" class="side-image">
     </div>
 
-    <p id="question-text" class="question-text">
-        متن سؤال اینجا قرار می‌گیرد...
-    </p>
+    <!-- کانتینر شبیه 8values -->
+    <div class="main-container">
 
-    <div class="slider-container">
-        <span>مخالفت</span>
-        <input type="range" min="0" max="100" value="50" id="answerRange">
-        <span>موافقت</span>
+        <h3 id="q-number" class="q-number">سوال 1 از 20</h3>
+
+        <div class="progress-bg">
+            <div id="progress-bar"></div>
+        </div>
+
+        <p id="question-text" class="question-text">
+            متن سؤال اینجا قرار می‌گیرد...
+        </p>
+
+        <div class="slider-container">
+            <span class="label">مخالفت</span>
+            <input type="range" min="0" max="100" value="50" id="answerRange">
+            <span class="label">موافقت</span>
+        </div>
+
+        <button id="nextBtn" class="next-btn">بعدی</button>
+
     </div>
-
-    <button id="nextBtn" class="next-btn">بعدی</button>
 
 </div>
 
 <script src="questions.js"></script>
-</body>
-</html>
-
 </body>
 </html>
