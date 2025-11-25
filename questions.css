@@ -3,122 +3,152 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family: "Segoe UI", sans-serif;
+    font-family: sans-serif;
 }
 
 body{
-    background:#1d1d1d;
-    color:white;
+    background:#f6f6f6; /* رنگ پس‌زمینه دقیقا شبیه 8values */
     direction: rtl;
     text-align: right;
 }
 
-/* MAIN QUESTION LAYOUT (8values style) */
-.container{
-    width: 90%;
-    max-width: 780px;      /* شبیه عرض محدود 8values */
-    margin: 120px auto;    /* فاصله بزرگ از بالا، مثل 8values */
-    padding: 0 10px;
+/* ----- TOP BAR (حفظ شد ولی کوچک‌تر مثل 8values) ----- */
+.top-bar{
+    width: 100%;
+    height: 50px;
+    background: rgba(0,0,0,0.6);
+    color:white;
+    display:flex;
+    align-items:center;
+    padding: 0 25px;
+    font-size: 1.1rem;
 }
 
-/* TITLE */
-#q-number{
-    font-size: 1.4rem;
-    margin-bottom: 18px;
-    color: #f6d391;
+/* ----- PAGE STRUCTURE LIKE IDRLABS ----- */
+.page-wrapper{
+    max-width: 1150px;
+    width: 100%;
+    margin: 40px auto;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 0 20px;
 }
 
-/* QUESTION TEXT */
-.question-text{
-    font-size: 1.35rem;
-    line-height: 1.8;
-    margin: 25px 0 45px;   /* فاصله زیاد مانند 8values */
+/* ----- SIDE IMAGE (مثل 8values نسخه جدید) ----- */
+.side-image-box{
+    flex-shrink: 0;
+    display:flex;
+    align-items:flex-start;
+    margin-top: 30px;
 }
 
-/* PROGRESS BAR (8values style) */
+.side-image{
+    width: 340px;          /* سایز بزرگ مثل IDRlabs */
+    max-width: 340px;
+    height: auto;
+}
+
+/* ----- MAIN QUIZ CONTAINER ----- */
+.main-container{
+    width: 100%;
+    max-width: 620px;       /* دقیقا اندازه 8values */
+}
+
+/* ----- QUESTION NUMBER ----- */
+.q-number{
+    font-size: 1.15rem;
+    margin-bottom: 16px;
+    color:#222;
+}
+
+/* ----- PROGRESS BAR ----- */
 .progress-bg{
-    width:100%;
-    height:12px;
-    background:#555;
-    border-radius:20px;
-    margin: 25px 0 40px;
+    width: 100%;
+    height: 15px;
+    background: #d1d1d1;
+    border-radius: 12px;
+    overflow:hidden;
+    margin-bottom: 35px;
 }
 
 #progress-bar{
-    height:12px;
-    width:0%;
-    background:#77d16c;
-    border-radius:20px;
-    transition: .4s;
+    width: 0%;
+    height: 15px;
+    background: #3b82f6;   /* آبی استاندارد */
+    transition: width .3s;
 }
 
-/* SLIDER AREA */
+/* ----- QUESTION TEXT ----- */
+.question-text{
+    font-size: 1.35rem;
+    color:#222;
+    line-height: 1.8;
+    margin: 20px 0 40px;
+}
+
+/* ----- SLIDER AREA ----- */
 .slider-container{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:20px;
-    margin-bottom:50px;
-}
-
-.slider-container span{
-    font-size: 1.1rem;
-    opacity: .9;
+    margin-bottom: 45px;
+    font-size: 1rem;
 }
 
 .slider-container input[type=range]{
-    width:70%;
-    height: 6px;
+    flex:1;
+    margin: 0 14px;
 }
 
-/* NEXT BUTTON (8values style) */
+.label{
+    color:#333;
+}
+
+/* ----- NEXT BUTTON (دقیقا مثل 8values) ----- */
 .next-btn{
-    display: block;
-    margin: 40px auto 0;
-    padding: 14px 40px;
-    font-size: 1.3rem;
-    font-weight:bold;
-    background:white;
-    color:black;
+    padding: 10px 28px;
+    background:#3b82f6;
+    color:white;
+    font-size: 1.15rem;
     border:none;
-    border-radius:6px;
+    border-radius: 6px;
     cursor:pointer;
     transition:.2s;
 }
 
 .next-btn:hover{
-    background:#e6e6e6;
+    background:#2563eb;
 }
 
-/* RESPONSIVE (8values mobile behavior) */
-@media(max-width: 700px){
-
-    .container{
-        margin: 80px auto;
+/* -------- RESPONSIVE -------- */
+@media(max-width: 950px){
+    .page-wrapper{
+        flex-direction: column;
+        align-items:center;
+        gap: 20px;
     }
 
-    #q-number{
-        font-size: 1.2rem;
+    .side-image{
+        width: 55%;
+        max-width: 300px;
+    }
+}
+
+@media(max-width: 550px){
+
+    .side-image{
+        width: 70%;
+        max-width: 240px;
     }
 
     .question-text{
-        font-size: 1.15rem;
-        margin: 20px 0 35px;
-    }
-
-    .slider-container{
-        flex-direction: column;
-        align-items: stretch;
-        gap: 15px;
-    }
-
-    .slider-container input[type=range]{
-        width: 100%;
+        font-size: 1.2rem;
     }
 
     .next-btn{
-        width: 100%;
-        padding: 14px 0;
+        width:100%;
+        text-align:center;
+        padding: 12px 0;
     }
 }
-
