@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>سوالات تست فرمانروایان ایران</title>
 <link rel="stylesheet" href="questions.css">
-</head>
 
-<body>
+<style>
+
 /* ----- TOP BAR ----- */
 .top-bar {
   width: 100%;
@@ -16,23 +16,33 @@
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   z-index: 20;
   border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
+.brand {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #f9d88b;
+  text-shadow: 0 0 8px rgba(255,215,130,0.6);
+}
+
+/* ==== عکس کنار صفحه (تنها بخش اصلاح‌شده) ==== */
 .side-image {
     position: fixed;
-    left: 20px;               /* فاصله از سمت چپ */
-    top: 50%;                 /* وسط عمودی */
+    left: 20px;
+    top: 50%;
     transform: translateY(-50%);
-    width: 180px;            /* اندازه عکس */
-    opacity: 0.88;           /* شفافیت قشنگ */
-    pointer-events: none;    /* تا روی دکمه‌ها تاثیر نگذاره */
-    z-index: 2;
+    width: 180px;
+    height: auto;
+    opacity: 0.88;
+    pointer-events: none;
+    z-index: 999;
     filter: drop-shadow(0 0 18px rgba(0,0,0,0.6));
 }
 
@@ -40,7 +50,7 @@
     .side-image {
         width: 120px;
         left: 10px;
-        opacity: 0.7;
+        opacity: 0.75;
     }
 }
 
@@ -51,68 +61,8 @@
         opacity: 0.6;
     }
 }
+/* ======================================== */
 
-
-
-.brand {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #f9d88b;
-  text-shadow: 0 0 8px rgba(255,215,130,0.6);
-}
-
-<!-- TOP BAR -->
-<header class="top-bar">
-    <div class="brand">زنده باد ایران</div>
-
-    <!-- LOGO INSIDE TOP BAR -->
-    <div class="logo-box">
-        <img src="assets/logo.png" alt="logo">
-    </div>
-</header>
-
-<!-- BACKGROUND ANIMATION (اگر داری) -->
-<div class="animated-bg"></div>
-<div class="light-effect"></div>
-
-<!-- MAIN CONTAINER -->
-<div class="container">
-
-    <!-- INTRO TEXT -->
-    <h2 class="page-title">تست فرمانروایان ایران</h2>
-    <p class="page-desc">
-        میزان شباهت شخصیت تو به فرمانروایان بزرگ ایران را با پاسخ به چند سؤال مشخص می‌کنیم.
-    </p>
-
-    <!-- PROGRESS -->
-    <h3 id="q-number">سوال 1 از 20</h3>
-    <div class="progress-bg">
-        <div id="progress-bar"></div>
-    </div>
-
-    <!-- QUESTION TEXT -->
-    <p id="question-text" class="question-text">
-        متن سؤال اینجا قرار می‌گیرد...
-    </p>
-
-    <!-- SLIDER -->
-    <div class="slider-container">
-        <span>مخالفت</span>
-        <input type="range" min="0" max="100" value="50" id="answerRange">
-        <span>موافقت</span>
-    </div>
-
-    <!-- NEXT BUTTON -->
-    <button id="nextBtn" class="next-btn">بعدی</button>
-
-</div>
-
-<script src="questions.js"></script>
-</body>
-</html>
-
-    100% { --x: 30%; --y: 60%; }
-}
 
 /* RESET */
 *{
@@ -125,20 +75,13 @@
 body{
     background:#1d1d1d;
     color:white;
-}
-
-.top-bar{
-    width:100%;
-    padding:15px 25px;
-    background:#222;
-    font-size:20px;
-    font-weight:bold;
-    border-bottom:1px solid #444;
+    direction: rtl;
+    text-align: right;
 }
 
 .container{
     max-width:900px;
-    margin:60px auto;
+    margin:80px auto;
     padding:0 20px;
 }
 
@@ -204,3 +147,57 @@ body{
 .next-btn:hover{
     background:#e6e6e6;
 }
+
+</style>
+</head>
+
+<body>
+
+<!-- عکس کنار صفحه -->
+<img src="assets/king.png" class="side-image">
+
+<!-- TOP BAR -->
+<header class="top-bar">
+    <div class="brand">زنده باد ایران</div>
+
+    <div class="logo-box">
+        <img src="assets/logo.png" alt="logo" style="height:45px;">
+    </div>
+</header>
+
+<!-- BACKGROUND EFFECTS -->
+<div class="animated-bg"></div>
+<div class="light-effect"></div>
+
+<!-- MAIN CONTAINER -->
+<div class="container">
+
+    <h2 class="page-title">تست فرمانروایان ایران</h2>
+
+    <p class="page-desc">
+        میزان شباهت شخصیت تو به فرمانروایان بزرگ ایران را با پاسخ به چند سؤال مشخص می‌کنیم.
+    </p>
+
+    <h3 id="q-number">سوال 1 از 20</h3>
+
+    <div class="progress-bg">
+        <div id="progress-bar"></div>
+    </div>
+
+    <p id="question-text" class="question-text">
+        متن سؤال اینجا قرار می‌گیرد...
+    </p>
+
+    <div class="slider-container">
+        <span>مخالفت</span>
+        <input type="range" min="0" max="100" value="50" id="answerRange">
+        <span>موافقت</span>
+    </div>
+
+    <button id="nextBtn" class="next-btn">بعدی</button>
+
+</div>
+
+<script src="questions.js"></script>
+</body>
+</html>
