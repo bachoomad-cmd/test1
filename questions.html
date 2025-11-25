@@ -1,51 +1,127 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سوالات تست فرمانروایان ایران</title>
-<link rel="stylesheet" href="questions.css">
-</head>
+/* --- ساختار کلی --- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: IRANSans, sans-serif;
+    background: #1c1a18;
+    color: #fff;
+    direction: rtl;
+    text-align: right;
+}
 
-<body>
+/* --- نوار بالا --- */
+.top-bar {
+    width: 100%;
+    background: #2a2520;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 1px solid #444;
+}
 
-<!-- نوار بالا -->
-<header class="top-bar">
-    <div class="brand">فرمانروایان ایران</div>
-</header>
+.brand {
+    font-size: 20px;
+    font-weight: bold;
+    color: gold;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px gold;
+}
 
-<!-- پس‌زمینه متحرک -->
-<div class="animated-bg"></div>
-<div class="light-effect"></div>
+/* --- زمینه انیمیشنی --- */
+.animated-bg {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #2a1f16, #3d2e1f, #2a1f16);
+    background-size: 300% 300%;
+    animation: bgMove 15s infinite ease-in-out;
+    z-index: -2;
+}
 
-<!-- محتوای اصلی -->
-<div class="container">
+@keyframes bgMove {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
 
-    <h2 class="page-title">تست فرمانروایان ایران</h2>
-    <p class="page-desc">
-        میزان شباهت شخصیت تو به فرمانروایان بزرگ ایران را با پاسخ به چند سؤال مشخص می‌کنیم.
-    </p>
+/* --- نور نرم --- */
+.light-effect {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255,215,0,0.1), transparent 70%);
+    z-index: -1;
+}
 
-    <h3 id="q-number">سوال 1 از 20</h3>
-    <div class="progress-bg">
-        <div id="progress-bar"></div>
-    </div>
+/* --- کانتینر اصلی --- */
+.container {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 20px;
+}
 
-    <p id="question-text" class="question-text">
-        متن سؤال اینجا قرار می‌گیرد...
-    </p>
+/* --- متن‌ها --- */
+.page-title {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: gold;
+    text-shadow: 0 0 8px rgba(255,215,0,0.6);
+}
 
-    <div class="slider-container">
-        <span>مخالفت</span>
-        <input type="range" min="0" max="100" value="50" id="answerRange">
-        <span>موافقت</span>
-    </div>
+.page-desc {
+    font-size: 16px;
+    opacity: 0.85;
+    margin-bottom: 25px;
+}
 
-    <button id="nextBtn" class="next-btn">بعدی</button>
+.question-text {
+    font-size: 20px;
+    margin: 25px 0;
+}
 
-</div>
+/* --- پروگرس بار --- */
+.progress-bg {
+    width: 100%;
+    background: #3a2f25;
+    height: 10px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
 
-<script src="questions.js"></script>
-</body>
-</html>
+#progress-bar {
+    width: 0%;
+    height: 100%;
+    background: gold;
+    transition: 0.3s;
+}
 
+/* --- اسلایدر --- */
+.slider-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    direction: rtl;
+}
+
+.slider-container input[type="range"] {
+    width: 60%;
+}
+
+/* --- دکمه بعدی --- */
+.next-btn {
+    width: 100%;
+    background: gold;
+    color: #000;
+    padding: 15px 0;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 25px;
+    transition: 0.2s;
+}
+
+.next-btn:hover {
+    background: #e6c200;
+}
