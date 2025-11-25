@@ -1,154 +1,122 @@
-/* RESET */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: sans-serif;
+/* ریست ساده */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
 
-body{
-    background:#f6f6f6; /* رنگ پس‌زمینه دقیقا شبیه 8values */
-    direction: rtl;
-    text-align: right;
+body {
+  background: #fff; /* پس‌زمینه روشن مثل IDRlabs */
+  direction: rtl;
+  text-align: right;
+  color: #333;
 }
 
-/* ----- TOP BAR (حفظ شد ولی کوچک‌تر مثل 8values) ----- */
-.top-bar{
+/* کل کادر کوییز */
+.quiz-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 50px 20px;
+}
+
+/* محتوی کوییز */
+.quiz-content {
+  max-width: 600px; /* تقریباً عرض مشابه 8-Values IDRlabs */
+  width: 100%;
+}
+
+/* بخش هدر سوال */
+.question-header h3 {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* پس‌زمینه پروگرس */
+.progress-bg {
+  width: 100%;
+  height: 12px;
+  background: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #3b82f6; /* رنگ آبی مثل IDRlabs */
+  transition: width 0.3s;
+}
+
+/* متن سوال */
+.question-text {
+  font-size: 1.4rem;
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+
+/* اسلایدر */
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 45px;
+}
+
+.slider-wrapper input[type=range] {
+  flex: 1;
+  margin: 0 15px;
+}
+
+.slider-label {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* دکمه بعدی */
+.next-btn {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 28px;
+  font-size: 1.1rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.next-btn:hover {
+  background: #2563eb;
+}
+
+/* ریسپانسیو موبایل */
+@media (max-width: 700px) {
+  .quiz-wrapper {
+    padding: 30px 10px;
+  }
+
+  .question-text {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+
+  .slider-wrapper {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .slider-wrapper input[type=range] {
     width: 100%;
-    height: 50px;
-    background: rgba(0,0,0,0.6);
-    color:white;
-    display:flex;
-    align-items:center;
-    padding: 0 25px;
-    font-size: 1.1rem;
-}
+    margin: 0;
+  }
 
-/* ----- PAGE STRUCTURE LIKE IDRLABS ----- */
-.page-wrapper{
-    max-width: 1150px;
+  .next-btn {
     width: 100%;
-    margin: 40px auto;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    padding: 0 20px;
+    padding: 12px 0;
+  }
 }
 
-/* ----- SIDE IMAGE (مثل 8values نسخه جدید) ----- */
-.side-image-box{
-    flex-shrink: 0;
-    display:flex;
-    align-items:flex-start;
-    margin-top: 30px;
-}
-
-.side-image{
-    width: 340px;          /* سایز بزرگ مثل IDRlabs */
-    max-width: 340px;
-    height: auto;
-}
-
-/* ----- MAIN QUIZ CONTAINER ----- */
-.main-container{
-    width: 100%;
-    max-width: 620px;       /* دقیقا اندازه 8values */
-}
-
-/* ----- QUESTION NUMBER ----- */
-.q-number{
-    font-size: 1.15rem;
-    margin-bottom: 16px;
-    color:#222;
-}
-
-/* ----- PROGRESS BAR ----- */
-.progress-bg{
-    width: 100%;
-    height: 15px;
-    background: #d1d1d1;
-    border-radius: 12px;
-    overflow:hidden;
-    margin-bottom: 35px;
-}
-
-#progress-bar{
-    width: 0%;
-    height: 15px;
-    background: #3b82f6;   /* آبی استاندارد */
-    transition: width .3s;
-}
-
-/* ----- QUESTION TEXT ----- */
-.question-text{
-    font-size: 1.35rem;
-    color:#222;
-    line-height: 1.8;
-    margin: 20px 0 40px;
-}
-
-/* ----- SLIDER AREA ----- */
-.slider-container{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom: 45px;
-    font-size: 1rem;
-}
-
-.slider-container input[type=range]{
-    flex:1;
-    margin: 0 14px;
-}
-
-.label{
-    color:#333;
-}
-
-/* ----- NEXT BUTTON (دقیقا مثل 8values) ----- */
-.next-btn{
-    padding: 10px 28px;
-    background:#3b82f6;
-    color:white;
-    font-size: 1.15rem;
-    border:none;
-    border-radius: 6px;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.next-btn:hover{
-    background:#2563eb;
-}
-
-/* -------- RESPONSIVE -------- */
-@media(max-width: 950px){
-    .page-wrapper{
-        flex-direction: column;
-        align-items:center;
-        gap: 20px;
-    }
-
-    .side-image{
-        width: 55%;
-        max-width: 300px;
-    }
-}
-
-@media(max-width: 550px){
-
-    .side-image{
-        width: 70%;
-        max-width: 240px;
-    }
-
-    .question-text{
-        font-size: 1.2rem;
-    }
-
-    .next-btn{
-        width:100%;
-        text-align:center;
-        padding: 12px 0;
-    }
-}
