@@ -1,3 +1,36 @@
+/* ---------- TOP HEADER BAR ---------- */
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    background: linear-gradient(120deg, #2e2212, #3b2b17, #2a1d0f);
+    border-bottom: 1px solid rgba(255, 216, 140, 0.25);
+    display: flex;
+    align-items: center;
+    padding: 0 22px;
+    z-index: 9999;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+/* Text-based brand */
+.top-bar .brand {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #f6d89f;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 10px rgba(255, 215, 130, 0.5);
+    animation: goldPulse 2.8s ease-in-out infinite;
+}
+
+/* soft golden pulse */
+@keyframes goldPulse {
+    0%   { text-shadow: 0 0 4px rgba(255, 215, 120, .6); }
+    50%  { text-shadow: 0 0 14px rgba(255, 235, 160, 1); }
+    100% { text-shadow: 0 0 4px rgba(255, 215, 120, .6); }
+}
+
 /* ---------- FIXED GOLDEN GLOW LOGO ---------- */
 .logo-box {
   position: fixed;
