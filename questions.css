@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سوالات تست فرمانروایان ایران</title>
-<link rel="stylesheet" href="questions.css">
+/* RESET */
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", sans-serif;
+}
 
-<style>
+body{
+    background:#1d1d1d;
+    color:white;
+    direction: rtl;
+    text-align: right;
+}
 
-/* ----- TOP BAR ----- */
+/* TOP BAR */
 .top-bar {
   width: 100%;
   height: 60px;
@@ -32,15 +37,14 @@
   text-shadow: 0 0 8px rgba(255,215,130,0.6);
 }
 
-/* ==== عکس کنار صفحه (تنها بخش اصلاح‌شده) ==== */
+/* IMAGE LEFT SIDE */
 .side-image {
     position: fixed;
-    left: 20px;
+    left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    width: 180px;
-    height: auto;
-    opacity: 0.88;
+    width: 160px;
+    opacity: 0.85;
     pointer-events: none;
     z-index: 999;
     filter: drop-shadow(0 0 18px rgba(0,0,0,0.6));
@@ -48,37 +52,21 @@
 
 @media(max-width: 768px) {
     .side-image {
-        width: 120px;
-        left: 10px;
-        opacity: 0.75;
+        width: 110px;
+        left: 5px;
+        opacity: 0.7;
     }
 }
 
 @media(max-width: 450px) {
     .side-image {
-        width: 90px;
-        left: 5px;
-        opacity: 0.6;
+        width: 80px;
+        left: 0;
+        opacity: 0.5;
     }
 }
-/* ======================================== */
 
-
-/* RESET */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: "Segoe UI", sans-serif;
-}
-
-body{
-    background:#1d1d1d;
-    color:white;
-    direction: rtl;
-    text-align: right;
-}
-
+/* CONTAINER */
 .container{
     max-width:900px;
     margin:80px auto;
@@ -147,57 +135,3 @@ body{
 .next-btn:hover{
     background:#e6e6e6;
 }
-
-</style>
-</head>
-
-<body>
-
-<!-- عکس کنار صفحه -->
-<img src="assets/nama.png" class="side-image">
-
-<!-- TOP BAR -->
-<header class="top-bar">
-    <div class="brand">زنده باد ایران</div>
-
-    <div class="logo-box">
-        <img src="assets/logo.png" alt="logo" style="height:45px;">
-    </div>
-</header>
-
-<!-- BACKGROUND EFFECTS -->
-<div class="animated-bg"></div>
-<div class="light-effect"></div>
-
-<!-- MAIN CONTAINER -->
-<div class="container">
-
-    <h2 class="page-title">تست فرمانروایان ایران</h2>
-
-    <p class="page-desc">
-        میزان شباهت شخصیت تو به فرمانروایان بزرگ ایران را با پاسخ به چند سؤال مشخص می‌کنیم.
-    </p>
-
-    <h3 id="q-number">سوال 1 از 20</h3>
-
-    <div class="progress-bg">
-        <div id="progress-bar"></div>
-    </div>
-
-    <p id="question-text" class="question-text">
-        متن سؤال اینجا قرار می‌گیرد...
-    </p>
-
-    <div class="slider-container">
-        <span>مخالفت</span>
-        <input type="range" min="0" max="100" value="50" id="answerRange">
-        <span>موافقت</span>
-    </div>
-
-    <button id="nextBtn" class="next-btn">بعدی</button>
-
-</div>
-
-<script src="questions.js"></script>
-</body>
-</html>
