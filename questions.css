@@ -1,4 +1,4 @@
-/* ریست کلی */
+/* ریست عمومی */
 * {
     margin: 0;
     padding: 0;
@@ -13,19 +13,19 @@ body {
     text-align: right;
 }
 
-/* بالای صفحه */
+/* نوار بالا */
 .top-bar {
     width: 100%;
     height: 60px;
-    background: rgba(20, 20, 20, 0.8);
+    background: rgba(20, 20, 20, 0.85);
     display: flex;
     align-items: center;
     padding: 0 25px;
-    backdrop-filter: blur(6px);
     position: fixed;
     top: 0;
     right: 0;
     z-index: 50;
+    backdrop-filter: blur(6px);
 }
 
 .brand {
@@ -33,14 +33,15 @@ body {
     color: #ffdf9f;
 }
 
-/* ساختار اصلی صفحه */
+/* ساختار اصلی */
 .page-wrapper {
     padding: 120px 20px 40px;
     max-width: 1200px;
     margin: auto;
     display: flex;
-    gap: 40px;
+    flex-direction: row;
     justify-content: space-between;
+    gap: 40px;
 }
 
 /* ستون متن */
@@ -55,7 +56,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* نوار پیشرفت */
+/* Progress */
 .progress-bg {
     width: 100%;
     height: 14px;
@@ -66,13 +67,13 @@ body {
 }
 
 #progress-bar {
-    width: 0%;
     height: 100%;
+    width: 0%;
     background: #4fa6ff;
     transition: 0.3s;
 }
 
-/* متن سوال */
+/* سوال */
 .question-text {
     font-size: 1.4rem;
     line-height: 1.8;
@@ -87,22 +88,21 @@ body {
     margin-bottom: 40px;
 }
 
-.slider-wrapper input[type="range"] {
+.slider-wrapper input {
     flex: 1;
     margin: 0 15px;
 }
 
 .label {
-    font-size: 1rem;
     color: #bbb;
 }
 
-/* دکمه بعدی */
+/* دکمه */
 .next-btn {
     padding: 12px 35px;
     background: #4fa6ff;
-    color: white;
     border: none;
+    color: white;
     font-size: 1.1rem;
     border-radius: 6px;
     cursor: pointer;
@@ -126,32 +126,44 @@ body {
     border-radius: 12px;
 }
 
-/* موبایل */
+/* ریسپانسیو — موبایل و تبلت */
 @media (max-width: 900px) {
+
     .page-wrapper {
-        flex-direction: column;
-        align-items: center;
-        text-align: right;
+        flex-direction: row !important;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .quiz-content {
+        max-width: 62%;
     }
 
     .side-image {
-        width: 65%;
-        max-width: 260px;
+        width: 32%;
+        max-width: 220px;
     }
 }
 
+/* موبایل کوچک */
 @media (max-width: 500px) {
+
+    .quiz-content {
+        max-width: 68%;
+    }
+
     .side-image {
-        width: 70%;
-        max-width: 200px;
+        width: 30%;
+        max-width: 150px;
+    }
+
+    .question-text {
+        font-size: 1.2rem;
     }
 
     .next-btn {
         width: 100%;
         text-align: center;
     }
-
-    .question-text {
-        font-size: 1.2rem;
-    }
 }
+
