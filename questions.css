@@ -33,18 +33,18 @@ body {
     color: #ffdf9f;
 }
 
-/* ساختار اصلی */
+/* ساختار اصلی صفحه */
 .page-wrapper {
     padding: 120px 20px 40px;
     max-width: 1200px;
     margin: auto;
     display: flex;
-    flex-direction: row;
+    flex-direction: row;   /* همیشه کنار هم */
     justify-content: space-between;
     gap: 40px;
 }
 
-/* ستون متن */
+/* متن */
 .quiz-content {
     width: 100%;
     max-width: 600px;
@@ -73,7 +73,7 @@ body {
     transition: 0.3s;
 }
 
-/* سوال */
+/* متن سوال */
 .question-text {
     font-size: 1.4rem;
     line-height: 1.8;
@@ -113,11 +113,12 @@ body {
     background: #2b88e0;
 }
 
-/* ستون عکس */
+/* عکس */
 .image-box {
     flex-shrink: 0;
     display: flex;
     align-items: flex-start;
+    justify-content: flex-start;
 }
 
 .side-image {
@@ -126,35 +127,36 @@ body {
     border-radius: 12px;
 }
 
-/* ریسپانسیو — موبایل و تبلت */
+/* ریسپانسیو — موبایل */
 @media (max-width: 900px) {
 
     .page-wrapper {
-        flex-direction: row !important;
-        justify-content: space-between;
-        gap: 20px;
-    }
-
-    .quiz-content {
-        max-width: 62%;
+        flex-direction: column;   /* متن بالا - عکس پایین */
+        align-items: center;
+        text-align: right;
+        gap: 25px;
     }
 
     .side-image {
-        width: 32%;
-        max-width: 220px;
+        width: 60%;
+        max-width: 260px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;           /* وسط‌چین */
+    }
+
+    .quiz-content {
+        width: 100%;
+        max-width: 90%;
     }
 }
 
-/* موبایل کوچک */
+/* موبایل کوچک‌تر */
 @media (max-width: 500px) {
 
-    .quiz-content {
-        max-width: 68%;
-    }
-
     .side-image {
-        width: 30%;
-        max-width: 150px;
+        width: 70%;
+        max-width: 220px;
     }
 
     .question-text {
@@ -163,7 +165,5 @@ body {
 
     .next-btn {
         width: 100%;
-        text-align: center;
     }
 }
-
