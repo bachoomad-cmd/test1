@@ -13,14 +13,15 @@ body {
     text-align: right;
 }
 
-/* نوار بالا */
+/* هدر بالای صفحه */
 .top-bar {
     width: 100%;
-    height: 60px;
+    height: 70px;
     background: rgba(20, 20, 20, 0.85);
     display: flex;
     align-items: center;
-    padding: 0 25px;
+    justify-content: center;   /* متن وسط */
+    padding: 0 20px;
     position: fixed;
     top: 0;
     right: 0;
@@ -28,9 +29,33 @@ body {
     backdrop-filter: blur(6px);
 }
 
-.brand {
-    font-size: 1.4rem;
-    color: #ffdf9f;
+/* متن طلایی داخل هدر */
+.header-subtitle{
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+  background: linear-gradient(
+    90deg,
+    #b6862e 0%,
+    #ffd700 20%,
+    #ffe89a 40%,
+    #ffd700 60%,
+    #b6862e 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow: 0 2px 8px rgba(255, 200, 80, 0.12);
+  animation: gold-slide 3.2s linear infinite;
+}
+
+/* انیمیشن حرکت نور طلایی */
+@keyframes gold-slide {
+  0% { background-position: 100% 0; }
+  100% { background-position: 0% 0; }
 }
 
 /* ساختار اصلی صفحه */
@@ -39,24 +64,22 @@ body {
     max-width: 1200px;
     margin: auto;
     display: flex;
-    flex-direction: row;   /* همیشه کنار هم */
+    flex-direction: row;
     justify-content: space-between;
     gap: 40px;
 }
 
-/* متن */
+/* بخش سؤال */
 .quiz-content {
     width: 100%;
     max-width: 600px;
 }
 
-/* شماره سؤال */
 #q-number {
     font-size: 1.3rem;
     margin-bottom: 20px;
 }
 
-/* Progress */
 .progress-bg {
     width: 100%;
     height: 14px;
@@ -73,7 +96,6 @@ body {
     transition: 0.3s;
 }
 
-/* متن سوال */
 .question-text {
     font-size: 1.4rem;
     line-height: 1.8;
@@ -118,7 +140,6 @@ body {
     flex-shrink: 0;
     display: flex;
     align-items: flex-start;
-    justify-content: flex-start;
 }
 
 .side-image {
@@ -127,13 +148,12 @@ body {
     border-radius: 12px;
 }
 
-/* ریسپانسیو — موبایل */
+/* موبایل: عکس پایین و وسط‌چین */
 @media (max-width: 900px) {
 
     .page-wrapper {
-        flex-direction: column;   /* متن بالا - عکس پایین */
+        flex-direction: column;
         align-items: center;
-        text-align: right;
         gap: 25px;
     }
 
@@ -142,7 +162,7 @@ body {
         max-width: 260px;
         margin-left: auto;
         margin-right: auto;
-        display: block;           /* وسط‌چین */
+        display: block;
     }
 
     .quiz-content {
@@ -151,7 +171,6 @@ body {
     }
 }
 
-/* موبایل کوچک‌تر */
 @media (max-width: 500px) {
 
     .side-image {
@@ -167,57 +186,3 @@ body {
         width: 100%;
     }
 }
-
-/* ====== Header gold shimmer subtitle ====== */
-.header-subtitle{
-  width: 100%;
-  text-align: center;
-  margin-top: 72px;            /* فاصله از هدر؛ اگر هدر تو ارتفاع متفاوتی داشت کمی تنظیم کن */
-  margin-bottom: 18px;
-  font-size: 1.25rem;          /* اندازه متن در دسکتاپ */
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  /* متن شبیه طلایی با شیمر */
-  background: linear-gradient(
-    90deg,
-    #b6862e 0%,
-    #ffd700 20%,
-    #ffe89a 40%,
-    #ffd700 60%,
-    #b6862e 100%
-  );
-  background-size: 200% 100%;  /* بزرگ‌تر برای حرکت */
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  /* درخشش اطراف متن */
-  text-shadow: 0 2px 8px rgba(255, 200, 80, 0.12);
-  /* انیمیشن حرکت نور طلایی */
-  animation: gold-slide 3.2s linear infinite;
-}
-
-/* انیمیشن شیمر: از راست به چپ حرکت می‌کند (RTL-friendly) */
-@keyframes gold-slide {
-  0% {
-    background-position: 100% 0;
-  }
-  100% {
-    background-position: 0% 0;
-  }
-}
-
-/* واکنش‌گرایی: موبایل کوچک‌تر و متن وسط‌چین شده */
-@media (max-width: 700px) {
-  .header-subtitle{
-    font-size: 1.05rem;
-    margin-top: 64px;
-  }
-}
-
-@media (max-width: 420px) {
-  .header-subtitle{
-    font-size: 0.98rem;
-    margin-top: 56px;
-  }
-}
-
