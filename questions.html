@@ -1,51 +1,42 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سوالات تست فرمانروایان ایران</title>
-<link rel="stylesheet" href="questions.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تست شخصیت</title>
+  <link rel="stylesheet" href="questions.css">
 </head>
-
 <body>
 
-<!-- نوار بالا (حفظ شد) -->
-<header class="top-bar">
-    <div class="brand">زنده باد ایران</div>
-</header>
+  <div class="quiz-wrapper">
 
-<div class="page-wrapper">
+    <div class="quiz-content">
 
-    <!-- عکس کناری بزرگ مثل IDRlabs -->
-    <div class="side-image-box">
-        <img src="assets/nama.png" class="side-image">
-    </div>
+      <div class="question-header">
+        <h3 id="q-number">سوال ۱ از N</h3>
+      </div>
 
-    <!-- کانتینر شبیه 8values -->
-    <div class="main-container">
+      <div class="progress-bg">
+        <div id="progress-bar"></div>
+      </div>
 
-        <h3 id="q-number" class="q-number">سوال 1 از 20</h3>
+      <div class="question-text" id="question-text">
+        متن سؤال اینجا قرار می‌گیرد …
+      </div>
 
-        <div class="progress-bg">
-            <div id="progress-bar"></div>
-        </div>
+      <div class="slider-wrapper">
+        <span class="slider-label">مخالفت</span>
+        <input type="range" id="answerRange" min="0" max="100" value="50">
+        <span class="slider-label">موافقت</span>
+      </div>
 
-        <p id="question-text" class="question-text">
-            متن سؤال اینجا قرار می‌گیرد...
-        </p>
-
-        <div class="slider-container">
-            <span class="label">مخالفت</span>
-            <input type="range" min="0" max="100" value="50" id="answerRange">
-            <span class="label">موافقت</span>
-        </div>
-
-        <button id="nextBtn" class="next-btn">بعدی</button>
+      <button id="nextBtn" class="next-btn">بعدی</button>
 
     </div>
 
-</div>
+  </div>
 
-<script src="questions.js"></script>
+  <script src="questions.js"></script>
 </body>
 </html>
+
