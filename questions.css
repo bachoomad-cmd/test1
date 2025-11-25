@@ -167,3 +167,57 @@ body {
         width: 100%;
     }
 }
+
+/* ====== Header gold shimmer subtitle ====== */
+.header-subtitle{
+  width: 100%;
+  text-align: center;
+  margin-top: 72px;            /* فاصله از هدر؛ اگر هدر تو ارتفاع متفاوتی داشت کمی تنظیم کن */
+  margin-bottom: 18px;
+  font-size: 1.25rem;          /* اندازه متن در دسکتاپ */
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  /* متن شبیه طلایی با شیمر */
+  background: linear-gradient(
+    90deg,
+    #b6862e 0%,
+    #ffd700 20%,
+    #ffe89a 40%,
+    #ffd700 60%,
+    #b6862e 100%
+  );
+  background-size: 200% 100%;  /* بزرگ‌تر برای حرکت */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* درخشش اطراف متن */
+  text-shadow: 0 2px 8px rgba(255, 200, 80, 0.12);
+  /* انیمیشن حرکت نور طلایی */
+  animation: gold-slide 3.2s linear infinite;
+}
+
+/* انیمیشن شیمر: از راست به چپ حرکت می‌کند (RTL-friendly) */
+@keyframes gold-slide {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+/* واکنش‌گرایی: موبایل کوچک‌تر و متن وسط‌چین شده */
+@media (max-width: 700px) {
+  .header-subtitle{
+    font-size: 1.05rem;
+    margin-top: 64px;
+  }
+}
+
+@media (max-width: 420px) {
+  .header-subtitle{
+    font-size: 0.98rem;
+    margin-top: 56px;
+  }
+}
+
