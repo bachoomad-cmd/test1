@@ -1,146 +1,64 @@
-/* ----- TOP BAR ----- */
-.top-bar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 70px;
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 25px;
-    z-index: 1000;
-    border-bottom: 1px solid rgba(255, 217, 140, 0.25);
-}
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سوالات تست فرمانروایان ایران</title>
+<link rel="stylesheet" href="questions.css">
+</head>
 
-/* عنوان سمت راست */
-.brand {
-    color: #f3d9a2;
-    font-size: 1.4rem;
-    font-weight: 600;
-    text-shadow: 0 0 12px rgba(255, 200, 100, 0.3);
-}
+<body>
 
+<!-- TOP BAR -->
+<header class="top-bar">
+    <div class="brand">فرمانروایان ایران</div>
 
-/* ----- LOGO BOX ----- */
-.logo-box {
-    display: flex;
-    align-items: center;
-}
+    <!-- LOGO INSIDE TOP BAR -->
+    <div class="logo-box">
+        <img src="assets/logo.png" alt="logo">
+    </div>
+</header>
 
-/* ----- LOGO IMAGE ----- */
-.logo-box img {
-    width: 58px;              /* اندازه مناسب */
-    height: auto;
-    filter: drop-shadow(0 0 12px rgba(255, 200, 100, 0.45));  /* نور طلایی */
-    animation: glowPulse 3s ease-in-out infinite;
-}
+<!-- BACKGROUND ANIMATION (اگر داری) -->
+<div class="animated-bg"></div>
+<div class="light-effect"></div>
 
-/* افکت نور طلایی */
-@keyframes glowPulse {
-    0%   { filter: drop-shadow(0 0 4px rgba(255, 210, 120, 0.4)); }
-    50%  { filter: drop-shadow(0 0 16px rgba(255, 210, 120, 0.7)); }
-    100% { filter: drop-shadow(0 0 4px rgba(255, 210, 120, 0.4)); }
-}
+<!-- MAIN CONTAINER -->
+<div class="container">
 
-/* فاصله محتوا از نوار بالا */
-.container {
-    margin-top: 110px;
-}
+    <!-- INTRO TEXT -->
+    <h2 class="page-title">تست فرمانروایان ایران</h2>
+    <p class="page-desc">
+        میزان شباهت شخصیت تو به فرمانروایان بزرگ ایران را با پاسخ به چند سؤال مشخص می‌کنیم.
+    </p>
 
+    <!-- PROGRESS -->
+    <h3 id="q-number">سوال 1 از 20</h3>
+    <div class="progress-bg">
+        <div id="progress-bar"></div>
+    </div>
 
-/* Text-based brand */
-.top-bar .brand {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #f6d89f;
-    letter-spacing: 0.5px;
-    text-shadow: 0 0 10px rgba(255, 215, 130, 0.5);
-    animation: goldPulse 2.8s ease-in-out infinite;
-}
+    <!-- QUESTION TEXT -->
+    <p id="question-text" class="question-text">
+        متن سؤال اینجا قرار می‌گیرد...
+    </p>
 
-/* soft golden pulse */
-@keyframes goldPulse {
-    0%   { text-shadow: 0 0 4px rgba(255, 215, 120, .6); }
-    50%  { text-shadow: 0 0 14px rgba(255, 235, 160, 1); }
-    100% { text-shadow: 0 0 4px rgba(255, 215, 120, .6); }
-}
+    <!-- SLIDER -->
+    <div class="slider-container">
+        <span>مخالفت</span>
+        <input type="range" min="0" max="100" value="50" id="answerRange">
+        <span>موافقت</span>
+    </div>
 
-/* ---------- FIXED GOLDEN GLOW LOGO ---------- */
-.logo-box {
-  position: fixed;
-  top: 18px;
-  left: 18px;
-  z-index: 9999;
-}
+    <!-- NEXT BUTTON -->
+    <button id="nextBtn" class="next-btn">بعدی</button>
 
-.logo-box img {
-  height: 60px;
-  width: auto;
-  opacity: 0.95;
-  filter: drop-shadow(0 0 8px rgba(255, 200, 80, 0.6));
-  animation: goldenPulse 2.2s ease-in-out infinite;
-  transition: 0.2s;
-}
+</div>
 
-.logo-box img:hover {
-  transform: scale(1.08);
-  filter: drop-shadow(0 0 14px rgba(255, 220, 110, 0.95));
-}
+<script src="questions.js"></script>
+</body>
+</html>
 
-/* Gold glowing animation */
-@keyframes goldenPulse {
-  0% {
-    filter: drop-shadow(0 0 5px rgba(255,200,80,0.4));
-  }
-  50% {
-    filter: drop-shadow(0 0 15px rgba(255,220,130,1));
-  }
-  100% {
-    filter: drop-shadow(0 0 5px rgba(255,200,80,0.4));
-  }
-}
-
-
-/* ---------- ANIMATED ROYAL BROWN BACKGROUND ---------- */
-
-.animated-bg {
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-
-    /* پس‌زمینه قهوه‌ای لوکس */
-    background: linear-gradient(140deg, #2b1f14, #3a2718, #2d1c10);
-    background-size: 300% 300%;
-    animation: bgFlow 18s ease-in-out infinite;
-}
-
-/* حرکت نور سفید روی صفحه */
-.light-effect {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-
-    background: radial-gradient(
-        circle at var(--x, 60%) var(--y, 40%),
-        rgba(255,255,255,0.18),
-        transparent 55%
-    );
-
-    animation: lightMove 12s ease-in-out infinite;
-}
-
-@keyframes bgFlow {
-    0%   { background-position: 0% 0%; }
-    50%  { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
-}
-
-@keyframes lightMove {
-    0%   { --x: 30%; --y: 60%; }
-    50%  { --x: 70%; --y: 30%; }
     100% { --x: 30%; --y: 60%; }
 }
 
