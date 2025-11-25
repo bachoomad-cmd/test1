@@ -8,6 +8,28 @@
 </head>
 
 <body>
+/* ----- TOP BAR ----- */
+.top-bar {
+  width: 100%;
+  height: 60px;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.brand {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #f9d88b;
+  text-shadow: 0 0 8px rgba(255,215,130,0.6);
+}
 
 <!-- TOP BAR -->
 <header class="top-bar">
