@@ -1,47 +1,52 @@
-<!-- questions.html -->
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>تست فرمانروایان ایران</title>
-<link rel="stylesheet" href="questions.css" />
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تست فرمانروایان ایران</title>
+    <link rel="stylesheet" href="questions.css">
 </head>
+
 <body>
-<header class="top-bar">
-<div class="brand">زنده باد ایران</div>
-</header>
 
+    <!-- نوار بالا -->
+    <header class="top-bar">
+        <div class="brand">فرمانروایان ایران</div>
+    </header>
 
-<div class="page-wrapper">
-<div class="quiz-content">
-<h3 id="q-number">سوال ۱ از ۲۰</h3>
+    <!-- کل صفحه -->
+    <div class="page-wrapper">
 
+        <!-- ستون متن و اسلایدر -->
+        <div class="quiz-content">
 
-<div class="progress-bg">
-<div id="progress-bar"></div>
-</div>
+            <h3 id="q-number">سوال ۱ از ۲۰</h3>
 
+            <div class="progress-bg">
+                <div id="progress-bar"></div>
+            </div>
 
-<p id="question-text" class="question-text">
-متن سؤال اینجا قرار می‌گیرد…
-</p>
+            <p class="question-text" id="question-text">
+                متن سؤال اینجا قرار می‌گیرد…
+            </p>
 
+            <div class="slider-wrapper">
+                <span class="label">مخالفت</span>
+                <input type="range" id="answerRange" min="0" max="100" value="50">
+                <span class="label">موافقت</span>
+            </div>
 
-<div class="slider-wrapper">
-<span class="label">مخالفت</span>
-<input type="range" min="0" max="100" value="50" id="answerRange" />
-<span class="label">موافقت</span>
-</div>
+            <button id="nextBtn" class="next-btn">بعدی</button>
+        </div>
 
+        <!-- ستون عکس سمت راست -->
+        <div class="image-box">
+            <img src="assets/nama.png" class="side-image" alt="icon">
+        </div>
 
-<button id="nextBtn" class="next-btn">بعدی</button>
-</div>
+    </div>
 
+    <script src="questions.js"></script>
 
-<div class="image-box">
-<img src="assets/nama.png" class="side-image" />
-</div>
-</div>
-
-
-<script src="questions.js"></script>
 </body>
 </html>
