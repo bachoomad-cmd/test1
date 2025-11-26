@@ -1,56 +1,91 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سوالات تست فرمانروایان ایران</title>
-<link rel="stylesheet" href="questions.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تست فرمانروایان ایران</title>
+    <link rel="stylesheet" href="questions.css">
+
+    <!-- فونت حرفه‌ای فارسی -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<!-- نوار بالا -->
-<header class="top-bar">
-    <div class="brand">فرمانروایان ایران</div>
-</header>
-
-<!-- پس‌زمینه -->
-<div class="animated-bg"></div>
-<div class="light-effect"></div>
-
-<!-- عکس کنار -->
-<img src="assets/nama.png" class="side-image">
-
-<!-- محتوای اصلی -->
-<div class="container">
-
-    <h2 class="page-title">تست فرمانروایان ایران</h2>
-
-    <p class="page-desc">
-        میزان شباهت شخصیت تو به فرمانروایان بزرگ ایران را با پاسخ به چند سؤال مشخص می‌کنیم.
-    </p>
-
-    <h3 id="q-number">سوال 1 از 20</h3>
-
-    <div class="progress-bg">
-        <div id="progress-bar"></div>
+    <!-- صفحه لودینگ -->
+    <div id="loading-screen">
+        <div class="loading-text">در حال آماده‌سازی آزمون...</div>
     </div>
 
-    <p id="question-text" class="question-text">
-        متن سؤال اینجا قرار می‌گیرد...
-    </p>
+    <!-- هدر طلایی -->
+    <header class="top-bar">
+        <div class="header-subtitle">10 ارزش فرمانروایان تاریخ ایران</div>
+    </header>
 
-    <div class="slider-container">
-        <span>مخالفت</span>
-        <input type="range" min="0" max="100" value="50" id="answerRange">
-        <span>موافقت</span>
+    <!-- صفحه اصلی -->
+    <div class="page-wrapper">
+
+        <!-- ستون متن -->
+        <div class="quiz-content fade-box">
+
+            <h3 id="q-number">سوال ۱ از ۲۰</h3>
+
+            <div class="progress-bg">
+                <div id="progress-bar"></div>
+            </div>
+
+            <p class="question-text" id="question-text">
+                متن سؤال اینجا قرار می‌گیرد…
+            </p>
+
+            <div class="slider-wrapper">
+                <span class="label">مخالفت</span>
+                <input type="range" id="answerRange" min="0" max="100" value="50">
+                <span class="label">موافقت</span>
+            </div>
+
+            <div class="button-row">
+                <button id="backBtn" class="back-btn sound-btn">بازگشت</button>
+                <button id="nextBtn" class="next-btn sound-btn">بعدی</button>
+            </div>
+
+        </div>
+
+        <!-- ستون عکس -->
+        <div class="image-box fade-box">
+            <img src="assets/nama.png" class="side-image" alt="image">
+        </div>
+
     </div>
 
-    <button id="nextBtn" class="next-btn">بعدی</button>
+    <!-- صدا -->
+    <audio id="clickSound" src="assets/click.mp3"></audio>
 
-</div>
+    <script src="questions.js"></script>
 
-<script src="questions.js"></script>
+    <!-- اسکریپت افکت‌ها -->
+    <script>
+        // لودینگ ۱ ثانیه‌ای
+        setTimeout(() => {
+            document.getElementById("loading-screen").classList.add("hide-loading");
+        }, 1000);
+
+        // صدای دکمه‌ها
+        const clickSound = document.getElementById("clickSound");
+        document.querySelectorAll(".sound-btn").forEach(btn => {
+            btn.addEventListener("click", () => clickSound.play());
+        });
+
+        // انیمیشن Fade در هر بار تغییر سؤال
+        function fadeInContent() {
+            document.querySelectorAll(".fade-box").forEach(box => {
+                box.classList.remove("show");
+                setTimeout(() => box.classList.add("show"), 10);
+            });
+        }
+
+        fadeInContent(); // شروع اولیه
+    </script>
+
 </body>
 </html>
