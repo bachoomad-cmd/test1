@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تست فرمانروایان ایران</title>
     <link rel="stylesheet" href="questions.css">
+
+    <!-- فونت حرفه‌ای فارسی -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
+
+    <!-- صفحه لودینگ -->
+    <div id="loading-screen">
+        <div class="loading-text">در حال آماده‌سازی آزمون...</div>
+    </div>
 
     <!-- هدر طلایی -->
     <header class="top-bar">
@@ -18,7 +26,7 @@
     <div class="page-wrapper">
 
         <!-- ستون متن -->
-        <div class="quiz-content">
+        <div class="quiz-content fade-box">
 
             <h3 id="q-number">سوال ۱ از ۲۰</h3>
 
@@ -37,20 +45,47 @@
             </div>
 
             <div class="button-row">
-                <button id="backBtn" class="back-btn">بازگشت</button>
-                <button id="nextBtn" class="next-btn">بعدی</button>
+                <button id="backBtn" class="back-btn sound-btn">بازگشت</button>
+                <button id="nextBtn" class="next-btn sound-btn">بعدی</button>
             </div>
 
         </div>
 
         <!-- ستون عکس -->
-        <div class="image-box">
+        <div class="image-box fade-box">
             <img src="assets/nama.png" class="side-image" alt="image">
         </div>
 
     </div>
 
+    <!-- صدا -->
+    <audio id="clickSound" src="assets/click.mp3"></audio>
+
     <script src="questions.js"></script>
+
+    <!-- اسکریپت افکت‌ها -->
+    <script>
+        // لودینگ ۱ ثانیه‌ای
+        setTimeout(() => {
+            document.getElementById("loading-screen").classList.add("hide-loading");
+        }, 1000);
+
+        // صدای دکمه‌ها
+        const clickSound = document.getElementById("clickSound");
+        document.querySelectorAll(".sound-btn").forEach(btn => {
+            btn.addEventListener("click", () => clickSound.play());
+        });
+
+        // انیمیشن Fade در هر بار تغییر سؤال
+        function fadeInContent() {
+            document.querySelectorAll(".fade-box").forEach(box => {
+                box.classList.remove("show");
+                setTimeout(() => box.classList.add("show"), 10);
+            });
+        }
+
+        fadeInContent(); // شروع اولیه
+    </script>
 
 </body>
 </html>
