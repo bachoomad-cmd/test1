@@ -93,14 +93,12 @@ body::before{
 .progress-bg{ width:100%; height:14px; background:#2b2b2b; border-radius:12px; overflow:hidden; margin-bottom:20px; }
 #progress-bar{ height:100%; width:0%; background: linear-gradient(90deg,#4fa6ff,#ffd875); transition:width .35s cubic-bezier(.2,.9,.3,1); }
 
-/* question text */
 .question-text{ font-size:1.35rem; line-height:1.9; color:#f3efe6; margin-bottom:26px; }
 
 /* ---------- Slider row ---------- */
 .slider-row{ display:flex; align-items:center; gap:12px; margin-bottom:10px }
 .slider-label{ color:#d7d6d2; width:76px; text-align:center; font-size:0.95rem; flex-shrink:0 }
 
-/* slider styling */
 .range-wrap{ flex:1; position:relative; padding:12px 6px; }
 .range-track{
   position:relative; height:8px; background:linear-gradient(90deg,#3b3b3b,#282828);
@@ -108,7 +106,7 @@ body::before{
 }
 input[type="range"]{
   -webkit-appearance:none; width:100%; background:transparent; position:relative; z-index:3;
-  margin:0; height:40px; /* allow pointer */
+  margin:0; height:40px;
 }
 input[type="range"]::-webkit-slider-runnable-track{ height:8px; background:transparent; border:none; }
 input[type="range"]::-webkit-slider-thumb{
@@ -118,7 +116,6 @@ input[type="range"]::-webkit-slider-thumb{
 }
 input[type="range"]:active::-webkit-slider-thumb{ transform:scale(1.12) }
 
-/* decorative filled track (under the slider thumb) */
 .range-fill{
   position:absolute; left:0; top:0; height:8px; border-radius:10px;
   background: linear-gradient(90deg,#4fa6ff,#ffd875);
@@ -159,26 +156,19 @@ input[type="range"]:active::-webkit-slider-thumb{ transform:scale(1.12) }
 .fade-box{ opacity:0; transform:translateY(12px); transition:opacity .45s ease, transform .45s ease; }
 .fade-box.show{ opacity:1; transform:translateY(0) }
 
-/* ---------- responsive: mobile behavior - image goes below & centered ---------- */
 @media (max-width:900px){
   .container{ flex-direction:column; align-items:center; gap:28px; padding-top:110px }
   .image-box{ order:2; justify-content:center; width:100%; }
   .side-image{ width:60%; max-width:300px; margin:0 auto; display:block }
   .quiz-content{ order:1; width:100%; max-width:760px; padding:22px }
 }
-
-/* small phones */
 @media (max-width:520px){
   .header-subtitle{ font-size:1.35rem }
   .question-text{ font-size:1.12rem }
   .side-image{ width:70%; max-width:240px }
   .slider-label{ width:64px; font-size:.92rem }
 }
-
-/* small polish */
 .label-rail{ position:absolute; left:0; right:0; top:12px; height:8px; pointer-events:none; }
-
-/* ensure background layers behind content */
 .container, .top-bar, #loading-screen{ position:relative }
 </style>
 </head>
@@ -195,11 +185,11 @@ input[type="range"]:active::-webkit-slider-thumb{ transform:scale(1.12) }
 
   <!-- QUIZ (right column in RTL) -->
   <section class="quiz-content fade-box" id="quizBox">
-    <div id="q-number">سوال 1 از 20</div>
+    <div id="q-number">سوال 1 از 30</div>
 
     <div class="progress-bg" aria-hidden="true"><div id="progress-bar"></div></div>
 
-    <div class="question-text" id="questionText">این یک مثال متن سؤال است. پاسخ دهید تا ادامه پیدا کند.</div>
+    <div class="question-text" id="questionText">در حال بارگذاری سوال‌ها...</div>
 
     <!-- slider row -->
     <div class="slider-row">
@@ -209,7 +199,6 @@ input[type="range"]:active::-webkit-slider-thumb{ transform:scale(1.12) }
           <div class="range-fill" id="rangeFill" style="width:50%"></div>
         </div>
         <input id="answerRange" type="range" min="0" max="100" value="50" />
-        <!-- decorative rail labels (invisible but align stations) -->
       </div>
       <div class="slider-label">موافقت</div>
     </div>
@@ -241,131 +230,142 @@ input[type="range"]:active::-webkit-slider-thumb{ transform:scale(1.12) }
 <audio id="clickSound" src="assets/click.mp3" preload="auto"></audio>
 
 <script>
-/* ========= Initialization ========= */
+/* ========= Questions (30) ========= */
+const questions = [
+"اگر یک امپراتوری خارجی پیشنهاد اتحاد دفاعی بده ولی در آینده ممکن است نفوذ سیاسی‌اش بر ما افزایشی داشته باشد، آن اتحاد را می‌پذیرید؟",
+"اگر باز کردن مرزها ثروت بیشتری بیاورد اما احتمال ورود جاسوس و خرابکار را بالا ببرد، باز می‌کنید؟",
+"اگر افزایش قدرت نظامی نیازمند محدودیت روابط تجاری باشد، قدرت نظامی را ترجیح می‌دهید؟",
+"اگر تنها راه جلوگیری از حمله دشمن واگذاری یک بندر مهم به یک قدرت خارجی باشد، آن را می‌پذیرید؟",
+"اگر باید بین جلوگیری از مهاجرت گسترده و جبران کمبود نیروی کار داخلی یکی را انتخاب کنید، کدام را اولویت می‌دهید؟",
+
+"اگر ورود معلمان خارجی سطح آموزش را بالا ببرد ولی نفوذ فرهنگی ایجاد کند، موافق ورودشان هستید؟",
+"اگر میزبانی یک رویداد جهانی اعتبار بیاورد ولی موقتاً کنترل رسانه‌ها را سخت‌تر کند، موافقید؟",
+"اگر اجازه فعالیت فرهنگی یک قوم همسایه صلح بیاورد اما خطر جدایی‌طلبی پدید آورد، آن را می‌پذیرید؟",
+"آیا برای پیشرفت اجازه می‌دهید آزادی‌های فرهنگی خارجی در داخل مرزها گسترش یابد؟",
+"اگر یک اتحاد جهانی شما را از جنگ نجات دهد ولی سیاست خارجی مستقل را محدود کند، آن را می‌پذیرید؟",
+
+"اگر بسته کردن مرزها به تولید داخلی کمک کند اما کیفیت کالاها پایین بماند، موافقید؟",
+"اگر یک قدرت خارجی بخواهد معادن ما را استخراج کند و در عوض فناوری پیشرفته بدهد، آن را قبول می‌کنید؟",
+"اگر تجارت جهانی رفاه را بالا ببرد اما وابستگی ایجاد کند، آن را ادامه می‌دهید؟",
+"اگر آزادسازی تجارت موجب خروج ثروت‌مندان شود، آیا باز هم به اقتصاد جهانی وصل می‌شوید؟",
+"اگر سرمایه‌گذاری خارجی زیرساخت مهم را کنترل کند، آیا باز هم جذب سرمایه می‌کنید؟",
+
+"اگر پذیرش فرهنگ جهانی نسل جوان را راضی کند اما سنت‌ها را کمرنگ کند، آن را پسندیده می‌دانید؟",
+"اگر مهاجرت نخبگان خارجی پیشرفت علمی بیاورد ولی با سنت‌ها سازگار نباشد، آن را تشویق می‌کنید؟",
+"اگر پذیرش رسم‌ها و آیین‌های جهانی وحدت با جهان ایجاد کند اما سنت‌های محلی را تضعیف کند، ادامه می‌دهید؟",
+"اگر مشارکت در کنوانسیون‌های جهانی نیازمند تغییر قوانین سنتی باشد، آن تغییر را می‌پذیرید؟",
+"اگر جهان‌باوری شکاف نسل‌ها را بیشتر کند، آیا باز هم آن را درست می‌دانید؟",
+
+"اگر حفظ یک سنت محبوب به قیمت عقب‌ماندن از فناوری باشد، آن سنت را حفظ می‌کنید؟",
+"اگر کنار گذاشتن یک آیین کهنه عدالت و کارایی را افزایش دهد، آیا آن را کنار می‌گذارید؟",
+"اگر نخبگان سنتی با اصلاحات مخالفت کنند، آیا مصلحت حکومت را به اصلاح ترجیح می‌دهید؟",
+"اگر حذف یک تابوی سنتی به سود کشور باشد اما واکنش عمومی شدید باشد، آن را انجام می‌دهید؟",
+"آیا تحمیلِ تغییرات تدریجی را به تغییرات ناگهانی ترجیح می‌دهید؟",
+
+"اگر برای امن‌کردن مرزها لازم باشد مقررات سخت‌تری تصویب کنید، موافقید؟",
+"اگر جنگِ کنترل بر منطقه مشروعیت سیاسی بیاورد، آیا از آن دفاع می‌کنید؟",
+"آیا گسترش نفوذ فرامرزی برای کشور اغلب مفیدتر از حفظ مرزهاست؟",
+"اگر تنوع قومی به قیمت چالش‌های اتحاد ملی باشد، آن را می‌پذیرید؟",
+"آیا حفظ مرزهای سیاسی برای هویت ملی ضروری است؟"
+];
+
+/* ========= UI references ========= */
 const loading = document.getElementById('loading-screen');
-setTimeout(()=>{ loading.classList.add('hide'); loading.style.display='none'; }, 1000);
-
-/* Fade-in show */
-function showFade(){
-  document.querySelectorAll('.fade-box').forEach(el=>el.classList.add('show'));
-}
-setTimeout(showFade, 120); // small delay after load
-
-/* Slider + stations logic (Model 2: visual stations, free slider) */
 const slider = document.getElementById('answerRange');
 const stations = Array.from(document.querySelectorAll('#stations .station'));
 const rangeFill = document.getElementById('rangeFill');
 
-function updateStations(value){
-  // highlight nearest station (visual feedback)
-  let nearest = stations.reduce((a,b)=> Math.abs(a.dataset.val - value) < Math.abs(b.dataset.val - value) ? a : b);
-  stations.forEach(s=> s.classList.toggle('active', s===nearest));
-}
-
-function updateFill(value){
-  rangeFill.style.width = value + '%';
-}
-
-// initial
-updateStations(slider.value);
-updateFill(slider.value);
-
-// on input
-slider.addEventListener('input', (e)=>{
-  const v = Number(e.target.value);
-  updateFill(v);
-  updateStations(v);
-});
-
-// clicking on a station moves slider to that position (optional UX)
-stations.forEach(s=>{
-  s.addEventListener('click', ()=>{
-    const v = Number(s.dataset.val);
-    slider.value = v;
-    updateFill(v);
-    updateStations(v);
-  });
-});
-
-/* Progress & question navigation (simple demo behavior) */
-let qIndex = 1, qTotal = 20;
 const qNumberEl = document.getElementById('q-number');
 const progressBar = document.getElementById('progress-bar');
 const questionText = document.getElementById('questionText');
 const nextBtn = document.getElementById('nextBtn');
 const backBtn = document.getElementById('backBtn');
-
-function updateProgress(){
-  const pct = Math.round((qIndex-1)/(qTotal-1)*100);
-  progressBar.style.width = pct + '%';
-  qNumberEl.textContent = `سوال ${qIndex} از ${qTotal}`;
-}
-
-updateProgress();
-
-nextBtn.addEventListener('click', () => {
-
-  playClick();
-
-  // اگر هنوز سوال باقی مانده
-  if (qIndex < qTotal) {
-      qIndex++;
-      questionText.style.opacity = 0;
-
-      setTimeout(() => {
-          questionText.textContent = `این متن نمونه برای سوال شماره ${qIndex} است.`;
-          questionText.style.opacity = 1;
-      }, 220);
-
-      updateProgress();
-
-      document.querySelectorAll('.fade-box').forEach(el => {
-          el.classList.remove('show');
-          setTimeout(() => el.classList.add('show'), 30);
-      });
-
-      return;
-  }
-
-  // اگر اینجا رسیدیم → یعنی سوال 20 تمام شده
-  window.location.href = "results.html";
-});
-
-backBtn.addEventListener('click', ()=>{
-  playClick();
-  if(qIndex > 1){
-    qIndex--;
-    questionText.style.opacity = 0;
-    setTimeout(()=>{
-      questionText.textContent = `این متن نمونه برای سوال شماره ${qIndex} است.`;
-      questionText.style.opacity = 1;
-    },220);
-    updateProgress();
-    document.querySelectorAll('.fade-box').forEach(el=>{
-      el.classList.remove('show');
-      setTimeout(()=>el.classList.add('show'), 30);
-    });
-  }
-});
-
-/* play sound safely (check user interaction) */
 const clickSound = document.getElementById('clickSound');
-function playClick(){
-  if(!clickSound) return;
-  clickSound.currentTime = 0;
-  // try/catch in case autoplay restrictions
-  try{ clickSound.play(); }catch(e){}
-}
 
-/* accessibility: keyboard for slider left/right */
+let qTotal = questions.length; // 30
+let qIndex = 0; // zero-based index
+let answers = new Array(qTotal).fill(50); // default neutral
+
+/* ========= Initialization UI ========= */
+setTimeout(()=>{ loading.classList.add('hide'); loading.style.display='none'; }, 600);
+function showFade(){ document.querySelectorAll('.fade-box').forEach(el=>el.classList.add('show')); }
+setTimeout(showFade, 120);
+
+function updateStations(value){
+  let nearest = stations.reduce((a,b)=> Math.abs(a.dataset.val - value) < Math.abs(b.dataset.val - value) ? a : b);
+  stations.forEach(s=> s.classList.toggle('active', s===nearest));
+}
+function updateFill(value){ rangeFill.style.width = value + '%'; }
+
+/* slider input */
+updateStations(slider.value); updateFill(slider.value);
+slider.addEventListener('input', (e)=>{ const v = Number(e.target.value); updateFill(v); updateStations(v); });
+
+stations.forEach(s=>{ s.addEventListener('click', ()=>{ const v = Number(s.dataset.val); slider.value = v; updateFill(v); updateStations(v); }); });
+
+/* keyboard */
 slider.addEventListener('keydown', (e)=>{
   if(e.key === 'ArrowLeft'){ slider.value = Math.max(0, Number(slider.value)-1); slider.dispatchEvent(new Event('input')); }
   if(e.key === 'ArrowRight'){ slider.value = Math.min(100, Number(slider.value)+1); slider.dispatchEvent(new Event('input')); }
 });
 
-/* make sure initial active station visible */
-updateStations(slider.value);
+/* ========= Navigation & render ========= */
+function renderQuestion(){
+  // set question text and slider value for current index
+  questionText.style.opacity = 0;
+  setTimeout(()=>{
+    questionText.textContent = questions[qIndex];
+    questionText.style.opacity = 1;
+  }, 160);
+
+  slider.value = answers[qIndex];
+  updateFill(slider.value);
+  updateStations(slider.value);
+
+  qNumberEl.textContent = `سوال ${qIndex+1} از ${qTotal}`;
+  const pct = Math.round((qIndex)/(qTotal-1)*100);
+  progressBar.style.width = pct + '%';
+
+  backBtn.style.display = qIndex === 0 ? 'none' : 'inline-block';
+  nextBtn.textContent = qIndex === qTotal-1 ? 'ثبت و مشاهده نتیجه' : 'بعدی';
+}
+
+function playClick(){ if(!clickSound) return; clickSound.currentTime = 0; try{ clickSound.play(); }catch(e){} }
+
+/* next */
+nextBtn.addEventListener('click', ()=>{
+  playClick();
+  // save current slider
+  answers[qIndex] = Number(slider.value);
+
+  if(qIndex < qTotal-1){
+    qIndex++;
+    renderQuestion();
+    // subtle fade
+    document.querySelectorAll('.fade-box').forEach(el=>{ el.classList.remove('show'); setTimeout(()=>el.classList.add('show'), 20); });
+    return;
+  }
+
+  // last question -> save and go to results
+  localStorage.setItem('quiz_answers', JSON.stringify(answers));
+  // small delay for UX
+  setTimeout(()=>{ window.location.href = 'results.html'; }, 120);
+});
+
+/* back */
+backBtn.addEventListener('click', ()=>{
+  playClick();
+  answers[qIndex] = Number(slider.value);
+  if(qIndex > 0) qIndex--;
+  renderQuestion();
+  document.querySelectorAll('.fade-box').forEach(el=>{ el.classList.remove('show'); setTimeout(()=>el.classList.add('show'), 20); });
+});
+
+/* init */
+renderQuestion();
+
 </script>
 
 </body>
 </html>
+
