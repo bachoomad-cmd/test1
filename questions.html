@@ -1,92 +1,362 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تست فرمانروایان ایران</title>
-    <link rel="stylesheet" href="questions.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>تست — سوالات</title>
 
-    <!-- فونت حرفه‌ای فارسی -->
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap" rel="stylesheet">
+<!-- فونت فارسی -->
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+/* ---------- RESET ---------- */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Vazirmatn',sans-serif;
+  direction:rtl;
+  color:#eee;
+  overflow-x:hidden;
+  /* پس‌زمینه قهوه‌ای پایه */
+  background:#3a2c20;
+  position:relative;
+}
+
+/* ---------- moving subtle dots (particles) ---------- */
+body::before{
+  content:"";
+  position:fixed;
+  inset:-50% -50% -50% -50%;
+  background-image: radial-gradient(#ffffff 1px, transparent 1px);
+  background-size: 14px 14px;       /* فاصله و سایز دونه‌ها */
+  opacity:0.12;                     /* بسیار محو */
+  z-index:0;
+  animation: floatDots 60s linear infinite;
+  transform: translate3d(0,0,0);
+}
+@keyframes floatDots{
+  0%{ transform: translate(0,0) }
+  50%{ transform: translate(-40px,-60px) } /* خیلی ملایم */
+  100%{ transform: translate(0,0) }
+}
+
+/* ---------- Loading screen ---------- */
+#loading-screen {
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  background:#111; z-index:300;
+}
+#loading-screen .loading-text{
+  font-size:1.4rem;
+  background: linear-gradient(90deg,#b6862e,#ffd700,#fff2b2,#ffd700,#b6862e);
+  background-size:200% 100%;
+  -webkit-background-clip:text; color:transparent;
+  animation: gold-slide 3s linear infinite;
+}
+
+/* ---------- Header (centered golden text) ---------- */
+.top-bar{
+  position:fixed; top:0; right:0; left:0;
+  height:75px; display:flex; align-items:center; justify-content:center;
+  background:rgba(20,20,20,0.90); z-index:200;
+  backdrop-filter: blur(6px);
+}
+.header-subtitle{
+  font-size:1.8rem; font-weight:800; letter-spacing:.6px;
+  background: linear-gradient(90deg,#b6862e,#ffd700,#ffe89a,#ffd700,#b6862e);
+  background-size:200% 100%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  animation: gold-slide 3s linear infinite;
+  text-shadow:0 2px 10px rgba(255,200,80,0.18);
+}
+@keyframes gold-slide{0%{background-position:100% 0}100%{background-position:0 0}}
+
+/* ---------- Page wrapper ---------- */
+.container {
+  max-width:1200px; margin:0 auto;
+  padding:120px 20px 60px; position:relative; z-index:50;
+  display:flex; gap:40px; align-items:flex-start; justify-content:space-between;
+}
+
+/* ---------- Quiz content (right column for RTL) ---------- */
+.quiz-content{
+  width:100%; max-width:600px;
+  min-width:260px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:10px; padding:28px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+  backdrop-filter: blur(2px);
+}
+
+/* number + progress */
+#q-number{ font-size:1.15rem; margin-bottom:14px; color:#f0e9d8 }
+.progress-bg{ width:100%; height:14px; background:#2b2b2b; border-radius:12px; overflow:hidden; margin-bottom:20px; }
+#progress-bar{ height:100%; width:0%; background: linear-gradient(90deg,#4fa6ff,#ffd875); transition:width .35s cubic-bezier(.2,.9,.3,1); }
+
+/* question text */
+.question-text{ font-size:1.35rem; line-height:1.9; color:#f3efe6; margin-bottom:26px; }
+
+/* ---------- Slider row ---------- */
+.slider-row{ display:flex; align-items:center; gap:12px; margin-bottom:10px }
+.slider-label{ color:#d7d6d2; width:76px; text-align:center; font-size:0.95rem; flex-shrink:0 }
+
+/* slider styling */
+.range-wrap{ flex:1; position:relative; padding:12px 6px; }
+.range-track{
+  position:relative; height:8px; background:linear-gradient(90deg,#3b3b3b,#282828);
+  border-radius:10px; overflow:visible;
+}
+input[type="range"]{
+  -webkit-appearance:none; width:100%; background:transparent; position:relative; z-index:3;
+  margin:0; height:40px; /* allow pointer */
+}
+input[type="range"]::-webkit-slider-runnable-track{ height:8px; background:transparent; border:none; }
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:22px; height:22px; border-radius:50%;
+  background:#ffd875; box-shadow:0 0 12px rgba(255,200,120,0.8); border:3px solid rgba(0,0,0,0.15);
+  margin-top:-7px; cursor:pointer; transition:transform .12s;
+}
+input[type="range"]:active::-webkit-slider-thumb{ transform:scale(1.12) }
+
+/* decorative filled track (under the slider thumb) */
+.range-fill{
+  position:absolute; left:0; top:0; height:8px; border-radius:10px;
+  background: linear-gradient(90deg,#4fa6ff,#ffd875);
+  width:50%; z-index:2;
+}
+
+/* ---------- Stations (model A: small dots + labels) ---------- */
+.stations{
+  width:100%; display:flex; justify-content:space-between; align-items:center; margin-top:10px;
+  padding:0 6px;
+}
+.station{
+  display:flex; flex-direction:column; align-items:center; gap:6px; font-size:0.9rem; color:#d8d6d2;
+}
+.station .dot{
+  width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,0.22);
+  box-shadow:0 0 6px rgba(0,0,0,0.4); transition: all .18s;
+}
+.station.active .dot{
+  background:#ffd875; transform: scale(1.25); box-shadow:0 0 12px rgba(255,200,120,0.9);
+}
+
+/* ---------- Buttons ---------- */
+.button-row{ display:flex; gap:12px; margin-top:12px; }
+.btn{
+  padding:10px 26px; border-radius:8px; border:0; cursor:pointer; font-weight:600; font-size:1rem;
+  color:#fff; box-shadow:0 8px 20px rgba(0,0,0,0.35);
+}
+.back-btn{ background:#c0392b }
+.next-btn{ background:#4fa6ff }
+.btn:active{ transform:translateY(1px) }
+
+/* ---------- side image (left on desktop) ---------- */
+.image-box{ flex-shrink:0; display:flex; align-items:flex-start; justify-content:flex-start; }
+.side-image{ width:330px; max-width:330px; border-radius:12px; box-shadow:0 12px 30px rgba(0,0,0,0.45) }
+
+/* ---------- fade-in class for content ---------- */
+.fade-box{ opacity:0; transform:translateY(12px); transition:opacity .45s ease, transform .45s ease; }
+.fade-box.show{ opacity:1; transform:translateY(0) }
+
+/* ---------- responsive: mobile behavior - image goes below & centered ---------- */
+@media (max-width:900px){
+  .container{ flex-direction:column; align-items:center; gap:28px; padding-top:110px }
+  .image-box{ order:2; justify-content:center; width:100%; }
+  .side-image{ width:60%; max-width:300px; margin:0 auto; display:block }
+  .quiz-content{ order:1; width:100%; max-width:760px; padding:22px }
+}
+
+/* small phones */
+@media (max-width:520px){
+  .header-subtitle{ font-size:1.35rem }
+  .question-text{ font-size:1.12rem }
+  .side-image{ width:70%; max-width:240px }
+  .slider-label{ width:64px; font-size:.92rem }
+}
+
+/* small polish */
+.label-rail{ position:absolute; left:0; right:0; top:12px; height:8px; pointer-events:none; }
+
+/* ensure background layers behind content */
+.container, .top-bar, #loading-screen{ position:relative }
+</style>
 </head>
-
 <body>
 
-    <!-- صفحه لودینگ -->
-    <div id="loading-screen">
-        <div class="loading-text">در حال آماده‌سازی آزمون...</div>
+<!-- Loading screen -->
+<div id="loading-screen"><div class="loading-text">در حال آماده‌سازی آزمون...</div></div>
+
+<!-- Header -->
+<header class="top-bar"><div class="header-subtitle">10 ارزش فرمانروایان تاریخ ایران</div></header>
+
+<!-- Main -->
+<main class="container">
+
+  <!-- QUIZ (right column in RTL) -->
+  <section class="quiz-content fade-box" id="quizBox">
+    <div id="q-number">سوال 1 از 20</div>
+
+    <div class="progress-bg" aria-hidden="true"><div id="progress-bar"></div></div>
+
+    <div class="question-text" id="questionText">این یک مثال متن سؤال است. پاسخ دهید تا ادامه پیدا کند.</div>
+
+    <!-- slider row -->
+    <div class="slider-row">
+      <div class="slider-label">مخالفت</div>
+      <div class="range-wrap">
+        <div class="range-track">
+          <div class="range-fill" id="rangeFill" style="width:50%"></div>
+        </div>
+        <input id="answerRange" type="range" min="0" max="100" value="50" />
+        <!-- decorative rail labels (invisible but align stations) -->
+      </div>
+      <div class="slider-label">موافقت</div>
     </div>
 
-    <!-- هدر طلایی -->
-    <header class="top-bar">
-        <div class="header-subtitle">10 ارزش فرمانروایان تاریخ ایران</div>
-    </header>
-
-    <!-- صفحه اصلی -->
-    <div class="page-wrapper">
-
-        <!-- ستون متن -->
-        <div class="quiz-content fade-box">
-
-            <h3 id="q-number">سوال ۱ از ۲۰</h3>
-
-            <div class="progress-bg">
-                <div id="progress-bar"></div>
-            </div>
-
-            <p class="question-text" id="question-text">
-                متن سؤال اینجا قرار می‌گیرد…
-            </p>
-
-            <div class="slider-wrapper">
-                <span class="label">مخالفت</span>
-                <input type="range" id="answerRange" min="0" max="100" value="50">
-                <span class="label">موافقت</span>
-            </div>
-
-            <div class="button-row">
-                <button id="backBtn" class="back-btn sound-btn">بازگشت</button>
-                <button id="nextBtn" class="next-btn sound-btn">بعدی</button>
-            </div>
-
-        </div>
-
-        <!-- ستون عکس -->
-        <div class="image-box fade-box">
-            <img src="assets/nama.png" class="side-image" alt="image">
-        </div>
-
+    <!-- stations (5) -->
+    <div class="stations" id="stations">
+      <div class="station" data-val="0"><div class="dot"></div><div class="s-label">خیلی مخالفم</div></div>
+      <div class="station" data-val="25"><div class="dot"></div><div class="s-label">مخالفم</div></div>
+      <div class="station" data-val="50"><div class="dot"></div><div class="s-label">مطمئن نیستم</div></div>
+      <div class="station" data-val="75"><div class="dot"></div><div class="s-label">موافقم</div></div>
+      <div class="station" data-val="100"><div class="dot"></div><div class="s-label">خیلی موافقم</div></div>
     </div>
 
-    <!-- صدا -->
-    <audio id="clickSound" src="assets/click.mp3"></audio>
+    <!-- buttons -->
+    <div class="button-row">
+      <button id="backBtn" class="btn back-btn sound-btn">بازگشت</button>
+      <button id="nextBtn" class="btn next-btn sound-btn">بعدی</button>
+    </div>
+  </section>
 
-    <script src="questions.js"></script>
+  <!-- SIDE IMAGE (left on desktop) -->
+  <aside class="image-box fade-box" id="imageBox">
+    <img src="assets/nama.png" alt="تصویر" class="side-image" />
+  </aside>
 
-    <!-- اسکریپت افکت‌ها -->
-    <script>
-        // لودینگ ۱ ثانیه‌ای
-        setTimeout(() => {
-            document.getElementById("loading-screen").classList.add("hide-loading");
-        }, 1000);
+</main>
 
-        // صدای دکمه‌ها
-        const clickSound = document.getElementById("clickSound");
-        document.querySelectorAll(".sound-btn").forEach(btn => {
-            btn.addEventListener("click", () => clickSound.play());
-        });
+<!-- click sound (optional) -->
+<audio id="clickSound" src="assets/click.mp3" preload="auto"></audio>
 
-        // انیمیشن Fade در هر بار تغییر سؤال
-        function fadeInContent() {
-            document.querySelectorAll(".fade-box").forEach(box => {
-                box.classList.remove("show");
-                setTimeout(() => box.classList.add("show"), 10);
-            });
-        }
+<script>
+/* ========= Initialization ========= */
+const loading = document.getElementById('loading-screen');
+setTimeout(()=>{ loading.classList.add('hide'); loading.style.display='none'; }, 1000);
 
-        fadeInContent(); // شروع اولیه
-    </script>
+/* Fade-in show */
+function showFade(){
+  document.querySelectorAll('.fade-box').forEach(el=>el.classList.add('show'));
+}
+setTimeout(showFade, 120); // small delay after load
+
+/* Slider + stations logic (Model 2: visual stations, free slider) */
+const slider = document.getElementById('answerRange');
+const stations = Array.from(document.querySelectorAll('#stations .station'));
+const rangeFill = document.getElementById('rangeFill');
+
+function updateStations(value){
+  // highlight nearest station (visual feedback)
+  let nearest = stations.reduce((a,b)=> Math.abs(a.dataset.val - value) < Math.abs(b.dataset.val - value) ? a : b);
+  stations.forEach(s=> s.classList.toggle('active', s===nearest));
+}
+
+function updateFill(value){
+  rangeFill.style.width = value + '%';
+}
+
+// initial
+updateStations(slider.value);
+updateFill(slider.value);
+
+// on input
+slider.addEventListener('input', (e)=>{
+  const v = Number(e.target.value);
+  updateFill(v);
+  updateStations(v);
+});
+
+// clicking on a station moves slider to that position (optional UX)
+stations.forEach(s=>{
+  s.addEventListener('click', ()=>{
+    const v = Number(s.dataset.val);
+    slider.value = v;
+    updateFill(v);
+    updateStations(v);
+  });
+});
+
+/* Progress & question navigation (simple demo behavior) */
+let qIndex = 1, qTotal = 20;
+const qNumberEl = document.getElementById('q-number');
+const progressBar = document.getElementById('progress-bar');
+const questionText = document.getElementById('questionText');
+const nextBtn = document.getElementById('nextBtn');
+const backBtn = document.getElementById('backBtn');
+
+function updateProgress(){
+  const pct = Math.round((qIndex-1)/(qTotal-1)*100);
+  progressBar.style.width = pct + '%';
+  qNumberEl.textContent = `سوال ${qIndex} از ${qTotal}`;
+}
+
+updateProgress();
+
+nextBtn.addEventListener('click', ()=>{
+  // sound
+  playClick();
+  if(qIndex < qTotal){
+    qIndex++;
+    // simulate changing question text
+    questionText.style.opacity = 0;
+    setTimeout(()=>{
+      questionText.textContent = `این متن نمونه برای سوال شماره ${qIndex} است.`;
+      questionText.style.opacity = 1;
+    },220);
+    updateProgress();
+    // fade content effect
+    document.querySelectorAll('.fade-box').forEach(el=>{
+      el.classList.remove('show');
+      setTimeout(()=>el.classList.add('show'), 30);
+    });
+  }
+});
+backBtn.addEventListener('click', ()=>{
+  playClick();
+  if(qIndex > 1){
+    qIndex--;
+    questionText.style.opacity = 0;
+    setTimeout(()=>{
+      questionText.textContent = `این متن نمونه برای سوال شماره ${qIndex} است.`;
+      questionText.style.opacity = 1;
+    },220);
+    updateProgress();
+    document.querySelectorAll('.fade-box').forEach(el=>{
+      el.classList.remove('show');
+      setTimeout(()=>el.classList.add('show'), 30);
+    });
+  }
+});
+
+/* play sound safely (check user interaction) */
+const clickSound = document.getElementById('clickSound');
+function playClick(){
+  if(!clickSound) return;
+  clickSound.currentTime = 0;
+  // try/catch in case autoplay restrictions
+  try{ clickSound.play(); }catch(e){}
+}
+
+/* accessibility: keyboard for slider left/right */
+slider.addEventListener('keydown', (e)=>{
+  if(e.key === 'ArrowLeft'){ slider.value = Math.max(0, Number(slider.value)-1); slider.dispatchEvent(new Event('input')); }
+  if(e.key === 'ArrowRight'){ slider.value = Math.min(100, Number(slider.value)+1); slider.dispatchEvent(new Event('input')); }
+});
+
+/* make sure initial active station visible */
+updateStations(slider.value);
+</script>
 
 </body>
 </html>
-
