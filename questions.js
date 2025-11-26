@@ -8,10 +8,7 @@ let qIndex = 1;       // شماره سوال فعلی
 //     ELEMENTS
 // ----------------------------
 const qNumberEl = document.getElementById("q-number");
-
-// 🔥 اصلاح شد: question-text
-const questionText = document.getElementById("question-text");
-
+const questionText = document.getElementById("questionText");
 const progressBar = document.getElementById("progress-bar");
 const nextBtn = document.getElementById("nextBtn");
 const backBtn = document.getElementById("backBtn");
@@ -79,4 +76,3 @@ function fadeContent() {
 updateProgress();
 updateQuestionText();
 fadeContent();
-
