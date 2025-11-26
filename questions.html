@@ -303,25 +303,34 @@ function updateProgress(){
 
 updateProgress();
 
-nextBtn.addEventListener('click', ()=>{
-  // sound
+nextBtn.addEventListener('click', () => {
+
   playClick();
-  if(qIndex < qTotal){
-    qIndex++;
-    // simulate changing question text
-    questionText.style.opacity = 0;
-    setTimeout(()=>{
-      questionText.textContent = `این متن نمونه برای سوال شماره ${qIndex} است.`;
-      questionText.style.opacity = 1;
-    },220);
-    updateProgress();
-    // fade content effect
-    document.querySelectorAll('.fade-box').forEach(el=>{
-      el.classList.remove('show');
-      setTimeout(()=>el.classList.add('show'), 30);
-    });
+
+  // اگر هنوز سوال باقی مانده
+  if (qIndex < qTotal) {
+      qIndex++;
+      questionText.style.opacity = 0;
+
+      setTimeout(() => {
+          questionText.textContent = `این متن نمونه برای سوال شماره ${qIndex} است.`;
+          questionText.style.opacity = 1;
+      }, 220);
+
+      updateProgress();
+
+      document.querySelectorAll('.fade-box').forEach(el => {
+          el.classList.remove('show');
+          setTimeout(() => el.classList.add('show'), 30);
+      });
+
+      return;
   }
+
+  // اگر اینجا رسیدیم → یعنی سوال 20 تمام شده
+  window.location.href = "results.html";
 });
+
 backBtn.addEventListener('click', ()=>{
   playClick();
   if(qIndex > 1){
