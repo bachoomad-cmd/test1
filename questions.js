@@ -76,3 +76,4 @@ function fadeContent() {
 updateProgress();
 updateQuestionText();
 fadeContent();
+
