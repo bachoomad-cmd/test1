@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>نتایج آزمون</title>
+
+<!-- فونت -->
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Vazirmatn',sans-serif;
+  background:#3a2c20;
+  color:#eee;
+  overflow-x:hidden;
+  direction:rtl;
+  position:relative;
+}
+
+/* ذرات سفید */
+body::before{
+  content:"";
+  position:fixed;
+  inset:-50% -50% -50% -50%;
+  background-image: radial-gradient(#fff 1px, transparent 1px);
+  background-size: 14px 14px;
+  opacity:0.10;
+  animation: floatDots 60s linear infinite;
+  z-index:0;
+}
+@keyframes floatDots{
+  0%{transform:translate(0,0)}
+  50%{transform:translate(-40px,-60px)}
+  100%{transform:translate(0,0)}
+}
+
+/* هدر */
+.top-bar{
+  position:fixed;top:0;right:0;left:0;
+  height:75px;background:rgba(20,20,20,.9);
+  display:flex;align-items:center;justify-content:center;
+  z-index:50;backdrop-filter:blur(6px)
+}
+.header-title{
+  font-size:1.8rem;font-weight:800;
+  background:linear-gradient(90deg,#b6862e,#ffd700,#fff2b2,#ffd700,#b6862e);
+  background-size:200% 100%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:gold-slide 3s linear infinite
+}
+@keyframes gold-slide{0%{background-position:100%}100%{background-position:0}}
+
+/* صفحه */
+.container{
+  max-width:900px;
+  margin:120px auto 40px;
+  padding:20px;
+  position:relative;
+  z-index:10;
+}
+
+/* کارت نتایج */
+.result-card{
+  background:rgba(255,255,255,0.05);
+  border-radius:12px;
+  padding:30px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.45);
+  backdrop-filter:blur(2px);
+  animation:fadeIn .7s ease;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.result-title{
+  font-size:1.8rem;
+  margin-bottom:25px;
+  color:#ffe7ad;
+  font-weight:800;
+  text-align:center;
+}
+
+/* آیتم نتایج */
+.result-item{
+  margin-bottom:25px;
+}
+.result-label{
+  font-size:1.1rem;margin-bottom:8px;
+  color:#f6f3e8;
+  font-weight:600;
+}
+.result-bar-bg{
+  width:100%;
+  height:16px;
+  background:#2d2d2d;
+  border-radius:10px;
+  overflow:hidden;
+}
+.result-bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,#4fa6ff,#ffd875);
+  width:0%;
+  transition:1s ease;
+}
+
+/* دکمه */
+.btn{
+  padding:12px 28px;
+  border:none;
+  border-radius:8px;
+  font-size:1.1rem;
+  cursor:pointer;
+  font-weight:600;
+  color:#fff;
+  background:#4fa6ff;
+  box-shadow:0 6px 20px rgba(0,0,0,.4);
+  margin:25px auto 0;
+  display:block;
+  transition:.2s;
+}
+.btn:hover{transform:translateY(-3px)}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="top-bar">
+  <div class="header-title">نتایج آزمون شما</div>
+</header>
+
+<div class="container">
+
+  <div class="result-card">
+
+    <div class="result-title">امتیازات نهایی</div>
+
+    <!-- Example result rows -->
+    <div class="result-item">
+      <div class="result-label">ارزش ۱ — رهبری</div>
+      <div class="result-bar-bg"><div class="result-bar-fill" data-val="82"></div></div>
+    </div>
+
+    <div class="result-item">
+      <div class="result-label">ارزش ۲ — عدالت</div>
+      <div class="result-bar-bg"><div class="result-bar-fill" data-val="65"></div></div>
+    </div>
+
+    <div class="result-item">
+      <div class="result-label">ارزش ۳ — شجاعت</div>
+      <div class="result-bar-bg"><div class="result-bar-fill" data-val="41"></div></div>
+    </div>
+
+    <div class="result-item">
+      <div class="result-label">ارزش ۴ — خرد</div>
+      <div class="result-bar-bg"><div class="result-bar-fill" data-val="90"></div></div>
+    </div>
+
+    <button class="btn" onclick="window.location.href='index.html'">بازگشت به صفحه اصلی</button>
+
+  </div>
+
+</div>
+
+<script>
+// انیمیشن پر شدن نوارها
+document.querySelectorAll(".result-bar-fill").forEach(bar=>{
+  let v = bar.dataset.val;
+  setTimeout(()=>{
+    bar.style.width = v + "%";
+  },300);
+});
+</script>
+
+</body>
+</html>
