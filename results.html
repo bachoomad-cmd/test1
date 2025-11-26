@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نتیجه آزمون</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+    background: #0d0d0d;
+    color: #eee;
+    font-family: 'Vazirmatn', sans-serif;
+    padding: 30px;
+}
+
+/* کارت نتایج */
+.result-card {
+    max-width: 700px;
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    margin: auto;
+    border-radius: 14px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+}
+
+/* عنوان صفحه */
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.9rem;
+    font-weight: 900;
+    background: linear-gradient(90deg,#b6862e,#ffd700,#fff2b2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* هر آیتم نتیجه */
+.result-item {
+    margin-bottom: 22px;
+}
+.result-item span {
+    font-size: 1.1rem;
+}
+
+/* نوار */
+.bar-bg {
+    width: 100%;
+    height: 12px;
+    background: #333;
+    border-radius: 10px;
+    margin-top: 6px;
+}
+.bar {
+    height: 100%;
+    background: linear-gradient(90deg,#4fa6ff,#ffd875);
+    width: 0%;
+    border-radius: 10px;
+    transition: 0.8s;
+}
+
+/* دکمه */
+.back-btn {
+    margin-top: 25px;
+    width: 100%;
+    padding: 14px;
+    font-size: 1.2rem;
+    background: #4fa6ff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+}
+.back-btn:hover {
+    opacity: 0.85;
+}
+</style>
+
+</head>
+<body>
+
+<h1>نتایج آزمون شما</h1>
+
+<div class="result-card" id="resultBox">
+    <!-- نتایج اینجا با جاوااسکریپت ساخته می‌شود -->
+</div>
+
+<button class="back-btn" onclick="window.location.href='questions.html'">
+    بازگشت و شروع دوباره آزمون
+</button>
+
+<script>
+// خواندن داده‌ها از localStorage
+let answers = JSON.parse(localStorage.getItem("quiz_answers") || "[]");
+
+// اگر کاربر بدون آزمون وارد شد
+if (answers.length === 0) {
+    document.getElementById("resultBox").innerHTML =
+        "<p style='text-align:center;font-size:1.2rem;'>هیچ پاسخی یافت نشد.</p>";
+} 
+else {
+    let box = document.getElementById("resultBox");
+
+    answers.forEach((value, index) => {
+        box.innerHTML += `
+            <div class="result-item">
+                <span>سؤال ${index+1}</span>
+                <div class="bar-bg">
+                    <div class="bar" style="width: ${value}%"></div>
+                </div>
+            </div>
+        `;
+    });
+}
+</script>
+
+</body>
+</html>
 
