@@ -1,29 +1,26 @@
 // ----------------------------
-//     SETTINGS
+// SETTINGS
 // ----------------------------
-let qTotal = 20;      // تعداد کل سوال‌ها
-let qIndex = 1;       // شماره سوال فعلی
+let qTotal = 20;
+let qIndex = 1;
 
 // ----------------------------
-//     ELEMENTS
+// ELEMENTS
 // ----------------------------
 const qNumberEl = document.getElementById("q-number");
-const questionText = document.getElementById("questionText");
+const questionText = document.getElementById("questionText"); // ← مطابق HTML
 const progressBar = document.getElementById("progress-bar");
 const nextBtn = document.getElementById("nextBtn");
 const backBtn = document.getElementById("backBtn");
 
 // ----------------------------
-//     UPDATE UI
+// UPDATE UI
 // ----------------------------
-
-// شماره سوال + نوار پیشرفت
 function updateProgress() {
     qNumberEl.textContent = `سوال ${qIndex} از ${qTotal}`;
     progressBar.style.width = ((qIndex - 1) / (qTotal - 1)) * 100 + "%";
 }
 
-// متن سوال (اینجا سوال‌ها را تغییر بده)
 function updateQuestionText() {
     questionText.style.opacity = 0;
     setTimeout(() => {
@@ -33,11 +30,11 @@ function updateQuestionText() {
 }
 
 // ----------------------------
-//     NEXT BUTTON
+// NEXT BUTTON
 // ----------------------------
-nextBtn.addEventListener("click", () => {
+nextBtn.addEventListener("click", (e) => {
+    e.preventDefault();
 
-    // اگر هنوز سوال باقی مانده
     if (qIndex < qTotal) {
         qIndex++;
         updateProgress();
@@ -46,12 +43,14 @@ nextBtn.addEventListener("click", () => {
         return;
     }
 
-    // اگر سوال آخر تمام شد → برو به نتایج
-    window.location.href = "results.html";
+    // LAST QUESTION → GO TO RESULTS
+    setTimeout(() => {
+        window.location.replace("results.html");
+    }, 50);
 });
 
 // ----------------------------
-//     BACK BUTTON
+// BACK BUTTON
 // ----------------------------
 backBtn.addEventListener("click", () => {
     if (qIndex > 1) {
@@ -63,7 +62,7 @@ backBtn.addEventListener("click", () => {
 });
 
 // ----------------------------
-//     FADE ANIMATION
+// FADE ANIMATION
 // ----------------------------
 function fadeContent() {
     document.querySelectorAll(".fade-box").forEach(el => {
@@ -72,7 +71,9 @@ function fadeContent() {
     });
 }
 
-// اجرای اولیه
+// ----------------------------
+// INIT
+// ----------------------------
 updateProgress();
 updateQuestionText();
 fadeContent();
