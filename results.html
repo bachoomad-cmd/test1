@@ -8,65 +8,48 @@
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
 
 <style>
-
 body {
     background: #0d0d0d;
     color: #eee;
     font-family: 'Vazirmatn', sans-serif;
     padding: 30px;
 }
-
-/* کارت نتایج */
 .result-card {
-    max-width: 700px;
-    background: rgba(255,255,255,0.05);
-    padding: 25px;
+    max-width: 900px;
+    background: rgba(255,255,255,0.03);
+    padding: 22px;
     margin: auto;
     border-radius: 14px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    box-shadow: 0 0 30px rgba(0,0,0,0.45);
 }
-
-/* عنوان صفحه */
 h1 {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 18px;
     font-size: 1.9rem;
     font-weight: 900;
     background: linear-gradient(90deg,#b6862e,#ffd700,#fff2b2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+.result-grid { display:flex; gap:18px; flex-wrap:wrap; }
+.left { flex:1 1 320px; }
+.right { flex:1 1 320px; }
 
-/* هر آیتم نتیجه */
-.result-item {
-    margin-bottom: 22px;
-}
-.result-item span {
-    font-size: 1.1rem;
-}
+/* progress bars */
+.result-item { margin-bottom: 14px; }
+.result-item b { font-size:1rem; }
+.bar-bg { width:100%; height:12px; background:#222; border-radius:10px; margin-top:6px; overflow:hidden; }
+.bar { height:100%; background: linear-gradient(90deg,#4fa6ff,#ffd875); width:0%; border-radius:10px; transition:0.8s; }
 
-/* نوار */
-.bar-bg {
-    width: 100%;
-    height: 12px;
-    background: #333;
-    border-radius: 10px;
-    margin-top: 6px;
-}
-.bar {
-    height: 100%;
-    background: linear-gradient(90deg,#4fa6ff,#ffd875);
-    width: 0%;
-    border-radius: 10px;
-    transition: 0.8s;
-}
+/* top matches */
+.match { padding:12px; margin-bottom:10px; background: rgba(255,255,255,0.03); border-radius:10px; display:flex; justify-content:space-between; align-items:center; }
+.match b { font-size:1rem; }
 
-/* دکمه */
 .back-btn {
-    margin-top: 25px;
+    margin-top: 16px;
     width: 100%;
-    padding: 14px;
-    font-size: 1.2rem;
+    padding: 12px;
+    font-size: 1rem;
     background: #4fa6ff;
     color: white;
     border: none;
@@ -74,47 +57,156 @@ h1 {
     cursor: pointer;
     font-weight: 700;
 }
-.back-btn:hover {
-    opacity: 0.85;
-}
 </style>
-
 </head>
 <body>
 
-<h1>نتایج آزمون شما</h1>
+<h1>نتیجهٔ آزمون شما — شباهت با پادشاهان</h1>
 
-<div class="result-card" id="resultBox">
-    <!-- نتایج اینجا با جاوااسکریپت ساخته می‌شود -->
+<div class="result-card" id="resultCard">
+  <div class="result-grid">
+    <div class="left" id="axesBox">
+      <h3>پروفایل شما (محورها)</h3>
+      <div class="result-item"><b>اقتدار ↔ آزادی</b>
+        <div class="bar-bg"><div id="axis0" class="bar" style="width:0%"></div></div>
+      </div>
+      <div class="result-item"><b>بازار ↔ برابری</b>
+        <div class="bar-bg"><div id="axis1" class="bar" style="width:0%"></div></div>
+      </div>
+      <div class="result-item"><b>سنت ↔ اصلاح</b>
+        <div class="bar-bg"><div id="axis2" class="bar" style="width:0%"></div></div>
+      </div>
+      <div class="result-item"><b>مرز ↔ جهان</b>
+        <div class="bar-bg"><div id="axis3" class="bar" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="right" id="matchesBox">
+      <h3>پادشاهانِ شبیه به شما (رتبه‌بندی)</h3>
+      <div id="topMatches"></div>
+    </div>
+  </div>
+
+  <button class="back-btn" onclick="window.location.href='questions.html'">بازگشت و تکرار آزمون</button>
 </div>
 
-<button class="back-btn" onclick="window.location.href='questions.html'">
-    بازگشت و شروع دوباره آزمون
-</button>
-
 <script>
-// خواندن داده‌ها از localStorage
-let answers = JSON.parse(localStorage.getItem("quiz_answers") || "[]");
+/* خواندن پاسخ‌ها */
+const answers = JSON.parse(localStorage.getItem('quiz_answers') || '[]');
 
-// اگر کاربر بدون آزمون وارد شد
-if (answers.length === 0) {
-    document.getElementById("resultBox").innerHTML =
-        "<p style='text-align:center;font-size:1.2rem;'>هیچ پاسخی یافت نشد.</p>";
-} 
-else {
-    let box = document.getElementById("resultBox");
-
-    answers.forEach((value, index) => {
-        box.innerHTML += `
-            <div class="result-item">
-                <span>سؤال ${index+1}</span>
-                <div class="bar-bg">
-                    <div class="bar" style="width: ${value}%"></div>
-                </div>
-            </div>
-        `;
-    });
+if (!answers || answers.length === 0){
+  document.getElementById('resultCard').innerHTML = '<p style="text-align:center;font-size:1.2rem;">هیچ پاسخی یافت نشد. لطفاً آزمون را ابتدا تکمیل کنید.</p>';
+  throw new Error('No answers');
 }
+
+/* ======== تبدیل پاسخ‌ها به 4 محور (0..100) ======== */
+/*
+  ما 30 سؤال داریم. تقسیم‌بندی به 4 محور:
+  - محور0 (اقتدار): سوالات 0..7  (8 سوال)
+  - محور1 (اقتصاد):   سوالات 8..15 (8 سوال)
+  - محور2 (سنت/اصلاح): سوالات 16..22 (7 سوال)
+  - محور3 (مرز/جهان): سوالات 23..29 (7 سوال)
+*/
+function computeAxes(arr){
+  const groups = [
+    {from:0, to:7},   // 8 q
+    {from:8, to:15},  // 8 q
+    {from:16, to:22}, // 7 q
+    {from:23, to:29}  // 7 q
+  ];
+
+  const axes = groups.map(g=>{
+    let sum = 0;
+    let n = g.to - g.from + 1;
+    for(let i=g.from;i<=g.to;i++){
+      const v = (arr[i] !== undefined) ? Number(arr[i]) : 50;
+      sum += (v - 50); // centered -50..+50
+    }
+    const maxSum = 50 * n; // if all were 100 => each v-50=50
+    // map sum (-maxSum .. +maxSum) to 0..100
+    const score = Math.round(((sum / maxSum) + 1) * 50);
+    return Math.max(0, Math.min(100, score));
+  });
+
+  return axes; // [axis0..axis3]
+}
+
+const userAxes = computeAxes(answers);
+
+/* ======== پروفایل پادشاهان (چهار محوره) ========
+   این پروفایل‌ها از تحلیل تاریخی نمونه‌سازی شده‌اند.
+   هر عدد 0..100 اندازه‌گیری گرایش آن پادشاه روی آن محور است.
+*/
+const kings = {
+  "کوروش بزرگ":[55,60,40,50],
+  "داریوش بزرگ":[80,75,55,65],
+  "خشایارشا":[85,60,70,80],
+  "مهرداد یکم":[70,55,60,75],
+  "بلاش یکم":[50,45,55,50],
+  "فرهاد چهارم":[85,50,70,65],
+  "اردشیر بابکان":[90,55,80,80],
+  "شاپور یکم":[75,60,65,85],
+  "خسرو انوشیروان":[85,65,60,70],
+  "شاه اسماعیل":[90,40,85,70],
+  "شاه طهماسب":[70,50,80,60],
+  "شاه عباس":[85,70,45,55],
+  "آقامحمدخان":[95,45,80,85],
+  "فتحعلی‌شاه":[60,50,75,45],
+  "ناصرالدین‌شاه":[70,65,50,55],
+  "رضاشاه":[95,70,40,65],
+  "محمدرضاشاه":[70,80,35,45],
+  "احمدشاه":[35,55,55,30]
+};
+
+/* ======== محاسبهٔ شباهت (نرمالایز شده) ======== */
+function similarityScore(u, k){
+  // Euclidean distance normalized to 0..1 then converted to percent similarity
+  let sumsq = 0;
+  for(let i=0;i<4;i++){
+    const d = u[i] - k[i];
+    sumsq += d*d;
+  }
+  const dist = Math.sqrt(sumsq);
+  const maxDist = Math.sqrt(4 * 100 * 100); // 200
+  const sim = Math.round((1 - dist / maxDist) * 100);
+  return Math.max(0, Math.min(100, sim));
+}
+
+/* ======== نمایش محورها ======== */
+document.getElementById('axis0').style.width = userAxes[0] + '%';
+document.getElementById('axis1').style.width = userAxes[1] + '%';
+document.getElementById('axis2').style.width = userAxes[2] + '%';
+document.getElementById('axis3').style.width = userAxes[3] + '%';
+
+/* ======== محاسبه و مرتب‌سازی پادشاهان ======== */
+const results = [];
+Object.keys(kings).forEach(name=>{
+  const sim = similarityScore(userAxes, kings[name]);
+  results.push({name, sim});
+});
+results.sort((a,b)=> b.sim - a.sim);
+
+/* ======== نشان دادن 5 نتیجهٔ برتر و همه ======== */
+const topBox = document.getElementById('topMatches');
+topBox.innerHTML = '';
+
+// top 5
+topBox.innerHTML += '<h4>برترین شباهت‌ها</h4>';
+results.slice(0,5).forEach(r=>{
+  topBox.innerHTML += `<div class="match"><b>${r.name}</b><span>${r.sim}%</span></div>`;
+});
+
+// full list with bars
+topBox.innerHTML += '<h4 style="margin-top:12px">کل پادشاهان (مرتب‌شده)</h4>';
+results.forEach(r=>{
+  topBox.innerHTML += `
+    <div class="result-item">
+      <b>${r.name}</b> — ${r.sim}% شباهت
+      <div class="bar-bg"><div class="bar" style="width:${r.sim}%"></div></div>
+    </div>
+  `;
+});
+
 </script>
 
 </body>
