@@ -1,0 +1,113 @@
+/* --------------- GENERAL --------------- */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "IRANSans", sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at center, #1b1b1b, #0d0d0d, #000);
+    color: white;
+    padding: 40px 15px;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+/* --- Golden Glow Animation --- */
+@keyframes goldPulse {
+    0% { filter: drop-shadow(0 0 6px rgba(255,223,140,0.3)); }
+    50% { filter: drop-shadow(0 0 16px rgba(255,223,140,0.65)); }
+    100% { filter: drop-shadow(0 0 6px rgba(255,223,140,0.3)); }
+}
+
+/* --------------- TITLE --------------- */
+.result-title {
+    font-size: 2.4rem;
+    color: #f3d9a2;
+    text-shadow: 0 0 15px rgba(255,215,140,.45);
+    margin-bottom: 15px;
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(15px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------- CARD WRAPPER --------------- */
+.result-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 22px;
+    padding: 30px;
+    width: 85%;
+    max-width: 520px;
+    margin: 25px auto;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 40px rgba(0,0,0,.5);
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------- IMAGE (Improved) --------------- */
+.king-img {
+    width: 260px;
+    height: 260px;
+    object-fit: contain;
+    background: radial-gradient(circle, #2f2a22, #1c1b19);
+    border-radius: 20px;
+    border: 2px solid #d6b06d;
+    padding: 8px;
+    animation: goldPulse 4s infinite ease-in-out;
+    margin: 0 auto 15px auto;
+    display: block;
+    box-shadow: 0 0 35px rgba(255,217,150,0.25);
+}
+
+/* --------------- NAME --------------- */
+.king-name {
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+    color: #ffdf9b;
+    text-shadow: 0 0 10px rgba(255,215,150,.4);
+    animation: fadeIn 1.2s ease-out;
+}
+
+/* --------------- QUOTE BOX --------------- */
+.quote-box {
+    background: rgba(255,255,255,0.06);
+    border-left: 4px solid #e7c27d;
+    margin: 18px auto;
+    padding: 14px 18px;
+    width: 90%;
+    border-radius: 12px;
+    font-style: italic;
+    line-height: 1.8;
+    color: #f1e4c8;
+    animation: fadeIn 1.4s ease-out;
+}
+
+/* --------------- BUTTON --------------- */
+.again-btn {
+    margin-top: 25px;
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    background: linear-gradient(135deg,#e9c174,#b89044);
+    color: #1b1b1b;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow: 0 0 14px rgba(255,215,120,.4);
+}
+
+.again-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 24px rgba(255,215,120,.6);
+}
