@@ -1,179 +1,229 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>نتایج آزمون</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نتیجه آزمون</title>
 
-<!-- فونت -->
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
 
 <style>
-/* RESET */
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:'Vazirmatn',sans-serif;
-  background:#3a2c20;
-  color:#eee;
-  overflow-x:hidden;
-  direction:rtl;
-  position:relative;
+body {
+    background: #0d0d0d;
+    color: #eee;
+    font-family: 'Vazirmatn', sans-serif;
+    padding: 30px;
 }
+.result-card {
+    max-width: 900px;
+    background: rgba(255,255,255,0.03);
+    padding: 22px;
+    margin: auto;
+    border-radius: 14px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.45);
+}
+h1 {
+    text-align: center;
+    margin-bottom: 18px;
+    font-size: 1.9rem;
+    font-weight: 900;
+    background: linear-gradient(90deg,#b6862e,#ffd700,#fff2b2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.result-grid { display:flex; gap:18px; flex-wrap:wrap; }
+.left { flex:1 1 320px; }
+.right { flex:1 1 320px; }
 
-/* ذرات سفید */
-body::before{
-  content:"";
-  position:fixed;
-  inset:-50% -50% -50% -50%;
-  background-image: radial-gradient(#fff 1px, transparent 1px);
-  background-size: 14px 14px;
-  opacity:0.10;
-  animation: floatDots 60s linear infinite;
-  z-index:0;
-}
-@keyframes floatDots{
-  0%{transform:translate(0,0)}
-  50%{transform:translate(-40px,-60px)}
-  100%{transform:translate(0,0)}
-}
+/* progress bars */
+.result-item { margin-bottom: 14px; }
+.result-item b { font-size:1rem; }
+.bar-bg { width:100%; height:12px; background:#222; border-radius:10px; margin-top:6px; overflow:hidden; }
+.bar { height:100%; background: linear-gradient(90deg,#4fa6ff,#ffd875); width:0%; border-radius:10px; transition:0.8s; }
 
-/* هدر */
-.top-bar{
-  position:fixed;top:0;right:0;left:0;
-  height:75px;background:rgba(20,20,20,.9);
-  display:flex;align-items:center;justify-content:center;
-  z-index:50;backdrop-filter:blur(6px)
-}
-.header-title{
-  font-size:1.8rem;font-weight:800;
-  background:linear-gradient(90deg,#b6862e,#ffd700,#fff2b2,#ffd700,#b6862e);
-  background-size:200% 100%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:gold-slide 3s linear infinite
-}
-@keyframes gold-slide{0%{background-position:100%}100%{background-position:0}}
+/* top matches */
+.match { padding:12px; margin-bottom:10px; background: rgba(255,255,255,0.03); border-radius:10px; display:flex; justify-content:space-between; align-items:center; }
+.match b { font-size:1rem; }
 
-/* صفحه */
-.container{
-  max-width:900px;
-  margin:120px auto 40px;
-  padding:20px;
-  position:relative;
-  z-index:10;
+.back-btn {
+    margin-top: 16px;
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    background: #4fa6ff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
 }
-
-/* کارت نتایج */
-.result-card{
-  background:rgba(255,255,255,0.05);
-  border-radius:12px;
-  padding:30px;
-  box-shadow:0 8px 30px rgba(0,0,0,0.45);
-  backdrop-filter:blur(2px);
-  animation:fadeIn .7s ease;
-}
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-.result-title{
-  font-size:1.8rem;
-  margin-bottom:25px;
-  color:#ffe7ad;
-  font-weight:800;
-  text-align:center;
-}
-
-/* آیتم نتایج */
-.result-item{
-  margin-bottom:25px;
-}
-.result-label{
-  font-size:1.1rem;margin-bottom:8px;
-  color:#f6f3e8;
-  font-weight:600;
-}
-.result-bar-bg{
-  width:100%;
-  height:16px;
-  background:#2d2d2d;
-  border-radius:10px;
-  overflow:hidden;
-}
-.result-bar-fill{
-  height:100%;
-  background:linear-gradient(90deg,#4fa6ff,#ffd875);
-  width:0%;
-  transition:1s ease;
-}
-
-/* دکمه */
-.btn{
-  padding:12px 28px;
-  border:none;
-  border-radius:8px;
-  font-size:1.1rem;
-  cursor:pointer;
-  font-weight:600;
-  color:#fff;
-  background:#4fa6ff;
-  box-shadow:0 6px 20px rgba(0,0,0,.4);
-  margin:25px auto 0;
-  display:block;
-  transition:.2s;
-}
-.btn:hover{transform:translateY(-3px)}
 </style>
 </head>
 <body>
 
-<!-- Header -->
-<header class="top-bar">
-  <div class="header-title">نتایج آزمون شما</div>
-</header>
+<h1>نتیجهٔ آزمون شما — شباهت با پادشاهان</h1>
 
-<div class="container">
-
-  <div class="result-card">
-
-    <div class="result-title">امتیازات نهایی</div>
-
-    <!-- Example result rows -->
-    <div class="result-item">
-      <div class="result-label">ارزش ۱ — رهبری</div>
-      <div class="result-bar-bg"><div class="result-bar-fill" data-val="82"></div></div>
+<div class="result-card" id="resultCard">
+  <div class="result-grid">
+    <div class="left" id="axesBox">
+      <h3>پروفایل شما (محورها)</h3>
+      <div class="result-item"><b>اقتدار ↔ آزادی</b>
+        <div class="bar-bg"><div id="axis0" class="bar" style="width:0%"></div></div>
+      </div>
+      <div class="result-item"><b>بازار ↔ برابری</b>
+        <div class="bar-bg"><div id="axis1" class="bar" style="width:0%"></div></div>
+      </div>
+      <div class="result-item"><b>سنت ↔ اصلاح</b>
+        <div class="bar-bg"><div id="axis2" class="bar" style="width:0%"></div></div>
+      </div>
+      <div class="result-item"><b>مرز ↔ جهان</b>
+        <div class="bar-bg"><div id="axis3" class="bar" style="width:0%"></div></div>
+      </div>
     </div>
 
-    <div class="result-item">
-      <div class="result-label">ارزش ۲ — عدالت</div>
-      <div class="result-bar-bg"><div class="result-bar-fill" data-val="65"></div></div>
+    <div class="right" id="matchesBox">
+      <h3>پادشاهانِ شبیه به شما (رتبه‌بندی)</h3>
+      <div id="topMatches"></div>
     </div>
-
-    <div class="result-item">
-      <div class="result-label">ارزش ۳ — شجاعت</div>
-      <div class="result-bar-bg"><div class="result-bar-fill" data-val="41"></div></div>
-    </div>
-
-    <div class="result-item">
-      <div class="result-label">ارزش ۴ — خرد</div>
-      <div class="result-bar-bg"><div class="result-bar-fill" data-val="90"></div></div>
-    </div>
-
-    <button class="btn" onclick="window.location.href='index.html'">بازگشت به صفحه اصلی</button>
-
   </div>
 
+  <button class="back-btn" onclick="window.location.href='questions.html'">بازگشت و تکرار آزمون</button>
 </div>
 
 <script>
-// انیمیشن پر شدن نوارها
-document.querySelectorAll(".result-bar-fill").forEach(bar=>{
-  let v = bar.dataset.val;
-  setTimeout(()=>{
-    bar.style.width = v + "%";
-  },300);
+/* خواندن پاسخ‌ها */
+const answers = JSON.parse(localStorage.getItem('quiz_answers') || '[]');
+
+if (!answers || answers.length === 0){
+  document.getElementById('resultCard').innerHTML = '<p style="text-align:center;font-size:1.2rem;">هیچ پاسخی یافت نشد. لطفاً آزمون را ابتدا تکمیل کنید.</p>';
+  throw new Error('No answers');
+}
+
+/* ======== تبدیل پاسخ‌ها به 4 محور (0..100) ======== */
+/*
+  ما 30 سؤال داریم. تقسیم‌بندی به 4 محور:
+  - محور0 (اقتدار): سوالات 0..7  (8 سوال)
+  - محور1 (اقتصاد):   سوالات 8..15 (8 سوال)
+  - محور2 (سنت/اصلاح): سوالات 16..22 (7 سوال)
+  - محور3 (مرز/جهان): سوالات 23..29 (7 سوال)
+*/
+function computeAxes(arr){
+  const groups = [
+    {from:0, to:7},   // 8 q
+    {from:8, to:15},  // 8 q
+    {from:16, to:22}, // 7 q
+    {from:23, to:29}  // 7 q
+  ];
+
+  const axes = groups.map(g=>{
+    let sum = 0;
+    let n = g.to - g.from + 1;
+    for(let i=g.from;i<=g.to;i++){
+      const v = (arr[i] !== undefined) ? Number(arr[i]) : 50;
+      sum += (v - 50); // centered -50..+50
+    }
+    const maxSum = 50 * n; // if all were 100 => each v-50=50
+    // map sum (-maxSum .. +maxSum) to 0..100
+    const score = Math.round(((sum / maxSum) + 1) * 50);
+    return Math.max(0, Math.min(100, score));
+  });
+
+  return axes; // [axis0..axis3]
+}
+
+const userAxes = computeAxes(answers);
+
+/* ======== پروفایل پادشاهان (چهار محوره) ========
+   این پروفایل‌ها از تحلیل تاریخی نمونه‌سازی شده‌اند.
+   هر عدد 0..100 اندازه‌گیری گرایش آن پادشاه روی آن محور است.
+*/
+const kings = {
+  // === هخامنشی ===
+  "کوروش بزرگ":        [25, 30, 20, 20],   // آزادی‌گرا، بازار آزاد، اصلاح‌گرا، صلح‌محور
+  "کمبوجیه":            [95, 20, 90, 95],   // اقتدار مطلق، سنت افراطی، توسعه‌طلب خشن
+  "داریوش بزرگ":        [100, 85, 65, 80],  // اقتدار کامل، اقتصاد دولتی، اصلاح اداری سنگین
+  "خشایارشا":           [98, 15, 95, 100],  // سنت افراطی، جنگ‌طلب مطلق
+
+  // === اشکانی ===
+  "مهرداد یکم":         [75, 10, 75, 95],   // توسعه مرزی، اقتدار متوسط، سنت بالا
+  "بلاش یکم":           [35, 25, 45, 30],   // صلح‌گرا، عدم تمرکز، کمترین توسعه‌طلبی اشکانی
+  "فرهاد چهارم":        [90, 5, 85, 85],    // خشونت بالا، اقتدار کامل، ضد اشراف
+
+  // === ساسانی ===
+  "اردشیر بابکان":      [100, 25, 100, 90], // استبداد مطلق، بازگشت به سنت، ضد آزادی
+  "شاپور یکم":           [80, 60, 55, 95],   // جنگ‌های بزرگ، تحمل مذهبی، توسعه‌طلب
+  "خسرو انوشیروان":     [95, 100, 45, 60],  // اقتصاد دولتی شدید، اصلاحات فنی
+  "یزدگرد سوم":         [10, 15, 25, 10],   // ضعیف‌ترین اقتدار، ضدجنگ، سقوط ساختاری
+
+  // === صفوی ===
+  "شاه اسماعیل":        [100, 5, 100, 80],  // ایدئولوژیک، اقتدار مطلق، سنت افراطی
+  "شاه طهماسب":         [60, 20, 90, 40],   // مذهبی، ضد جنگ، محافظه‌کار
+  "شاه عباس":           [85, 90, 35, 70],   // اصلاح ارتش، اقتصاد باز، تمرکز بالا
+
+  // === افشاریه / زند ===
+  "نادرشاه":            [100, 30, 50, 100], // جهان‌گشاترین شاه ایران
+  "کریم‌خان زند":       [15, 95, 10, 15],   // آزادی‌گرا، بازار آزاد واقعی، صلح‌گرا
+
+  // === قاجار ===
+  "آقامحمدخان":         [100, 15, 80, 95],  // خشونت شدید، اقتدار مطلق
+  "فتحعلی‌شاه":         [55, 25, 85, 35],   // سلطنت ضعیف، سنتی، ضد اصلاح
+  "ناصرالدین‌شاه":      [70, 55, 50, 50],   // میانه، اصلاحات کند
+  "احمدشاه":            [5, 40, 30, 10],    // آزادی‌گرا، ضد اقتدار، ضد جنگ
+
+  // === پهلوی ===
+  "رضاشاه":             [95, 100, 20, 65],  // اقتدار سخت، نوسازی صنعتی، اقتصاد دولتی مطلق
+  "محمدرضاشاه":         [60, 95, 25, 35]    // نوسازی فرهنگی، بازار نفت‌محور، غرب‌گرا
+};
+
+/* ======== محاسبهٔ شباهت (نرمالایز شده) ======== */
+function similarityScore(u, k){
+  // Euclidean distance normalized to 0..1 then converted to percent similarity
+  let sumsq = 0;
+  for(let i=0;i<4;i++){
+    const d = u[i] - k[i];
+    sumsq += d*d;
+  }
+  const dist = Math.sqrt(sumsq);
+  const maxDist = Math.sqrt(4 * 100 * 100); // 200
+  const sim = Math.round((1 - dist / maxDist) * 100);
+  return Math.max(0, Math.min(100, sim));
+}
+
+/* ======== نمایش محورها ======== */
+document.getElementById('axis0').style.width = userAxes[0] + '%';
+document.getElementById('axis1').style.width = userAxes[1] + '%';
+document.getElementById('axis2').style.width = userAxes[2] + '%';
+document.getElementById('axis3').style.width = userAxes[3] + '%';
+
+/* ======== محاسبه و مرتب‌سازی پادشاهان ======== */
+const results = [];
+Object.keys(kings).forEach(name=>{
+  const sim = similarityScore(userAxes, kings[name]);
+  results.push({name, sim});
 });
+results.sort((a,b)=> b.sim - a.sim);
+
+/* ======== نشان دادن 5 نتیجهٔ برتر و همه ======== */
+const topBox = document.getElementById('topMatches');
+topBox.innerHTML = '';
+
+// top 5
+topBox.innerHTML += '<h4>برترین شباهت‌ها</h4>';
+results.slice(0,5).forEach(r=>{
+  topBox.innerHTML += `<div class="match"><b>${r.name}</b><span>${r.sim}%</span></div>`;
+});
+
+// full list with bars
+topBox.innerHTML += '<h4 style="margin-top:12px">کل پادشاهان (مرتب‌شده)</h4>';
+results.forEach(r=>{
+  topBox.innerHTML += `
+    <div class="result-item">
+      <b>${r.name}</b> — ${r.sim}% شباهت
+      <div class="bar-bg"><div class="bar" style="width:${r.sim}%"></div></div>
+    </div>
+  `;
+});
+
 </script>
 
 </body>
