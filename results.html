@@ -1,28 +1,166 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نتیجه تست فرمانروایان ایران</title>
-<link rel="stylesheet" href="result.css">
+<title>نتیجه آزمون شما</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+<style>
+body {
+    background: #0d0d0d;
+    color: #eee;
+    font-family: 'Vazirmatn', sans-serif;
+    padding: 30px;
+    text-align:center;
+}
+
+.result-box {
+    max-width: 550px;
+    margin: auto;
+    background: rgba(255,255,255,0.05);
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.45);
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg,#d8b46a,#ffe8a6,#fff8d9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.king-img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin: 20px auto;
+    display:block;
+    border:2px solid #d9b56b;
+    box-shadow: 0 0 20px rgba(255,210,120,0.35);
+}
+
+.king-name {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin: 10px 0;
+    color:#f7e1ac;
+}
+
+.similarity {
+    font-size: 1.1rem;
+    opacity: .85;
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    background: #d6a84d;
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+}
+</style>
 </head>
 
 <body>
 
-<div class="result-container">
+<h1>نتیجه آزمون شما</h1>
 
-    <h1 class="title">نتیجه تست فرمانروایان ایران</h1>
+<div class="result-box" id="resultBox">
+    <img id="kingImage" class="king-img" src="">
+    <div id="kingName" class="king-name"></div>
+    <div id="similarityText" class="similarity"></div>
 
-    <div id="king-card" class="king-card">
-        <img id="king-img" class="king-img" src="" alt="">
-        <h2 id="king-name" class="king-name"></h2>
-        <p id="king-tagline" class="king-tagline"></p>
-        <p id="king-desc" class="king-desc"></p>
-    </div>
-
+    <button class="back-btn" onclick="window.location.href='questions.html'">
+        بازگشت و تکرار آزمون
+    </button>
 </div>
 
-<script src="result.js"></script>
+<script>
+/* --- گرفتن جواب‌ها --- */
+const answers = JSON.parse(localStorage.getItem('quiz_answers') || '[]');
+if (!answers.length){
+    document.getElementById('resultBox').innerHTML = "پاسخی یافت نشد.";
+    throw new Error("No answers");
+}
+
+/* --- تبدیل پاسخ‌ها به محور --- */
+function computeAxes(arr){
+    const groups = [
+        {from:0,to:7},
+        {from:8,to:15},
+        {from:16,to:22},
+        {from:23,to:29}
+    ];
+    return groups.map(g=>{
+        let sum = 0, n = g.to-g.from+1;
+        for(let i=g.from;i<=g.to;i++){
+            sum += (arr[i] - 50);
+        }
+        const max = 50*n;
+        return Math.round(((sum/max)+1)*50);
+    });
+}
+
+const userAxes = computeAxes(answers);
+
+/* --- پروفایل پادشاهان (دقیقاً مطابق فایل‌های تو) --- */
+const kings = {
+  "کوروش":          [25,30,20,20],
+  "داریوش":         [100,85,65,80],
+  "خشایار":         [98,15,95,100],
+  "کمبوجیه":        [95,20,90,95],
+  "مهرداد یکم":     [75,10,75,95],
+  "فرهاد چهارم":    [90,5,85,85],
+  "شاپور یکم":       [80,60,55,95],
+  "خسرو":           [95,100,45,60],
+  "اردشیر":         [100,25,100,90],
+  "شاه اسماعیل":    [100,5,100,80],
+  "شاه طهماسب":     [60,20,90,40],
+  "شاه عباس":       [85,90,35,70],
+  "نادر":           [100,30,50,100],
+  "کریم خان":       [15,95,10,15],
+  "آقا محمد خان":   [100,15,80,95],
+  "ناصرالدین شاه":  [70,55,50,50],
+  "احمدشاه":        [5,40,30,10],
+  "رضاخان":         [95,100,20,65],
+  "محمدرضا شاه":    [60,95,25,35]
+};
+
+/* --- شباهت --- */
+function similarityScore(u, k){
+  let s = 0;
+  for(let i=0;i<4;i++){ s += (u[i]-k[i])**2; }
+  return Math.round((1 - Math.sqrt(s)/200)*100);
+}
+
+/* --- نزدیک‌ترین پادشاه --- */
+let best = null;
+Object.keys(kings).forEach(name=>{
+    const sim = similarityScore(userAxes, kings[name]);
+    if (!best || sim > best.sim) best = {name, sim};
+});
+
+/* --- خروجی --- */
+document.getElementById("kingName").textContent = best.name;
+document.getElementById("similarityText").textContent = `شباهت: ${best.sim}%`;
+
+/* مسیر عکس مطابق فایل‌های تو */
+const imgPath = `assets/${best.name}.png`;
+document.getElementById("kingImage").src = imgPath;
+
+</script>
+
 </body>
 </html>
 
