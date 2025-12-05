@@ -144,7 +144,7 @@ function similarityScore(u, k){
   return Math.round((1 - Math.sqrt(s)/200)*100);
 }
 
-/* --- پیدا کردن نزدیک‌ترین پادشاه --- */
+/* --- نزدیک‌ترین پادشاه --- */
 let best = null;
 Object.keys(kings).forEach(name=>{
     const sim = similarityScore(userAxes, kings[name]);
@@ -155,10 +155,12 @@ Object.keys(kings).forEach(name=>{
 document.getElementById("kingName").textContent = best.name;
 document.getElementById("similarityText").textContent = `شباهت: ${best.sim}%`;
 
+/* تصویر PNG */
 const imgPath = `assets/kings/${best.name}.png`;
 document.getElementById("kingImage").src = imgPath;
 
 </script>
+
 
 </body>
 </html>
