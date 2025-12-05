@@ -3,98 +3,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>نتیجه آزمون شما</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
 
 <style>
 body {
-    background: #0d0d0d;
-    color: #eee;
+    background: radial-gradient(circle at center, #1a1a1a, #0a0a0a 80%);
     font-family: 'Vazirmatn', sans-serif;
-    padding: 30px;
-    text-align:center;
+    color: #eee;
+    text-align: center;
+    padding: 40px 20px;
+    overflow-x: hidden;
+}
+
+/* نور پس‌زمینه */
+.bg-glow {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255,215,130,0.15), transparent 70%);
+    z-index: -1;
+    animation: glowPulse 6s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0% { opacity: .35; transform: scale(1); }
+    50% { opacity: .55; transform: scale(1.15); }
+    100% { opacity: .35; transform: scale(1); }
 }
 
 .result-box {
-    max-width: 550px;
+    max-width: 620px;
     margin: auto;
-    background: rgba(255,255,255,0.05);
-    padding: 30px;
-    border-radius: 18px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.45);
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(8px);
+    padding: 35px 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,225,150,0.15);
+    box-shadow: 0 0 25px rgba(255,200,120,0.15);
+    animation: fadeIn .8s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 h1 {
-    font-size: 2rem;
-    margin-bottom: 10px;
+    font-size: 2.3rem;
+    margin-bottom: 14px;
     background: linear-gradient(90deg,#d8b46a,#ffe8a6,#fff8d9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .king-img {
-    width: 220px;
-    height: 220px;
+    width: 240px;
+    height: 240px;
     object-fit: cover;
-    border-radius: 14px;
+    border-radius: 16px;
     margin: 20px auto;
     display:block;
     border:2px solid #d9b56b;
-    box-shadow: 0 0 20px rgba(255,210,120,0.35);
+    box-shadow: 0 0 25px rgba(255,215,150,0.45);
 }
 
 .king-name {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-weight: 900;
+    color:#f4d69c;
     margin: 10px 0;
-    color:#f7e1ac;
+    text-shadow: 0 0 10px rgba(255,215,150,0.4);
 }
 
 .similarity {
-    font-size: 1.1rem;
-    opacity: .85;
-    margin-bottom: 20px;
+    font-size: 1.2rem;
+    opacity: .9;
+    margin-bottom: 12px;
+}
+
+.quote-box {
+    margin-top: 22px;
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: #ffecc5;
+    opacity: .9;
+    background: rgba(255,225,150,0.07);
+    padding: 15px 18px;
+    border-radius: 12px;
+    border-right: 3px solid #d6b174;
+    box-shadow: inset 0 0 12px rgba(255,215,130,0.1);
 }
 
 .back-btn {
-    margin-top: 20px;
+    margin-top: 25px;
     width: 100%;
-    padding: 12px;
-    font-size: 1.1rem;
+    padding: 14px;
+    font-size: 1.2rem;
     background: #d6a84d;
     color: #000;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     font-weight: 700;
+    transition: .25s;
+}
+
+.back-btn:hover {
+    background: #f0c574;
+    transform: translateY(-3px);
+    box-shadow: 0 0 18px rgba(255,215,130,0.4);
 }
 </style>
 </head>
 
 <body>
 
+<div class="bg-glow"></div>
+
 <h1>نتیجه آزمون شما</h1>
 
-<div class="result-box" id="resultBox">
+<div class="result-box">
+
     <img id="kingImage" class="king-img" src="">
     <div id="kingName" class="king-name"></div>
     <div id="similarityText" class="similarity"></div>
+    <div id="kingQuote" class="quote-box"></div>
 
     <button class="back-btn" onclick="window.location.href='questions.html'">
         بازگشت و تکرار آزمون
     </button>
+
 </div>
 
 <script>
-/* --- گرفتن جواب‌ها --- */
+/* ---- دریافت پاسخ‌ها ---- */
 const answers = JSON.parse(localStorage.getItem('quiz_answers') || '[]');
 if (!answers.length){
-    document.getElementById('resultBox').innerHTML = "پاسخی یافت نشد.";
+    document.querySelector('.result-box').innerHTML = "پاسخی یافت نشد.";
     throw new Error("No answers");
 }
 
-/* --- تبدیل پاسخ‌ها به محور --- */
+/* ---- محاسبه محورهای شخصیتی ---- */
 function computeAxes(arr){
     const groups = [
         {from:0,to:7},
@@ -114,53 +165,50 @@ function computeAxes(arr){
 
 const userAxes = computeAxes(answers);
 
-/* --- پروفایل پادشاهان (دقیقاً مطابق فایل‌های تو) --- */
+/* ---- پروفایل پادشاهان + جمله معروف ---- */
 const kings = {
-  "کوروش":          [25,30,20,20],
-  "داریوش":         [100,85,65,80],
-  "خشایار":         [98,15,95,100],
-  "کمبوجیه":        [95,20,90,95],
-  "مهرداد یکم":     [75,10,75,95],
-  "فرهاد چهارم":    [90,5,85,85],
-  "شاپور یکم":       [80,60,55,95],
-  "خسرو":           [95,100,45,60],
-  "اردشیر":         [100,25,100,90],
-  "شاه اسماعیل":    [100,5,100,80],
-  "شاه طهماسب":     [60,20,90,40],
-  "شاه عباس":       [85,90,35,70],
-  "نادر":           [100,30,50,100],
-  "کریم خان":       [15,95,10,15],
-  "آقا محمد خان":   [100,15,80,95],
-  "ناصرالدین شاه":  [70,55,50,50],
-  "احمدشاه":        [5,40,30,10],
-  "رضاخان":         [95,100,20,65],
-  "محمدرضا شاه":    [60,95,25,35]
+  "کوروش":        {axes:[25,30,20,20], quote:"«راه نیک، راه راستی است؛ راه راستی، راه آزادی است.»"},
+  "داریوش":       {axes:[100,85,65,80], quote:"«خدای بزرگ، اهورامزدا مرا و کشور مرا بپاید.»"},
+  "خشایار":       {axes:[98,15,95,100], quote:"«من پادشاهی‌ام که قدرت را با نظم یکی می‌دانم.»"},
+  "کمبوجیه":      {axes:[95,20,90,95], quote:"«هیچ تختی بی‌اقتدار پایدار نمی‌ماند.»"},
+  "مهرداد یکم":   {axes:[75,10,75,95], quote:"«ایران را باید با خرد نگه داشت، نه با شمشیر تنها.»"},
+  "فرهاد چهارم":  {axes:[90,5,85,85], quote:"«فرمانروایی هنر نگاهبانی از مردم است.»"},
+  "شاپور یکم":     {axes:[80,60,55,95], quote:"«پادشاهی باید ستون عدالت باشد.»"},
+  "خسرو":         {axes:[95,100,45,60], quote:"«پادشاه خوب، نخست خدمت‌گزار مردم است.»"},
+  "اردشیر":       {axes:[100,25,100,90], quote:"«پایه‌های شاهی بر داد و راستی است.»"},
+  "شاه اسماعیل":  {axes:[100,5,100,80], quote:"«مملکت با شمشیر گرفته می‌شود، با عشق نگاه داشته می‌شود.»"},
+  "شاه طهماسب":   {axes:[60,20,90,40], quote:"«آن‌که صلح آورد، از شمشیر برتر است.»"},
+  "شاه عباس":     {axes:[85,90,35,70], quote:"«ایران با آبادانی سربلند می‌شود.»"},
+  "نادر":         {axes:[100,30,50,100], quote:"«من سرباز ایرانم؛ تاج و تخت خادم مردم است.»"},
+  "کریم خان":      {axes:[15,95,10,15], quote:"«من شاه نیستم؛ وکیل‌الرعایا هستم.»"},
+  "آقا محمد خان": {axes:[100,15,80,95], quote:"«قدرت را از اراده می‌گیرند، نه از خون.»"},
+  "ناصرالدین شاه":{axes:[70,55,50,50], quote:"«جهان را باید دید، نه فقط حکم کرد.»"},
+  "احمدشاه":      {axes:[5,40,30,10], quote:"«هیچ سلطنتی بی‌پشتیبانی مردم نمی‌پاید.»"},
+  "رضاخان":       {axes:[95,100,20,65], quote:"«ایران باید نو شود؛ نوسازی راه نجات است.»"},
+  "محمدرضا شاه":  {axes:[60,95,25,35], quote:"«آینده ایران روشن است اگر متحد باشد.»"}
 };
 
-/* --- شباهت --- */
+/* ---- محاسبه شباهت ---- */
 function similarityScore(u, k){
   let s = 0;
   for(let i=0;i<4;i++){ s += (u[i]-k[i])**2; }
   return Math.round((1 - Math.sqrt(s)/200)*100);
 }
 
-/* --- نزدیک‌ترین پادشاه --- */
+/* ---- پیدا کردن پادشاه نزدیک ---- */
 let best = null;
 Object.keys(kings).forEach(name=>{
-    const sim = similarityScore(userAxes, kings[name]);
+    const sim = similarityScore(userAxes, kings[name].axes);
     if (!best || sim > best.sim) best = {name, sim};
 });
 
-/* --- خروجی --- */
+/* ---- نمایش نتیجه ---- */
 document.getElementById("kingName").textContent = best.name;
 document.getElementById("similarityText").textContent = `شباهت: ${best.sim}%`;
+document.getElementById("kingQuote").textContent = kings[best.name].quote;
 
-/* مسیر عکس مطابق فایل‌های تو */
-const imgPath = `assets/${best.name}.png`;
-document.getElementById("kingImage").src = imgPath;
-
+document.getElementById("kingImage").src = `assets/${best.name}.png`;
 </script>
 
 </body>
 </html>
-
