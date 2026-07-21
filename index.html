@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Noto+Sans+Cuneiform&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
   :root{
@@ -24,6 +24,7 @@
 
     --display: "Lalezar", sans-serif;
     --body: "Vazirmatn", sans-serif;
+    --cuneiform: "Noto Sans Cuneiform", sans-serif;
   }
 
   *{ margin:0; padding:0; box-sizing:border-box; }
@@ -81,6 +82,12 @@
   }
   .brand-mark svg{ width:16px; height:16px; }
 
+  .nav-right-group{
+    display:flex;
+    align-items:center;
+    gap:22px;
+  }
+
   .nav-links{
     display:flex;
     gap:22px;
@@ -89,6 +96,29 @@
   }
   .nav-links a{ text-decoration:none; }
   .nav-links a:hover{ color: var(--parchment); }
+
+  /* ---------- LANG SWITCHER BUTTON ---------- */
+  .lang-btn{
+    background: rgba(212,169,74,.1);
+    border: 1px solid rgba(212,169,74,.3);
+    color: var(--gold-soft);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: .8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all .2s ease;
+  }
+  .lang-btn:hover{
+    background: rgba(212,169,74,.25);
+    border-color: var(--gold);
+  }
+  .cuneiform-mode {
+    font-family: var(--cuneiform) !important;
+    letter-spacing: 2px;
+  }
 
   /* ---------- PAGE HEAD ---------- */
   .page-head{
@@ -226,17 +256,24 @@
     <span class="brand-mark">
       <svg viewBox="0 0 24 24" fill="none" stroke="#d4a94a" stroke-width="1.4"><path d="M12 2 L14 9 L21 9 L15.5 13.2 L17.5 20 L12 15.8 L6.5 20 L8.5 13.2 L3 9 L10 9 Z"/></svg>
     </span>
-    آینه
+    <span data-key="brand">آینه</span>
   </a>
-  <div class="nav-links">
-    <a href="#tests">تست‌ها</a>
+  <div class="nav-right-group">
+    <div class="nav-links">
+      <a href="#tests" data-key="navTests">تست‌ها</a>
+    </div>
+    <!-- دکمه کوچک سوییچ زبان -->
+    <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">
+      <span>𐎧𐏁𐎠𐎡</span>
+      <span id="langBtnText">پارسی باستان</span>
+    </button>
   </div>
 </nav>
 
 <div class="page-head">
   <div class="container">
-    <h1>تست‌ها</h1>
-    <p>چند تا تست کوتاه شخصیت‌شناسی، ریشه‌گرفته از تاریخ و فرهنگ ایران. یکی رو انتخاب کن و شروع کن.</p>
+    <h1 data-key="mainHeading">تست‌ها</h1>
+    <p data-key="mainDesc">چند تا تست کوتاه شخصیت‌شناسی، ریشه‌گرفته از تاریخ و فرهنگ ایران. یکی رو انتخاب کن و شروع کن.</p>
   </div>
 </div>
 
@@ -247,33 +284,33 @@
       <a href="questions.html" class="card">
         <div class="card-media">
           <img src="assets/card-kings.png" alt="پرتره‌ی کوروش بزرگ" loading="lazy" width="400" height="400">
-          <span class="badge live">دردسترس</span>
+          <span class="badge live" data-key="badgeLive1">دردسترس</span>
         </div>
         <div class="card-body">
-          <h3>تست پادشاهان ایران</h3>
-          <p>از کوروش تا رضاشاه؛ کدوم پادشاه شخصیتت رو بهتر نشون می‌ده؟</p>
+          <h3 data-key="card1Title">تست پادشاهان ایران</h3>
+          <p data-key="card1Desc">از کوروش تا رضاشاه؛ کدوم پادشاه شخصیتت رو بهتر نشون می‌ده؟</p>
         </div>
       </a>
 
       <a href="iran-history.html" class="card">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#173a38,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#2fb6a6" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-          <span class="badge live">دردسترس</span>
+          <span class="badge live" data-key="badgeLive2">دردسترس</span>
         </div>
         <div class="card-body">
-          <h3>تو کدوم دوره‌ی تاریخ ایران زندگی می‌کردی؟</h3>
-          <p>از هخامنشی تا پهلوی؛ روحت مال کدوم دوره‌ست؟</p>
+          <h3 data-key="card2Title">تو کدوم دوره‌ی تاریخ ایران زندگی می‌کردی؟</h3>
+          <p data-key="card2Desc">از هخامنشی تا پهلوی؛ روحت مال کدوم دوره‌ست؟</p>
         </div>
       </a>
 
       <div class="card is-disabled">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#3a1730,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#e08aa2" stroke-width="1.2"><path d="M12 2 L14 9 L21 9 L15.5 13.2 L17.5 20 L12 15.8 L6.5 20 L8.5 13.2 L3 9 L10 9 Z"/></svg>
-          <span class="badge soon">به‌زودی</span>
+          <span class="badge soon" data-key="badgeSoon">به‌زودی</span>
         </div>
         <div class="card-body">
-          <h3>تست شاعران ایران</h3>
-          <p>حافظ می‌فهمتت یا مولانا بیشتر باهات حرف می‌زنه؟</p>
+          <h3 data-key="card3Title">تست شاعران ایران</h3>
+          <p data-key="card3Desc">حافظ می‌فهمتت یا مولانا بیشتر باهات حرف می‌زنه؟</p>
         </div>
       </div>
 
@@ -282,8 +319,72 @@
 </main>
 
 <footer>
-  <div class="container">© ۱۴۰۵ آینه — تست‌های شخصیت‌شناسی ایرانی</div>
+  <div class="container" data-key="footer">© ۱۴۰۵ آینه — تست‌های شخصیت‌شناسی ایرانی</div>
 </footer>
+
+<script>
+  // فرهنگ لغات (فارسی عامیانه + فینگلیش میخی باستانی)
+  const translations = {
+    fa: {
+      brand: "آینه",
+      navTests: "تست‌ها",
+      mainHeading: "تست‌ها",
+      mainDesc: "چند تا تست کوتاه شخصیت‌شناسی، ریشه‌گرفته از تاریخ و فرهنگ ایران. یکی رو انتخاب کن و شروع کن.",
+      badgeLive1: "دردسترس",
+      badgeLive2: "دردسترس",
+      badgeSoon: "به‌زودی",
+      card1Title: "تست پادشاهان ایران",
+      card1Desc: "از کوروش تا رضاشاه؛ کدوم پادشاه شخصیتت رو بهتر نشون می‌ده؟",
+      card2Title: "تو کدوم دوره‌ی تاریخ ایران زندگی می‌کردی؟",
+      card2Desc: "از هخامنشی تا پهلوی؛ روحت مال کدوم دوره‌ست؟",
+      card3Title: "تست شاعران ایران",
+      card3Desc: "حافظ می‌فهمتت یا مولانا بیشتر باهات حرف می‌زنه؟",
+      footer: "© ۱۴۰۵ آینه — تست‌های شخصیت‌شناسی ایرانی",
+      btnLabel: "پارسی باستان"
+    },
+    oldPersian: {
+      brand: "𐎠 𐎡 𐎴 𐎥",
+      navTests: "𐎫 𐎿 𐎫 𐎥 𐎠",
+      mainHeading: "𐎫 𐎿 𐎫 𐎥 𐎠",
+      mainDesc: "𐎭 𐎴 𐎭 𐎫 𐎿 𐎫 𐎣 𐎺 𐎫 𐎠 𐎧 𐎺 𐎭 𐎫 𐎼 𐎺 𐎫 𐎺 𐎡 𐎭 𐎸 𐎫 𐎠 𐎼 𐎡 𐎧",
+      badgeLive1: "𐎭 𐎼 𐎭 𐎿 𐎫 𐎼 𐎿",
+      badgeLive2: "𐎭 𐎼 𐎭 𐎿 𐎫 𐎼 𐎿",
+      badgeSoon: "𐎲 𐎇 𐎺 𐎭 𐎡",
+      card1Title: "𐎫 𐎿 𐎫 𐎱 𐎠 𐎭 𐏁 𐎠 𐎥 𐎠 𐎴",
+      card1Desc: "𐎠 𐎇 𐎣 𐎺 𐎼 𐎺 𐏁 𐎫 𐎠 𐎼 𐎯 𐎠 𐏁 𐎠 𐎥",
+      card2Title: "𐎫 𐎺 𐎣 𐎭 𐎺 𐎶 𐎭 𐎺 𐎼 𐎥",
+      card2Desc: "𐎠 𐎇 𐎥 𐎧 𐎠 𐎶 𐎴 𐏁 𐎡 𐎫 𐎠 𐎱 𐎥 𐎸 𐎺 𐎡",
+      card3Title: "𐎫 𐎿 𐎫 𐏁 𐎠 b 𐎼 𐎠 𐎴",
+      card3Desc: "𐎥 𐎠 𐎳 𐎇 𐎶 𐎡 𐎳 𐎥 𐎶 𐎫 𐎡 𐎹 𐎠 𐎶 𐎺 𐎸 𐎴 𐎠",
+      footer: "© ۱۴۰۵ 𐎠 𐎡 𐎴 𐎥 — 𐎫 𐎿 𐎫 𐎥 𐎠 𐎡 𐎡 𐎼 𐎠 𐎴 𐎡",
+      btnLabel: "فارسی"
+    }
+  };
+
+  let currentLang = 'fa';
+
+  function toggleLanguage() {
+    currentLang = (currentLang === 'fa') ? 'oldPersian' : 'fa';
+    
+    // به‌روزرسانی متن‌های HTML
+    document.querySelectorAll('[data-key]').forEach(el => {
+      const key = el.getAttribute('data-key');
+      if (translations[currentLang][key]) {
+        el.innerText = translations[currentLang][key];
+        
+        // اعمال فونت میخی در حالت باستانی
+        if (currentLang === 'oldPersian') {
+          el.classList.add('cuneiform-mode');
+        } else {
+          el.classList.remove('cuneiform-mode');
+        }
+      }
+    });
+
+    // تغییر لیبل دکمه
+    document.getElementById('langBtnText').innerText = translations[currentLang].btnLabel;
+  }
+</script>
 
 </body>
 </html>
