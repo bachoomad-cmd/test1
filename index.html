@@ -97,7 +97,7 @@
   .nav-links a{ text-decoration:none; }
   .nav-links a:hover{ color: var(--parchment); }
 
-  /* ---------- MODERN GLASS SWITCHER ---------- */
+  /* ---------- GLASS SWITCHER ---------- */
   .lang-switch-wrapper {
     display: inline-flex;
     align-items: center;
@@ -137,7 +137,7 @@
     line-height: 1;
   }
 
-  /* ---------- TEXT ROTATION ANIMATION (چرخش سه بعدی) ---------- */
+  /* ---------- TEXT ANIMATION ---------- */
   .flip-text {
     display: inline-block;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
@@ -149,8 +149,8 @@
   }
   .cuneiform-style {
     font-family: var(--cuneiform) !important;
-    letter-spacing: 3px !important;
-    word-spacing: 6px !important;
+    letter-spacing: 2px !important;
+    word-spacing: 4px !important;
     color: var(--gold-soft) !important;
     direction: ltr;
     display: inline-block;
@@ -201,7 +201,7 @@
     transform: translateY(-3px);
   }
   .card.is-disabled{
-    opacity:.55;
+    opacity:.6;
     pointer-events:none;
   }
 
@@ -220,7 +220,7 @@
     display:grid;
     place-items:center;
   }
-  .card-media.icon-tile svg{ width:42%; height:42%; }
+  .card-media.icon-tile svg{ width:38%; height:38%; }
 
   .badge{
     position:absolute;
@@ -279,10 +279,6 @@
   @media (max-width: 420px){
     .grid{ grid-template-columns: 1fr 1fr; gap:14px; }
   }
-
-  @media (prefers-reduced-motion: reduce){
-    *{ transition-duration:.001ms !important; }
-  }
 </style>
 </head>
 <body>
@@ -299,7 +295,6 @@
       <a href="#tests" class="flip-text" data-key="navTests">تست‌ها</a>
     </div>
     
-    <!-- دکمه مدرن سوییچ دوحالته (Glass Toggle) -->
     <div class="lang-switch-wrapper" onclick="toggleLanguage()">
       <div class="lang-option active" id="opt-fa">فارسی</div>
       <div class="lang-option" id="opt-old">
@@ -320,10 +315,11 @@
   <div class="container">
     <div class="grid">
 
+      <!-- تست ۱ (دردسترس) -->
       <a href="questions.html" class="card">
         <div class="card-media">
           <img src="assets/card-kings.png" alt="پرتره‌ی کوروش بزرگ" loading="lazy" width="400" height="400">
-          <span class="badge live flip-text" data-key="badgeLive1">دردسترس</span>
+          <span class="badge live flip-text" data-key="badgeLive">دردسترس</span>
         </div>
         <div class="card-body">
           <h3 class="flip-text" data-key="card1Title">تست پادشاهان ایران</h3>
@@ -331,10 +327,11 @@
         </div>
       </a>
 
+      <!-- تست ۲ (دردسترس) -->
       <a href="iran-history.html" class="card">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#173a38,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#2fb6a6" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-          <span class="badge live flip-text" data-key="badgeLive2">دردسترس</span>
+          <span class="badge live flip-text" data-key="badgeLive">دردسترس</span>
         </div>
         <div class="card-body">
           <h3 class="flip-text" data-key="card2Title">تو کدوم دوره‌ی تاریخ ایران زندگی می‌کردی؟</h3>
@@ -342,6 +339,7 @@
         </div>
       </a>
 
+      <!-- تست ۳ (به‌زودی) -->
       <div class="card is-disabled">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#3a1730,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#e08aa2" stroke-width="1.2"><path d="M12 2 L14 9 L21 9 L15.5 13.2 L17.5 20 L12 15.8 L6.5 20 L8.5 13.2 L3 9 L10 9 Z"/></svg>
@@ -350,6 +348,102 @@
         <div class="card-body">
           <h3 class="flip-text" data-key="card3Title">تست شاعران ایران</h3>
           <p class="flip-text" data-key="card3Desc">حافظ می‌فهمتت یا مولانا بیشتر باهات حرف می‌زنه؟</p>
+        </div>
+      </div>
+
+      <!-- تست ۴ (به‌زودی) -->
+      <div class="card is-disabled">
+        <div class="card-media icon-tile" style="background:linear-gradient(160deg,#2b2d17,#0b1220);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#d4a94a" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          <span class="badge soon flip-text" data-key="badgeSoon">به‌زودی</span>
+        </div>
+        <div class="card-body">
+          <h3 class="flip-text" data-key="card4Title">قهرمان شاهنامه وجودت کیه؟</h3>
+          <p class="flip-text" data-key="card4Desc">شجاعت رستم، خرد زال یا زیرکی گردآفرید؟</p>
+        </div>
+      </div>
+
+      <!-- تست ۵ (به‌زودی) -->
+      <div class="card is-disabled">
+        <div class="card-media icon-tile" style="background:linear-gradient(160deg,#1a2d3a,#0b1220);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5d9bec" stroke-width="1.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span class="badge soon flip-text" data-key="badgeSoon">به‌زودی</span>
+        </div>
+        <div class="card-body">
+          <h3 class="flip-text" data-key="card5Title">کدوم کهن‌الگو یا نماد باستانی هستی؟</h3>
+          <p class="flip-text" data-key="card5Desc">سیمرغ حکمت، شیر خورشید یا درفش کاویانی؟</p>
+        </div>
+      </div>
+
+      <!-- تست ۶ (به‌زودی) -->
+      <div class="card is-disabled">
+        <div class="card-media icon-tile" style="background:linear-gradient(160deg,#331d25,#0b1220);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#c06c84" stroke-width="1.2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="badge soon flip-text" data-key="badgeSoon">به‌زودی</span>
+        </div>
+        <div class="card-body">
+          <h3 class="flip-text" data-key="card6Title">کدوم شهر تاریخی ایران خلوتگاه روحت است؟</h3>
+          <p class="flip-text" data-key="card6Desc">رازآلودی شیراز، شکوه اصفهان یا اصالت یزد؟</p>
+        </div>
+      </div>
+
+      <!-- تست ۷ (به‌زودی) -->
+      <div class="card is-disabled">
+        <div class="card-media icon-tile" style="background:linear-gradient(160deg,#1c332b,#0b1220);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#45b69c" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          <span class="badge soon flip-text" data-key="badgeSoon">به‌زودی</span>
+        </div>
+        <div class="card-body">
+          <h3 class="flip-text" data-key="card7Title">چقدر تعارفی و اصیل ایرانی هستی؟</h3>
+          <p class="flip-text" data-key="card7Desc">مترسنج میزان تعارف، رفاقت و آداب‌دانش ایرانیِ تو!</p>
+        </div>
+      </div>
+
+      <!-- تست ۸ (به‌زودی) -->
+      <div class="card is-disabled">
+        <div class="card-media icon-tile" style="background:linear-gradient(160deg,#382819,#0b1220);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e09f67" stroke-width="1.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span class="badge soon flip-text" data-key="badgeSoon">به‌زودی</span>
+        </div>
+        <div class="card-body">
+          <h3 class="flip-text" data-key="card8Title">تاجر جاده ابریشم یا فرمانده سپاه؟</h3>
+          <p class="flip-text" data-key="card8Desc">در اقتصاد و سیاست باستان چه کاره می‌شدی؟</p>
+        </div>
+      </div>
+
+      <!-- تست ۹ (به‌زودی) -->
+      <div class="card is-disabled">
+        <div class="card-media icon-tile" style="background:linear-gradient(160deg,#2d1938,#0b1220);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#a06cd5" stroke-width="1.2"><path d="M12 3a6 6 0 0 0 9 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <span class="badge soon flip-text" data-key="badgeSoon">به‌زودی</span>
+        </div>
+        <div class="card-body">
+          <h3 class="flip-text" data-key="card9Title">کدوم جشن باستانی جفت روحته؟</h3>
+          <p class="flip-text" data-key="card9Desc">شور و نورِ نوروز، گرمای یلدا یا جادوی مهرگان؟</p>
+        </div>
+      </div>
+
+      <!-- تست ۱۰ (به‌زودی) -->
+      <div class="card is-disabled">
+        <div class="card-media icon-tile" style="background:linear-gradient(160deg,#193837,#0b1220);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#36b5b0" stroke-width="1.2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span class="badge soon flip-text" data-key="badgeSoon">به‌زودی</span>
+        </div>
+        <div class="card-body">
+          <h3 class="flip-text" data-key="card10Title">کدوم مکتب فلسفی و اندیشه ایرانی هستی؟</h3>
+          <p class="flip-text" data-key="card10Desc">خردگرایی فردوسی، خیامیسم و حال‌گرایی یا عرفان عطار؟</p>
+        </div>
+      </div>
+
+      <!-- تست ۱۱ (به‌زودی) -->
+      <div class="card is-disabled">
+        <div class="card-media icon-tile" style="background:linear-gradient(160deg,#381919,#0b1220);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e65c5c" stroke-width="1.2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          <span class="badge soon flip-text" data-key="badgeSoon">به‌زودی</span>
+        </div>
+        <div class="card-body">
+          <h3 class="flip-text" data-key="card11Title">سبک معماری وجودت چیه؟</h3>
+          <p class="flip-text" data-key="card11Desc">ستون‌های استوار تخت‌جمشید یا مقرنس‌های اسلیمی کاخ‌ها؟</p>
         </div>
       </div>
 
@@ -368,8 +462,7 @@
       navTests: "تست‌ها",
       mainHeading: "تست‌ها",
       mainDesc: "چند تا تست کوتاه شخصیت‌شناسی، ریشه‌گرفته از تاریخ و فرهنگ ایران. یکی رو انتخاب کن و شروع کن.",
-      badgeLive1: "دردسترس",
-      badgeLive2: "دردسترس",
+      badgeLive: "دردسترس",
       badgeSoon: "به‌زودی",
       card1Title: "تست پادشاهان ایران",
       card1Desc: "از کوروش تا رضاشاه؛ کدوم پادشاه شخصیتت رو بهتر نشون می‌ده؟",
@@ -377,6 +470,22 @@
       card2Desc: "از هخامنشی تا پهلوی؛ روحت مال کدوم دوره‌ست؟",
       card3Title: "تست شاعران ایران",
       card3Desc: "حافظ می‌فهمتت یا مولانا بیشتر باهات حرف می‌زنه؟",
+      card4Title: "قهرمان شاهنامه وجودت کیه؟",
+      card4Desc: "شجاعت رستم، خرد زال یا زیرکی گردآفرید؟",
+      card5Title: "کدوم کهن‌الگو یا نماد باستانی هستی؟",
+      card5Desc: "سیمرغ حکمت، شیر خورشید یا درفش کاویانی؟",
+      card6Title: "کدوم شهر تاریخی ایران خلوتگاه روحت است؟",
+      card6Desc: "رازآلودی شیراز، شکوه اصفهان یا اصالت یزد؟",
+      card7Title: "چقدر تعارفی و اصیل ایرانی هستی؟",
+      card7Desc: "مترسنج میزان تعارف، رفاقت و آداب‌دانش ایرانیِ تو!",
+      card8Title: "تاجر جاده ابریشم یا فرمانده سپاه؟",
+      card8Desc: "در اقتصاد و سیاست باستان چه کاره می‌شدی؟",
+      card9Title: "کدوم جشن باستانی جفت روحته؟",
+      card9Desc: "شور و نورِ نوروز، گرمای یلدا یا جادوی مهرگان؟",
+      card10Title: "کدوم مکتب فلسفی و اندیشه ایرانی هستی؟",
+      card10Desc: "خردگرایی فردوسی، خیامیسم و حال‌گرایی یا عرفان عطار؟",
+      card11Title: "سبک معماری وجودت چیه؟",
+      card11Desc: "ستون‌های استوار تخت‌جمشید یا مقرنس‌های اسلیمی کاخ‌ها؟",
       footer: "© ۱۴۰۵ آینه — تست‌های شخصیت‌شناسی ایرانی"
     },
     oldPersian: {
@@ -384,8 +493,7 @@
       navTests: "𐎫𐎿𐎫𐎥𐎠",
       mainHeading: "𐎫𐎿𐎫𐎥𐎠",
       mainDesc: "𐎭𐎴𐎭 𐎫𐎿𐎫𐎣 𐎺𐎫𐎠𐎧 𐎺𐎭𐎫𐎼 𐎺𐎫𐎺𐎡𐎭 𐎸𐎫𐎠𐎼𐎡𐎧",
-      badgeLive1: "𐎭𐎼𐎭𐎿𐎫𐎼𐎿",
-      badgeLive2: "𐎭𐎼𐎭𐎿𐎫𐎼𐎿",
+      badgeLive: "𐎭𐎼𐎭𐎿𐎫𐎼𐎿",
       badgeSoon: "𐎲𐎇𐎺𐎭𐎡",
       card1Title: "𐎫𐎿𐎫 𐎱𐎠𐎭𐏁𐎠𐎥𐎠𐎴",
       card1Desc: "𐎠𐎇 𐎣𐎺𐎼𐎺𐏁 𐎫𐎠 𐎼𐎯𐎠𐎠𐎥",
@@ -393,6 +501,22 @@
       card2Desc: "𐎠𐎇 𐎥𐎧𐎠𐎶𐎴𐎡 𐎫𐎠 𐎱𐎥𐎸𐎺𐎡",
       card3Title: "𐎫𐎿𐎫 𐎠𐎼𐎠𐎴",
       card3Desc: "𐎥𐎠𐎳𐎇 𐎶𐎡𐎳𐎥𐎶𐎫𐎡 𐎹𐎠 𐎶𐎺𐎸𐎴𐎠",
+      card4Title: "𐎧𐎧𐎼𐎶𐎠𐎴 𐏁𐎠𐎥𐎴𐎠𐎶𐎥",
+      card4Desc: "𐎼𐎿𐎫𐎶 𐎇𐎠𐎾 𐎥𐎸𐎼𐎭𐎠𐎳𐎼𐎡𐎭",
+      card5Title: "𐎴𐎶𐎠𐎭 𐎲𐎠𐎿𐎫𐎠𐎴𐎡",
+      card5Desc: "𐎿𐎡𐎶𐎼𐎥 𐏁𐎡𐎼 𐎧𐎺𐎼𐏁𐎡𐎭",
+      card6Title: "𐏁𐎥𐎼 𐎫𐎠𐎼𐎡𐎧𐎡",
+      card6Desc: "𐎡𐎼𐎠𐎇 𐎠𐎿𐎳𐎥𐎠𐎴 𐎹𐎇𐎭",
+      card7Title: "𐎫𐎠𐎼𐎡𐎧 𐎠𐎭𐎠𐎲 𐎡𐎼𐎠𐎴",
+      card7Desc: "𐎶𐎡𐎇𐎠𐎴 𐎼𐎳𐎠2𐎫 𐎺 𐎠𐎭𐎠𐎲",
+      card8Title: "𐎫𐎠𐎪𐎼 𐎹𐎠 𐎳𐎼𐎶𐎠𐎴𐎭𐎥",
+      card8Desc: "𐎠2𐎫𐎿𐎠𐎭 𐎺 𐎿𐎡𐎠𐎿𐎫 𐎲𐎠𐎿𐎫𐎠𐎴",
+      card9Title: "𐎪𐏁𐎴 𐎲𐎠𐎿𐎫𐎠𐎴𐎡",
+      card9Desc: "𐎴𐎺𐎼𐎺𐎇 𐎹𐎾𐎭𐎠 𐎶𐎥𐎼𐎥𐎠𐎴",
+      card10Title: "𐎳𐎾𐎿𐎳𐎥 𐎡𐎼𐎠𐎴𐎡",
+      card10Desc: "𐎳𐎼𐎭𐎺𐎿𐎡 𐎧𐎡𐎠𐎶 B𐎫𐎠𐎼",
+      card11Title: "𐎶B𐎶𐎠𐎼𐎡 𐎲𐎠𐎿𐎫𐎠𐎴",
+      card11Desc: "𐎫𐎧𐎫 𐎪𐎶𐏁𐎡𐎭 𐎣𐎠𐎧𐎥𐎠",
       footer: "© ۱۴۰۵ 𐎠𐎡𐎴𐎥 — 𐎫𐎿𐎫𐎥𐎠𐎡 𐎡𐎼𐎠𐎴𐎡"
     }
   };
@@ -402,11 +526,9 @@
   function toggleLanguage() {
     currentLang = (currentLang === 'fa') ? 'oldPersian' : 'fa';
     
-    // ۱. انیمیشن دکمه سوییچ
     document.getElementById('opt-fa').classList.toggle('active', currentLang === 'fa');
     document.getElementById('opt-old').classList.toggle('active', currentLang === 'oldPersian');
 
-    // ۲. انیمیشن چرخش ۳D متن‌ها بدون خراب کردن ساختار صفحه
     const elements = document.querySelectorAll('.flip-text');
     
     elements.forEach(el => el.classList.add('flipping'));
