@@ -34,16 +34,11 @@
     color: var(--parchment);
     font-family: var(--body);
     line-height:1.7;
+    overflow-x: hidden;
   }
 
   a{ color:inherit; }
   img{ display:block; max-width:100%; }
-
-  :focus-visible{
-    outline: 2px solid var(--gold);
-    outline-offset: 3px;
-    border-radius: 4px;
-  }
 
   .container{
     width:100%;
@@ -59,6 +54,8 @@
     justify-content:space-between;
     padding: 18px 28px;
     border-bottom: 1px solid rgba(139,150,168,.14);
+    position: relative;
+    z-index: 10;
   }
 
   .brand{
@@ -112,7 +109,7 @@
   }
   .lang-switch-wrapper:hover {
     border-color: rgba(212, 169, 74, 0.5);
-    box-shadow: 0 0 12px rgba(212, 169, 74, 0.15);
+    box-shadow: 0 0 12px rgba(212, 169, 74, 0.2);
   }
   .lang-option {
     padding: 4px 12px;
@@ -137,10 +134,95 @@
     line-height: 1;
   }
 
+  /* ---------- CYLINDER HERO (منشور کوروش) ---------- */
+  .cylinder-hero {
+    padding: 40px 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .cylinder-wrapper {
+    width: 220px;
+    height: 100px;
+    perspective: 1000px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .cy-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px; height: 70px;
+    background: radial-gradient(ellipse at center, rgba(212, 169, 74, 0.35) 0%, rgba(11, 18, 32, 0) 75%);
+    filter: blur(12px);
+    transition: opacity 0.5s ease;
+  }
+
+  .cy-body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotateCylinder 18s linear infinite;
+  }
+
+  @keyframes rotateCylinder {
+    0% { transform: rotateY(0deg) rotateX(5deg); }
+    100% { transform: rotateY(360deg) rotateX(5deg); }
+  }
+
+  /* ساخت شکل استوانه‌ای منشور با SVG */
+  .cy-surface {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #5c4220 0%, #a8834c 25%, #d4a94a 50%, #8c6833 75%, #422f16 100%);
+    border-radius: 50px / 25px;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.8), 0 10px 25px rgba(0,0,0,0.5);
+    border: 1px solid rgba(232, 207, 148, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* حکاکی خطوط میخی روی منشور */
+  .cy-text-pattern {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    top: 0; left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-family: var(--cuneiform);
+    font-size: 0.75rem;
+    color: rgba(11, 18, 32, 0.75);
+    letter-spacing: 3px;
+    line-height: 1.2;
+    text-shadow: 0.5px 0.5px 0px rgba(255,255,255,0.2);
+    user-select: none;
+    animation: scrollCuneiform 9s linear infinite;
+  }
+
+  @keyframes scrollCuneiform {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ---------- PARTICLES CANVAS (ذرات معلق میخی) ---------- */
+  #particles-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 999;
+  }
+
   /* ---------- TEXT ANIMATION ---------- */
   .flip-text {
     display: inline-block;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, color 0.3s ease;
     backface-visibility: hidden;
   }
   .flip-text.flipping {
@@ -154,11 +236,12 @@
     color: var(--gold-soft) !important;
     direction: ltr;
     display: inline-block;
+    text-shadow: 0 0 8px rgba(212, 169, 74, 0.3);
   }
 
   /* ---------- PAGE HEAD ---------- */
   .page-head{
-    padding: 56px 0 40px;
+    padding: 10px 0 40px;
     text-align:center;
     border-bottom: 1px solid rgba(139,150,168,.14);
   }
@@ -283,6 +366,8 @@
 </head>
 <body>
 
+<canvas id="particles-canvas"></canvas>
+
 <nav class="nav">
   <a href="/" class="brand">
     <span class="brand-mark">
@@ -304,6 +389,20 @@
   </div>
 </nav>
 
+<!-- بخش منشور کوروش با انیمیشن چرخش و هدر -->
+<div class="cylinder-hero">
+  <div class="cylinder-wrapper" id="cylinderContainer">
+    <div class="cy-glow" id="cyGlow"></div>
+    <div class="cy-body">
+      <div class="cy-surface">
+        <div class="cy-text-pattern">
+          𐎤𐎢𐎼𐎢𐏁 𐎧𐏁𐎠𐎹𐎰𐎡𐎹 𐎺𐎯𐎼𐎣 𐎧𐏁𐎠𐎹𐎰𐎡𐎹 𐎧𐏁𐎠𐎹𐎰𐎡𐎹𐎠𐎴𐎠𐎶 𐎧𐏁𐎠𐎹𐎰𐎡𐎹 𐎭𐎥𐎹𐎢𐎴𐎠𐎶
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="page-head">
   <div class="container">
     <h1 class="flip-text" data-key="mainHeading">تست‌ها</h1>
@@ -315,7 +414,7 @@
   <div class="container">
     <div class="grid">
 
-      <!-- تست ۱ (دردسترس) -->
+      <!-- تست ۱ -->
       <a href="questions.html" class="card">
         <div class="card-media">
           <img src="assets/card-kings.png" alt="پرتره‌ی کوروش بزرگ" loading="lazy" width="400" height="400">
@@ -327,7 +426,7 @@
         </div>
       </a>
 
-      <!-- تست ۲ (دردسترس) -->
+      <!-- تست ۲ -->
       <a href="iran-history.html" class="card">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#173a38,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#2fb6a6" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
@@ -339,7 +438,7 @@
         </div>
       </a>
 
-      <!-- تست ۳ (به‌زودی) -->
+      <!-- تست ۳ -->
       <div class="card is-disabled">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#3a1730,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#e08aa2" stroke-width="1.2"><path d="M12 2 L14 9 L21 9 L15.5 13.2 L17.5 20 L12 15.8 L6.5 20 L8.5 13.2 L3 9 L10 9 Z"/></svg>
@@ -351,7 +450,7 @@
         </div>
       </div>
 
-      <!-- تست ۴ (به‌زودی) -->
+      <!-- تست ۴ -->
       <div class="card is-disabled">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#2b2d17,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#d4a94a" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -363,7 +462,7 @@
         </div>
       </div>
 
-      <!-- تست ۵ (به‌زودی) -->
+      <!-- تست ۵ -->
       <div class="card is-disabled">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#1a2d3a,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#5d9bec" stroke-width="1.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -375,7 +474,7 @@
         </div>
       </div>
 
-      <!-- تست ۶ (به‌زودی) -->
+      <!-- تست ۶ -->
       <div class="card is-disabled">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#331d25,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#c06c84" stroke-width="1.2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
@@ -387,7 +486,7 @@
         </div>
       </div>
 
-      <!-- تست ۷ (به‌زودی) -->
+      <!-- تست ۷ -->
       <div class="card is-disabled">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#1c332b,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#45b69c" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
@@ -399,7 +498,7 @@
         </div>
       </div>
 
-      <!-- تست ۸ (به‌زودی) -->
+      <!-- تست ۸ -->
       <div class="card is-disabled">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#382819,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#e09f67" stroke-width="1.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -411,7 +510,7 @@
         </div>
       </div>
 
-      <!-- تست ۹ (به‌زودی) -->
+      <!-- تست ۹ -->
       <div class="card is-disabled">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#2d1938,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#a06cd5" stroke-width="1.2"><path d="M12 3a6 6 0 0 0 9 9 9 9 9 0 1 1-9-9Z"/></svg>
@@ -423,7 +522,7 @@
         </div>
       </div>
 
-      <!-- تست ۱۰ (به‌زودی) -->
+      <!-- تست ۱۰ -->
       <div class="card is-disabled">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#193837,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#36b5b0" stroke-width="1.2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
@@ -435,7 +534,7 @@
         </div>
       </div>
 
-      <!-- تست ۱۱ (به‌زودی) -->
+      <!-- تست ۱۱ -->
       <div class="card is-disabled">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#381919,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#e65c5c" stroke-width="1.2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
@@ -508,14 +607,14 @@
       card6Title: "𐏁𐎥𐎼 𐎫𐎠𐎼𐎡𐎧𐎡",
       card6Desc: "𐎡𐎼𐎠𐎇 𐎠𐎿𐎳𐎥𐎠𐎴 𐎹𐎇𐎭",
       card7Title: "𐎫𐎠𐎼𐎡𐎧 𐎠𐎭𐎠𐎲 𐎡𐎼𐎠𐎴",
-      card7Desc: "𐎶𐎡𐎇𐎠𐎴 𐎼𐎳𐎠2𐎫 𐎺 𐎠𐎭𐎠𐎲",
+      card7Desc: "𐎶𐎡𐎇𐎠𐎴 𐎼𐎳𐎠𐎫 𐎺 𐎠𐎭𐎠𐎲",
       card8Title: "𐎫𐎠𐎪𐎼 𐎹𐎠 𐎳𐎼𐎶𐎠𐎴𐎭𐎥",
-      card8Desc: "𐎠2𐎫𐎿𐎠𐎭 𐎺 𐎿𐎡𐎠𐎿𐎫 𐎲𐎠𐎿𐎫𐎠𐎴",
+      card8Desc: "𐎠𐎫𐎿𐎠𐎭 𐎺 𐎿𐎡𐎠𐎿𐎫 𐎲𐎠𐎿𐎫𐎠𐎴",
       card9Title: "𐎪𐏁𐎴 𐎲𐎠𐎿𐎫𐎠𐎴𐎡",
       card9Desc: "𐎴𐎺𐎼𐎺𐎇 𐎹𐎾𐎭𐎠 𐎶𐎥𐎼𐎥𐎠𐎴",
       card10Title: "𐎳𐎾𐎿𐎳𐎥 𐎡𐎼𐎠𐎴𐎡",
-      card10Desc: "𐎳𐎼𐎭𐎺𐎿𐎡 𐎧𐎡𐎠𐎶 B𐎫𐎠𐎼",
-      card11Title: "𐎶B𐎶𐎠𐎼𐎡 𐎲𐎠𐎿𐎫𐎠𐎴",
+      card10Desc: "𐎳𐎼𐎭𐎺𐎿𐎡 𐎧𐎡𐎠𐎶 𐎫𐎠𐎼",
+      card11Title: "𐎶𐎠𐎼𐎡 𐎲𐎠𐎿𐎫𐎠𐎴",
       card11Desc: "𐎫𐎧𐎫 𐎪𐎶𐏁𐎡𐎭 𐎣𐎠𐎧𐎥𐎠",
       footer: "© ۱۴۰۵ 𐎠𐎡𐎴𐎥 — 𐎫𐎿𐎫𐎥𐎠𐎡 𐎡𐎼𐎠𐎴𐎡"
     }
@@ -523,11 +622,107 @@
 
   let currentLang = 'fa';
 
+  /* ---------- سیستم ذرات معلق (Cuneiform Burst Particles) ---------- */
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  const cuneiformChars = ["𐎤", "𐎢", "𐎼", "𐎢", "𐏁", "𐎧", "𐏁", "𐎠", "𐎹", "𐎰", "𐎡", "𐎹", "𐎺", "𐎯", "𐎼", "𐎣"];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  class Particle {
+    constructor(startX, startY, targetX, targetY, char) {
+      this.x = startX;
+      this.y = startY;
+      this.targetX = targetX;
+      this.targetY = targetY;
+      this.char = char;
+      this.progress = 0;
+      this.speed = 0.02 + Math.random() * 0.015;
+      this.size = 14 + Math.random() * 8;
+      this.alpha = 1;
+      this.curve = (Math.random() - 0.5) * 200;
+    }
+
+    update() {
+      this.progress += this.speed;
+      // حرکت منحنی شکیل به سمت متون
+      const currentProgress = Math.min(this.progress, 1);
+      const ease = 1 - Math.pow(1 - currentProgress, 3);
+
+      this.x = (1 - ease) * this.x + ease * this.targetX + Math.sin(ease * Math.PI) * this.curve;
+      this.y = (1 - ease) * this.y + ease * this.targetY;
+
+      if (this.progress >= 0.8) {
+        this.alpha = (1 - this.progress) / 0.2;
+      }
+    }
+
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = Math.max(this.alpha, 0);
+      ctx.font = `${this.size}px "Noto Sans Cuneiform"`;
+      ctx.fillStyle = '#e8cf94';
+      ctx.shadowColor = '#d4a94a';
+      ctx.shadowBlur = 10;
+      ctx.fillText(this.char, this.x, this.y);
+      ctx.restore();
+    }
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      particles[i].update();
+      particles[i].draw();
+      if (particles[i].progress >= 1) {
+        particles.splice(i, 1);
+      }
+    }
+    if (particles.length > 0) {
+      requestAnimationFrame(animateParticles);
+    }
+  }
+
+  function triggerCylinderExplosion() {
+    const cylinderEl = document.getElementById('cylinderContainer');
+    const rect = cylinderEl.getBoundingClientRect();
+    const startX = rect.left + rect.width / 2;
+    const startY = rect.top + rect.height / 2;
+
+    const flipElements = document.querySelectorAll('.flip-text');
+    
+    flipElements.forEach(el => {
+      const elRect = el.getBoundingClientRect();
+      const targetX = elRect.left + elRect.width / 2;
+      const targetY = elRect.top + elRect.height / 2;
+      const char = cuneiformChars[Math.floor(Math.random() * cuneiformChars.length)];
+
+      particles.push(new Particle(startX, startY, targetX, targetY, char));
+    });
+
+    animateParticles();
+  }
+
+  /* ---------- سوییچ زبان همراه انیمیشن منشور ---------- */
   function toggleLanguage() {
     currentLang = (currentLang === 'fa') ? 'oldPersian' : 'fa';
     
     document.getElementById('opt-fa').classList.toggle('active', currentLang === 'fa');
     document.getElementById('opt-old').classList.toggle('active', currentLang === 'oldPersian');
+
+    // اگر به پارسی باستان سوییچ شد، انیمیشن جدا شدن حروف از منشور اجرا شود
+    if (currentLang === 'oldPersian') {
+      triggerCylinderExplosion();
+      document.getElementById('cyGlow').style.opacity = '1';
+    } else {
+      document.getElementById('cyGlow').style.opacity = '0.5';
+    }
 
     const elements = document.querySelectorAll('.flip-text');
     
@@ -547,7 +742,7 @@
         }
         el.classList.remove('flipping');
       });
-    }, 200);
+    }, 250);
   }
 </script>
 
