@@ -34,7 +34,6 @@
     color: var(--parchment);
     font-family: var(--body);
     line-height:1.7;
-    transition: background 0.5s ease;
   }
 
   a{ color:inherit; }
@@ -60,8 +59,6 @@
     justify-content:space-between;
     padding: 18px 28px;
     border-bottom: 1px solid rgba(139,150,168,.14);
-    position: relative;
-    z-index: 10;
   }
 
   .brand{
@@ -100,76 +97,63 @@
   .nav-links a{ text-decoration:none; }
   .nav-links a:hover{ color: var(--parchment); }
 
-  /* ---------- LANG SWITCHER BUTTON ---------- */
-  .lang-btn{
-    background: rgba(212,169,74,.1);
-    border: 1px solid rgba(212,169,74,.3);
-    color: var(--gold-soft);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: .82rem;
+  /* ---------- MODERN GLASS SWITCHER ---------- */
+  .lang-switch-wrapper {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(26, 39, 64, 0.6);
+    border: 1px solid rgba(212, 169, 74, 0.25);
+    padding: 3px;
+    border-radius: 30px;
+    backdrop-filter: blur(8px);
     cursor: pointer;
+    user-select: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .lang-switch-wrapper:hover {
+    border-color: rgba(212, 169, 74, 0.5);
+    box-shadow: 0 0 12px rgba(212, 169, 74, 0.15);
+  }
+  .lang-option {
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--slate);
+    border-radius: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
-    gap: 8px;
-    transition: all .3s ease;
-    box-shadow: 0 0 0px var(--gold);
+    gap: 6px;
   }
-  .lang-btn:hover{
-    background: rgba(212,169,74,.25);
-    border-color: var(--gold);
-    box-shadow: 0 0 12px rgba(212,169,74,.3);
-  }
-  .lang-btn.active {
-    background: var(--gold);
-    color: var(--ink);
-    font-weight: bold;
-  }
-
-  /* ---------- STYLES FOR CUNEIFORM OVERLAY (افکت لوح سنگی) ---------- */
-  [data-key] {
-    position: relative;
-    transition: all 0.4s ease;
-  }
-
-  /* استایل متن میخی درون لوح سنگی */
-  .cuneiform-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(26, 39, 64, 0.95), rgba(11, 18, 32, 0.98));
-    border: 1px solid var(--gold);
-    border-radius: 8px;
+  .lang-option.active {
+    background: linear-gradient(135deg, rgba(212, 169, 74, 0.22), rgba(212, 169, 74, 0.08));
     color: var(--gold-soft);
+    border: 1px solid rgba(212, 169, 74, 0.4);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .cuneiform-glyph {
     font-family: var(--cuneiform);
-    padding: 6px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    box-shadow: inset 0 0 15px rgba(212, 169, 74, 0.2), 0 4px 15px rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
-    z-index: 5;
-    opacity: 0;
-    transform: scale(0.95);
-    pointer-events: none;
-    transition: opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.4s ease;
-    letter-spacing: 2px;
-  }
-
-  /* لوح سنگی در حالت فعال */
-  body.old-persian-mode .cuneiform-overlay {
-    opacity: 1;
-    transform: scale(1);
-    pointer-events: auto;
-  }
-
-  body.old-persian-mode .card-body p .cuneiform-overlay,
-  body.old-persian-mode .page-head p .cuneiform-overlay {
     font-size: 0.9rem;
-    line-height: 1.4;
+    line-height: 1;
+  }
+
+  /* ---------- TEXT ROTATION ANIMATION (چرخش سه بعدی) ---------- */
+  .flip-text {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+    backface-visibility: hidden;
+  }
+  .flip-text.flipping {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+  .cuneiform-style {
+    font-family: var(--cuneiform) !important;
+    letter-spacing: 3px !important;
+    word-spacing: 6px !important;
+    color: var(--gold-soft) !important;
+    direction: ltr;
+    display: inline-block;
   }
 
   /* ---------- PAGE HEAD ---------- */
@@ -248,7 +232,6 @@
     padding: 4px 10px;
     border-radius: 999px;
     backdrop-filter: blur(4px);
-    z-index: 6;
   }
   .badge.live{
     background: rgba(47,182,166,.18);
@@ -309,23 +292,27 @@
     <span class="brand-mark">
       <svg viewBox="0 0 24 24" fill="none" stroke="#d4a94a" stroke-width="1.4"><path d="M12 2 L14 9 L21 9 L15.5 13.2 L17.5 20 L12 15.8 L6.5 20 L8.5 13.2 L3 9 L10 9 Z"/></svg>
     </span>
-    <span data-key="brand">آینه</span>
+    <span class="flip-text" data-key="brand">آینه</span>
   </a>
   <div class="nav-right-group">
     <div class="nav-links">
-      <a href="#tests" data-key="navTests">تست‌ها</a>
+      <a href="#tests" class="flip-text" data-key="navTests">تست‌ها</a>
     </div>
-    <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">
-      <span>𐎧𐏁𐎠𐎡</span>
-      <span id="langBtnText">لوح هخامنشی</span>
-    </button>
+    
+    <!-- دکمه مدرن سوییچ دوحالته (Glass Toggle) -->
+    <div class="lang-switch-wrapper" onclick="toggleLanguage()">
+      <div class="lang-option active" id="opt-fa">فارسی</div>
+      <div class="lang-option" id="opt-old">
+        <span class="cuneiform-glyph">𐎧𐏁</span> پارسی باستان
+      </div>
+    </div>
   </div>
 </nav>
 
 <div class="page-head">
   <div class="container">
-    <h1 data-key="mainHeading">تست‌ها</h1>
-    <p data-key="mainDesc">چند تا تست کوتاه شخصیت‌شناسی، ریشه‌گرفته از تاریخ و فرهنگ ایران. یکی رو انتخاب کن و شروع کن.</p>
+    <h1 class="flip-text" data-key="mainHeading">تست‌ها</h1>
+    <p class="flip-text" data-key="mainDesc">چند تا تست کوتاه شخصیت‌شناسی، ریشه‌گرفته از تاریخ و فرهنگ ایران. یکی رو انتخاب کن و شروع کن.</p>
   </div>
 </div>
 
@@ -336,33 +323,33 @@
       <a href="questions.html" class="card">
         <div class="card-media">
           <img src="assets/card-kings.png" alt="پرتره‌ی کوروش بزرگ" loading="lazy" width="400" height="400">
-          <span class="badge live" data-key="badgeLive1">دردسترس</span>
+          <span class="badge live flip-text" data-key="badgeLive1">دردسترس</span>
         </div>
         <div class="card-body">
-          <h3 data-key="card1Title">تست پادشاهان ایران</h3>
-          <p data-key="card1Desc">از کوروش تا رضاشاه؛ کدوم پادشاه شخصیتت رو بهتر نشون می‌ده؟</p>
+          <h3 class="flip-text" data-key="card1Title">تست پادشاهان ایران</h3>
+          <p class="flip-text" data-key="card1Desc">از کوروش تا رضاشاه؛ کدوم پادشاه شخصیتت رو بهتر نشون می‌ده؟</p>
         </div>
       </a>
 
       <a href="iran-history.html" class="card">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#173a38,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#2fb6a6" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-          <span class="badge live" data-key="badgeLive2">دردسترس</span>
+          <span class="badge live flip-text" data-key="badgeLive2">دردسترس</span>
         </div>
         <div class="card-body">
-          <h3 data-key="card2Title">تو کدوم دوره‌ی تاریخ ایران زندگی می‌کردی؟</h3>
-          <p data-key="card2Desc">از هخامنشی تا پهلوی؛ روحت مال کدوم دوره‌ست؟</p>
+          <h3 class="flip-text" data-key="card2Title">تو کدوم دوره‌ی تاریخ ایران زندگی می‌کردی؟</h3>
+          <p class="flip-text" data-key="card2Desc">از هخامنشی تا پهلوی؛ روحت مال کدوم دوره‌ست؟</p>
         </div>
       </a>
 
       <div class="card is-disabled">
         <div class="card-media icon-tile" style="background:linear-gradient(160deg,#3a1730,#0b1220);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#e08aa2" stroke-width="1.2"><path d="M12 2 L14 9 L21 9 L15.5 13.2 L17.5 20 L12 15.8 L6.5 20 L8.5 13.2 L3 9 L10 9 Z"/></svg>
-          <span class="badge soon" data-key="badgeSoon">به‌زودی</span>
+          <span class="badge soon flip-text" data-key="badgeSoon">به‌زودی</span>
         </div>
         <div class="card-body">
-          <h3 data-key="card3Title">تست شاعران ایران</h3>
-          <p data-key="card3Desc">حافظ می‌فهمتت یا مولانا بیشتر باهات حرف می‌زنه؟</p>
+          <h3 class="flip-text" data-key="card3Title">تست شاعران ایران</h3>
+          <p class="flip-text" data-key="card3Desc">حافظ می‌فهمتت یا مولانا بیشتر باهات حرف می‌زنه؟</p>
         </div>
       </div>
 
@@ -371,57 +358,74 @@
 </main>
 
 <footer>
-  <div class="container" data-key="footer">© ۱۴۰۵ آینه — تست‌های شخصیت‌شناسی ایرانی</div>
+  <div class="container flip-text" data-key="footer">© ۱۴۰۵ آینه — تست‌های شخصیت‌شناسی ایرانی</div>
 </footer>
 
 <script>
-  // فرهنگ لغات (فینگلیش میخی باستانی)
-  const oldPersianText = {
-    brand: "𐎠 𐎡 𐎴 𐎥",
-    navTests: "𐎫 𐎿 𐎫 𐎥 𐎠",
-    mainHeading: "𐎫 𐎿 𐎫 𐎥 𐎠",
-    mainDesc: "𐎭 𐎴 𐎭 𐎫 𐎿 𐎫 𐎣 𐎺 𐎫 𐎠 𐎧 𐎺 𐎭 𐎫 𐎼 𐎺 𐎫 𐎺 𐎡 𐎭 𐎸 𐎫 𐎠 𐎼 𐎡 𐎧",
-    badgeLive1: "𐎭 𐎼 𐎭 𐎿 𐎫 𐎼 𐎿",
-    badgeLive2: "𐎭 𐎼 𐎭 𐎿 𐎫 𐎼 𐎿",
-    badgeSoon: "𐎲 𐎇 𐎺 𐎭 𐎡",
-    card1Title: "𐎫 𐎿 𐎫 𐎱 𐎠 𐎭 𐏁 𐎠 𐎥 𐎠 𐎴",
-    card1Desc: "𐎠 𐎇 𐎣 𐎺 𐎼 𐎺 𐏁 𐎫 𐎠 𐎼 𐎯 𐎠 𐏁 𐎠 𐎥",
-    card2Title: "𐎫 𐎺 𐎣 𐎭 𐎺 𐎶 𐎭 𐎺 𐎼 𐎥",
-    card2Desc: "𐎠 𐎇 𐎥 𐎧 𐎠 𐎶 𐎴 𐏁 𐎡 𐎫 𐎠 𐎱 𐎥 𐎸 𐎺 𐎡",
-    card3Title: "𐎫 𐎿 𐎫  𐎠 𐎼 𐎠 𐎴",
-    card3Desc: "𐎥 𐎠 𐎳 𐎇 𐎶 𐎡 𐎳 𐎥 𐎶 𐎫 𐎡 𐎹 𐎠 𐎶 𐎺 𐎸 𐎴 𐎠",
-    footer: "© ۱۴۰۵ 𐎠 𐎡 𐎴 𐎥 — 𐎫 𐎿 𐎫 𐎥 𐎠 𐎡 𐎡 𐎼 𐎠 𐎴 𐎡"
+  const translations = {
+    fa: {
+      brand: "آینه",
+      navTests: "تست‌ها",
+      mainHeading: "تست‌ها",
+      mainDesc: "چند تا تست کوتاه شخصیت‌شناسی، ریشه‌گرفته از تاریخ و فرهنگ ایران. یکی رو انتخاب کن و شروع کن.",
+      badgeLive1: "دردسترس",
+      badgeLive2: "دردسترس",
+      badgeSoon: "به‌زودی",
+      card1Title: "تست پادشاهان ایران",
+      card1Desc: "از کوروش تا رضاشاه؛ کدوم پادشاه شخصیتت رو بهتر نشون می‌ده؟",
+      card2Title: "تو کدوم دوره‌ی تاریخ ایران زندگی می‌کردی؟",
+      card2Desc: "از هخامنشی تا پهلوی؛ روحت مال کدوم دوره‌ست؟",
+      card3Title: "تست شاعران ایران",
+      card3Desc: "حافظ می‌فهمتت یا مولانا بیشتر باهات حرف می‌زنه؟",
+      footer: "© ۱۴۰۵ آینه — تست‌های شخصیت‌شناسی ایرانی"
+    },
+    oldPersian: {
+      brand: "𐎠𐎡𐎴𐎥",
+      navTests: "𐎫𐎿𐎫𐎥𐎠",
+      mainHeading: "𐎫𐎿𐎫𐎥𐎠",
+      mainDesc: "𐎭𐎴𐎭 𐎫𐎿𐎫𐎣 𐎺𐎫𐎠𐎧 𐎺𐎭𐎫𐎼 𐎺𐎫𐎺𐎡𐎭 𐎸𐎫𐎠𐎼𐎡𐎧",
+      badgeLive1: "𐎭𐎼𐎭𐎿𐎫𐎼𐎿",
+      badgeLive2: "𐎭𐎼𐎭𐎿𐎫𐎼𐎿",
+      badgeSoon: "𐎲𐎇𐎺𐎭𐎡",
+      card1Title: "𐎫𐎿𐎫 𐎱𐎠𐎭𐏁𐎠𐎥𐎠𐎴",
+      card1Desc: "𐎠𐎇 𐎣𐎺𐎼𐎺𐏁 𐎫𐎠 𐎼𐎯𐎠𐎠𐎥",
+      card2Title: "𐎫𐎺 𐎣𐎭𐎺𐎶 𐎭𐎺𐎼𐎥",
+      card2Desc: "𐎠𐎇 𐎥𐎧𐎠𐎶𐎴𐎡 𐎫𐎠 𐎱𐎥𐎸𐎺𐎡",
+      card3Title: "𐎫𐎿𐎫 𐎠𐎼𐎠𐎴",
+      card3Desc: "𐎥𐎠𐎳𐎇 𐎶𐎡𐎳𐎥𐎶𐎫𐎡 𐎹𐎠 𐎶𐎺𐎸𐎴𐎠",
+      footer: "© ۱۴۰۵ 𐎠𐎡𐎴𐎥 — 𐎫𐎿𐎫𐎥𐎠𐎡 𐎡𐎼𐎠𐎴𐎡"
+    }
   };
 
-  // ساخت خودکار لوح‌های سنگی روی عناصر
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll('[data-key]').forEach(el => {
-      const key = el.getAttribute('data-key');
-      if (oldPersianText[key]) {
-        const overlay = document.createElement('div');
-        overlay.className = 'cuneiform-overlay';
-        overlay.innerText = oldPersianText[key];
-        el.appendChild(overlay);
-      }
-    });
-  });
-
-  let isOldPersian = false;
+  let currentLang = 'fa';
 
   function toggleLanguage() {
-    isOldPersian = !isOldPersian;
-    const btn = document.getElementById('langToggle');
-    const btnText = document.getElementById('langBtnText');
+    currentLang = (currentLang === 'fa') ? 'oldPersian' : 'fa';
+    
+    // ۱. انیمیشن دکمه سوییچ
+    document.getElementById('opt-fa').classList.toggle('active', currentLang === 'fa');
+    document.getElementById('opt-old').classList.toggle('active', currentLang === 'oldPersian');
 
-    if (isOldPersian) {
-      document.body.classList.add('old-persian-mode');
-      btn.classList.add('active');
-      btnText.innerText = "بازگشت به فارسی";
-    } else {
-      document.body.classList.remove('old-persian-mode');
-      btn.classList.remove('active');
-      btnText.innerText = "لوح هخامنشی";
-    }
+    // ۲. انیمیشن چرخش ۳D متن‌ها بدون خراب کردن ساختار صفحه
+    const elements = document.querySelectorAll('.flip-text');
+    
+    elements.forEach(el => el.classList.add('flipping'));
+
+    setTimeout(() => {
+      elements.forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (translations[currentLang][key]) {
+          el.innerText = translations[currentLang][key];
+
+          if (currentLang === 'oldPersian') {
+            el.classList.add('cuneiform-style');
+          } else {
+            el.classList.remove('cuneiform-style');
+          }
+        }
+        el.classList.remove('flipping');
+      });
+    }, 200);
   }
 </script>
 
